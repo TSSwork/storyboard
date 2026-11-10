@@ -9,15 +9,19 @@ from pathlib import Path
 # --------------------------------------------------
 
 BASE_DIR = Path(__file__).resolve().parent
-PRODUCTION_DIR = BASE_DIR / "production"
 
 INPUT_FILE = (
-    PRODUCTION_DIR
+    BASE_DIR
+    / "production"
     / "Production_Crops_Livestock_E_All_Data_(Normalized).csv"
 )
 
 OUTPUT_DIR = BASE_DIR / "extracted"
-OUTPUT_FILE = OUTPUT_DIR / "sri_lanka_crop_production.csv"
+
+OUTPUT_FILE = (
+    OUTPUT_DIR
+    / "sri_lanka_crop_production.csv"
+)
 
 # --------------------------------------------------
 # Filters
@@ -25,32 +29,24 @@ OUTPUT_FILE = OUTPUT_DIR / "sri_lanka_crop_production.csv"
 
 COUNTRY = "Sri Lanka"
 
-# Keep crop production and harvested area.
-# We can add other elements after inspecting the dataset.
-ELEMENTS = {
-    "Production",
-    "Area harvested",
-    "Yield",
+ELEMENT_CODES = {
+    "5312",  # Area harvested
+    "5412",  # Yield
+    "5510",  # Production
 }
 
 # --------------------------------------------------
-# Extract
+# Extraction
 # --------------------------------------------------
 
 def main():
 
     if not INPUT_FILE.exists():
-        raise FileNotFoundError(
-            f"Dataset not found: {INPUT_FILE}"
-        )
+        raise FileNotFoundError(INPUT_FILE)
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     rows_written = 0
-
-    print(f"Input: {INPUT_FILE}")
-    print(f"Country: {COUNTRY}")
-    print(f"Elements: {', '.join(sorted(ELEMENTS))}")
 
     with INPUT_FILE.open(
         "r",
@@ -63,6 +59,8 @@ def main():
         required_columns = {
             "Area",
             "Item",
+            "Item Code",
+            "Element Code",
             "Element",
             "Year",
             "Unit",
@@ -74,7 +72,7 @@ def main():
 
         if missing:
             raise ValueError(
-                f"Missing expected columns: {missing}"
+                f"Missing columns: {missing}"
             )
 
         with OUTPUT_FILE.open(
@@ -95,14 +93,16 @@ def main():
                 if row["Area"] != COUNTRY:
                     continue
 
-                if row["Element"] not in ELEMENTS:
+                if row["Element Code"] not in ELEMENT_CODES:
                     continue
 
                 writer.writerow(row)
+
                 rows_written += 1
 
     print("\nExtraction completed.")
-    print(f"Rows: {rows_written}")
+    print(f"Country: {COUNTRY}")
+    print(f"Rows extracted: {rows_written}")
     print(f"Output: {OUTPUT_FILE}")
 
 
