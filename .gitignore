@@ -14,3 +14,6 @@ raw/FAOSTAT/production/
 raw/FAOSTAT_TRADE/downloads/
 raw/FAOSTAT_TRADE/annual/
 raw/COMTRADE/.env
+raw/COMTRADE/monthly/
+raw/COMTRADE/annual/
+raw/COMTRADE/annual_api/
