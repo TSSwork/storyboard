@@ -9,3 +9,5 @@ raw/EAR5/downloads
 
 # Virtual environments
 .venv
+raw/world_bank/food_prices_lka.jsonl
+raw/FAOSTAT/production/
