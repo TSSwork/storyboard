@@ -45,6 +45,20 @@ wheels = [
 ]
 
 [[package]]
+name = "cdsapi"
+version = "0.7.7"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "ecmwf-datastores-client" },
+    { name = "requests" },
+    { name = "tqdm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/55/f3/6cb5b4bf077c441978c5d5be3a568d37e1f07f3e7177a17fa66aec2594b6/cdsapi-0.7.7.tar.gz", hash = "sha256:bc0cf807c1b78aceba6a11c3a5180f885f47f71a4e58205e324cfedcee16f10b", size = 13322, upload-time = "2025-09-30T19:11:22.404Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4f/f4/4a65460d5cb6784128019fd707a87993f378db25e796eba01400a0903f62/cdsapi-0.7.7-py2.py3-none-any.whl", hash = "sha256:384c1658572d6dc53f4111f6dd46fcdfe6fea54a688af9756d71f6fe9118b66d", size = 12293, upload-time = "2025-09-30T19:11:21.184Z" },
+]
+
+[[package]]
 name = "certifi"
 version = "2026.10.23"
 source = { registry = "https://pypi.org/simple" }
@@ -178,6 +192,30 @@ wheels = [
 ]
 
 [[package]]
+name = "colorama"
+version = "0.4.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d8/53/6f443c9a4a8358a93a6792e2acffb9d9d5cb0a5cfd8802644b7b1c9a02e4/colorama-0.4.6.tar.gz", hash = "sha256:08695f5cb7ed6e0531a20572697297273c47b8cae5a63ffc6d6ed5c201be6e44", size = 27697, upload-time = "2022-10-25T02:36:22.414Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d1/d6/3965ed04c63042e047cb6a3e6ed1a63a35087b6a609aa3a15ed8ac56c221/colorama-0.4.6-py2.py3-none-any.whl", hash = "sha256:4f1d9991f5acc0ca119f9d443620b77f9d6b33703e51011c16baf57afb285fc6", size = 25335, upload-time = "2022-10-25T02:36:20.889Z" },
+]
+
+[[package]]
+name = "ecmwf-datastores-client"
+version = "0.6.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "attrs" },
+    { name = "multiurl" },
+    { name = "requests" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/2b/dd/64a2acbf5fdb055aa9f0e10a4bccdb47c51d32454587f8e4fb0d893618fd/ecmwf_datastores_client-0.6.0.tar.gz", hash = "sha256:2a82791682e63dbee4db3b736d9b399dea5766a4573181fdd0eb0343124e5972", size = 178869, upload-time = "2026-11-04T13:12:37.185Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/db/08/7f6acd63819a9f02be7cc07363583c84f0f22903c2f68df34f5444aef555/ecmwf_datastores_client-0.6.0-py3-none-any.whl", hash = "sha256:64756b13693494f0f365ac86fa4575feed09f9cd1d78ebaf278d08a0efdbcb2f", size = 26422, upload-time = "2026-11-04T13:12:35.653Z" },
+]
+
+[[package]]
 name = "h11"
 version = "0.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -221,6 +259,21 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/f5/08/8eea9d4b8302028f3abb2c0813953f7aec26d33b7a8960ed760e65ff29fa/idna-3.20.tar.gz", hash = "sha256:a7db850025b95ded1eae8a46181a1a6c56c92c96f0e2b005d9ff8dc0210cab44", size = 216463, upload-time = "2026-09-17T14:11:04.752Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/58/a2/bb081bab032533a855d44de1d56f8e8426114ff1ba5d1f07a438a0a654f8/idna-3.20-py3-none-any.whl", hash = "sha256:ab7ae7122974553370f0bdb919e1a960b2cd1bc1ef0276416d896db81c14582c", size = 69583, upload-time = "2026-09-17T14:11:03.168Z" },
+]
+
+[[package]]
+name = "multiurl"
+version = "0.3.9"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "python-dateutil" },
+    { name = "pytz" },
+    { name = "requests" },
+    { name = "tqdm" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d3/35/a08c568e63fda8cb1b7f3168409c026d2b407ab6d82da09cea078b01c2d7/multiurl-0.3.9.tar.gz", hash = "sha256:799b7998bfabd4e15d51ba09d08eb5d0716762655bae6e09db00a14c3bfaeae6", size = 20044, upload-time = "2026-06-18T07:43:38.756Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/59/f1/2374970b2ad0ab20e28a0cd12eec1c234567fef31064f0903396d55ae3f1/multiurl-0.3.9-py3-none-any.whl", hash = "sha256:5acedb53343bb47ff6188405dc33e10c1f1713591de8929a69b966d4d395d88e", size = 22610, upload-time = "2026-06-18T07:43:37.727Z" },
 ]
 
 [[package]]
@@ -360,6 +413,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pytz"
+version = "2026.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/f5/b0/168030b0bfcc334cf09fa3313afdb888d892c8a0027324683d1de0ec277e/pytz-2026.6.tar.gz", hash = "sha256:3b0fc2727707663d6e517936f444fd8a8b240f1fc32f4bf7ee03274245945284", size = 318520, upload-time = "2026-10-29T09:05:47.011Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/b6/25/564f3fc5b70c1398d706c51f2b1470d0ea0b1b2f96fee67877b6f5bdf3b6/pytz-2026.6-py2.py3-none-any.whl", hash = "sha256:7fed3fee8fd6bd4a2b7b75a8d56021d0624127bf69bd5691f115db929ac570b3", size = 506321, upload-time = "2026-10-29T09:05:45.14Z" },
+]
+
+[[package]]
 name = "rasterio"
 version = "1.5.2"
 source = { registry = "https://pypi.org/simple" }
@@ -477,6 +539,18 @@ wheels = [
 ]
 
 [[package]]
+name = "tqdm"
+version = "4.70.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/0d/ea/b2a5bd54b28a324dae8211928b2d730b6547500342c7e6c6dea08bd0a485/tqdm-4.70.1.tar.gz", hash = "sha256:cefd0eca11b2a37a3aee776544d4f4ae913f02688135b5556b8788dfa474afc4", size = 171846, upload-time = "2026-09-11T07:25:16.601Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a7/03/921a3d3c75785aca9ebfbfcabfbc3a1be12e2ab5265deb026d55a5a3f83e/tqdm-4.70.1-py3-none-any.whl", hash = "sha256:c293e525e6fef9c20e8728fd4612df02a0aa31bb5fe91ecd93e123b1b7bffa73", size = 80199, upload-time = "2026-09-11T07:25:14.599Z" },
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -508,6 +582,7 @@ name = "work"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "cdsapi" },
     { name = "httpx" },
     { name = "numpy" },
     { name = "pandas" },
@@ -518,6 +593,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "cdsapi", specifier = ">=0.7.7" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "numpy", specifier = ">=2.5.4" },
     { name = "pandas", specifier = ">=3.1.1" },
