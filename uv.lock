@@ -254,6 +254,19 @@ wheels = [
 ]
 
 [[package]]
+name = "h5netcdf"
+version = "1.8.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "numpy" },
+    { name = "packaging" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9e/cc/870c3642cfe900f0400d1784ac21a366b70bdb5b59c41fbe286e0c801e15/h5netcdf-1.8.3.tar.gz", hash = "sha256:95b5d1972894a28f3237aa6497fd34d365610c22880803c2640b0b49dcae85da", size = 83092, upload-time = "2026-11-11T12:31:48.967Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/63/4c/a784e8af8658a423335201b536f26ce2d6341e41cea15383d490089998f9/h5netcdf-1.8.3-py3-none-any.whl", hash = "sha256:767a61acaf0a2a2a99937ecd92c496c78dd54ad207b693c57211c466a975c75b", size = 65286, upload-time = "2026-11-11T12:31:47.397Z" },
+]
+
+[[package]]
 name = "httpcore"
 version = "1.0.9"
 source = { registry = "https://pypi.org/simple" }
@@ -666,6 +679,7 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "cdsapi" },
+    { name = "h5netcdf" },
     { name = "httpx" },
     { name = "netcdf4" },
     { name = "numpy" },
@@ -680,6 +694,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "cdsapi", specifier = ">=0.7.7" },
+    { name = "h5netcdf", specifier = ">=1.8.3" },
     { name = "httpx", specifier = ">=0.28.1" },
     { name = "netcdf4", specifier = ">=1.7.5.1.post1" },
     { name = "numpy", specifier = ">=2.5.4" },
