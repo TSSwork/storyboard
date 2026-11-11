@@ -67,10 +67,16 @@ def download_month(client, year, month):
 
     print(f"\nDownloading {year}-{month:02d}")
 
+    # Download to a temp name, rename when complete, so an interrupted
+    # download is never mistaken for a finished file.
+    tmp_file = output_file.with_suffix(".nc.part")
+
     client.retrieve(
         "reanalysis-era5-land",
         request
-    ).download(str(output_file))
+    ).download(str(tmp_file))
+
+    tmp_file.replace(output_file)
 
     print(f"Saved: {output_file}")
 

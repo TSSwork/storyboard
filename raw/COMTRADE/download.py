@@ -11,22 +11,21 @@ from pathlib import Path
 import requests
 from dotenv import dotenv_values
 
-# --------------------------------------------------
+# ==================================================
 # CONFIGURATION
-# --------------------------------------------------
+# ==================================================
 
 BASE_DIR = Path(__file__).resolve().parent
 
 OUTPUT_DIR = BASE_DIR / "annual_api"
-FLOW_DIR = OUTPUT_DIR / "flow_pages"
-MANIFEST_DIR = OUTPUT_DIR / "manifests"
+FLOW_DIR = OUTPUT_DIR / "all_flow_pages"
+MANIFEST_DIR = OUTPUT_DIR / "all_flow_manifests"
 
 REPORTER_CODE = 144
 START_YEAR = 2010
 END_YEAR = 2025
 
 MAX_RECORDS = 100_000
-
 REQUEST_INTERVAL = 1.2
 MAX_RETRIES = 5
 TIMEOUT = 180
@@ -36,24 +35,35 @@ BASE_URL = "https://comtradeapi.un.org/data/v1"
 AVAILABILITY_URL = f"{BASE_URL}/getDA/C/A/HS"
 DATA_URL = f"{BASE_URL}/get/C/A/HS"
 
-FLOWS = {
-    "X": "Exports",
-    "M": "Imports",
-}
+# All documented UN Comtrade trade-flow codes.
+FLOWS = [
+    "M",
+    "X",
+    "RX",
+    "RM",
+    "MIP",
+    "XIP",
+    "MOP",
+    "XOP",
+    "MIF",
+    "XIF",
+    "DX",
+    "FM",
+]
 
 
-# --------------------------------------------------
+# ==================================================
 # DIRECTORIES
-# --------------------------------------------------
+# ==================================================
 
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 FLOW_DIR.mkdir(parents=True, exist_ok=True)
 MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
 
 
-# --------------------------------------------------
+# ==================================================
 # API KEYS
-# --------------------------------------------------
+# ==================================================
 
 env = dotenv_values(BASE_DIR / ".env")
 
@@ -72,9 +82,9 @@ if not API_KEYS:
     raise RuntimeError("No API keys found in .env")
 
 
-# --------------------------------------------------
+# ==================================================
 # REQUEST HANDLING
-# --------------------------------------------------
+# ==================================================
 
 session = requests.Session()
 last_request_time = 0.0
@@ -98,6 +108,8 @@ def api_request(url, params):
 
     for attempt in range(MAX_RETRIES):
 
+        authentication_failed = False
+
         for key_index, key in enumerate(API_KEYS):
 
             rate_limit()
@@ -118,6 +130,7 @@ def api_request(url, params):
                         f"API key {key_index + 1} rejected: "
                         f"HTTP {response.status_code}"
                     )
+                    authentication_failed = True
                     continue
 
                 if response.status_code == 429:
@@ -161,6 +174,9 @@ def api_request(url, params):
             except (requests.RequestException, ValueError) as exc:
                 last_error = exc
 
+        if authentication_failed and last_error:
+            raise RuntimeError(str(last_error))
+
         delay = min(10 * (2 ** attempt), 120)
 
         print(
@@ -173,9 +189,9 @@ def api_request(url, params):
     raise RuntimeError(f"API request failed: {last_error}")
 
 
-# --------------------------------------------------
+# ==================================================
 # DATA AVAILABILITY
-# --------------------------------------------------
+# ==================================================
 
 def get_available_years():
 
@@ -228,20 +244,18 @@ def get_available_years():
     return available
 
 
-# --------------------------------------------------
-# DOWNLOAD ONE TRADE FLOW
-# --------------------------------------------------
+# ==================================================
+# DOWNLOAD ONE FLOW
+# ==================================================
 
 def download_flow(year, flow_code):
-
-    flow_name = FLOWS[flow_code]
 
     year_dir = FLOW_DIR / str(year)
     year_dir.mkdir(parents=True, exist_ok=True)
 
     flow_file = year_dir / f"{flow_code}.json"
 
-    # Reuse an existing verified flow checkpoint.
+    # Reuse a valid saved checkpoint.
     if flow_file.exists():
 
         saved = json.loads(flow_file.read_text(encoding="utf-8"))
@@ -254,18 +268,16 @@ def download_flow(year, flow_code):
             and saved.get("count") == len(saved["data"])
         ):
 
-            records = saved["data"]
-
             print(
-                f"[CHECKPOINT] {year} {flow_name}: "
-                f"{len(records):,} records"
+                f"[CHECKPOINT] {year} {flow_code}: "
+                f"{len(saved['data']):,} records"
             )
 
-            return records
+            return saved["data"]
 
         raise RuntimeError(
             f"Invalid checkpoint: {flow_file}. "
-            "Inspect or remove it before retrying."
+            "Inspect or remove this file before retrying."
         )
 
     params = {
@@ -276,7 +288,7 @@ def download_flow(year, flow_code):
         "includeDesc": "true",
     }
 
-    print(f"[DOWNLOAD] {year}: {flow_name} ({flow_code})")
+    print(f"[DOWNLOAD] {year}: flow {flow_code}")
 
     result = api_request(DATA_URL, params)
 
@@ -284,27 +296,23 @@ def download_flow(year, flow_code):
     api_count = int(result.get("count", len(records)))
 
     if not isinstance(records, list):
-        raise RuntimeError(f"{year} {flow_name}: invalid API data.")
+        raise RuntimeError(
+            f"{year} {flow_code}: invalid API data."
+        )
 
     if api_count != len(records):
         raise RuntimeError(
-            f"{year} {flow_name}: API count ({api_count}) "
-            f"does not match returned rows ({len(records)})."
-        )
-
-    if not records:
-        raise RuntimeError(
-            f"{year} {flow_name}: API returned no records."
+            f"{year} {flow_code}: API count {api_count} "
+            f"does not match returned rows {len(records)}."
         )
 
     if len(records) >= MAX_RECORDS:
         raise RuntimeError(
-            f"{year} {flow_name}: reached the {MAX_RECORDS:,}-record "
-            "request limit. The response may be incomplete. "
-            "This year has NOT been marked complete."
+            f"{year} {flow_code}: reached the "
+            f"{MAX_RECORDS:,}-record request limit. "
+            "Possible truncation. Not saving this flow."
         )
 
-    # Check that the response contains the requested flow.
     unexpected = {
         record.get("flowCode")
         for record in records
@@ -313,13 +321,13 @@ def download_flow(year, flow_code):
 
     if unexpected:
         raise RuntimeError(
-            f"{year} {flow_name}: unexpected flow codes: {unexpected}"
+            f"{year} {flow_code}: unexpected flow codes: "
+            f"{unexpected}"
         )
 
     checkpoint = {
         "year": year,
         "flowCode": flow_code,
-        "flowName": flow_name,
         "count": len(records),
         "downloaded_at": datetime.now(timezone.utc).isoformat(),
         "data": records,
@@ -335,16 +343,16 @@ def download_flow(year, flow_code):
     os.replace(temporary, flow_file)
 
     print(
-        f"[SUCCESS] {year} {flow_name}: "
+        f"[SUCCESS] {year} {flow_code}: "
         f"{len(records):,} records"
     )
 
     return records
 
 
-# --------------------------------------------------
+# ==================================================
 # DOWNLOAD AND BUILD ONE YEAR
-# --------------------------------------------------
+# ==================================================
 
 def download_year(dataset):
 
@@ -352,7 +360,10 @@ def download_year(dataset):
     classification = dataset["classificationCode"]
     expected = int(dataset["totalRecords"])
 
-    output_file = OUTPUT_DIR / f"sri_lanka_trade_{year}.csv"
+    output_file = (
+        OUTPUT_DIR / f"sri_lanka_trade_all_flows_{year}.csv"
+    )
+
     manifest_file = MANIFEST_DIR / f"{year}.json"
 
     print("\n" + "=" * 60)
@@ -360,7 +371,7 @@ def download_year(dataset):
     print(f"Expected records: {expected:,}")
     print("=" * 60)
 
-    # Skip only a previously verified complete dataset.
+    # Skip an already verified dataset.
     if output_file.exists() and manifest_file.exists():
 
         manifest = json.loads(manifest_file.read_text())
@@ -370,37 +381,61 @@ def download_year(dataset):
             and manifest.get("expected_records") == expected
             and manifest.get("downloaded_records") == expected
             and manifest.get("classification") == classification
+            and manifest.get("flow_codes") == FLOWS
         ):
             print(f"[SKIP] {year} already verified")
             return
 
     all_records = []
+    flow_counts = {}
 
+    # Download every documented flow separately.
     for flow_code in FLOWS:
 
         records = download_flow(year, flow_code)
+
+        flow_counts[flow_code] = len(records)
         all_records.extend(records)
 
     # --------------------------------------------------
-    # VALIDATE COMBINED DATA
+    # VALIDATION
     # --------------------------------------------------
 
     actual = len(all_records)
 
     print(f"\n[VALIDATION] {year}")
-    print(f"Exports: {sum(r.get('flowCode') == 'X' for r in all_records):,}")
-    print(f"Imports: {sum(r.get('flowCode') == 'M' for r in all_records):,}")
+
+    for flow_code in FLOWS:
+        print(
+            f"{flow_code:5} | "
+            f"{flow_counts[flow_code]:>10,}"
+        )
+
+    print("-" * 30)
     print(f"Combined: {actual:,}")
     print(f"Expected: {expected:,}")
 
     if actual != expected:
         raise RuntimeError(
-            f"{year}: combined flow count ({actual:,}) "
-            f"does not match availability ({expected:,}). "
+            f"{year}: combined flow count {actual:,} "
+            f"does not match availability {expected:,}. "
             "CSV has NOT been created."
         )
 
-    # Check for duplicate records.
+    # Every record must belong to the requested reporter/year.
+    for record in all_records:
+
+        if int(record.get("reporterCode", -1)) != REPORTER_CODE:
+            raise RuntimeError(
+                f"{year}: unexpected reporter in returned data."
+            )
+
+        if str(record.get("period")) != str(year):
+            raise RuntimeError(
+                f"{year}: unexpected period in returned data."
+            )
+
+    # Detect exact duplicate records.
     unique_records = {
         json.dumps(record, sort_keys=True, ensure_ascii=False)
         for record in all_records
@@ -453,12 +488,8 @@ def download_year(dataset):
         "classification": classification,
         "expected_records": expected,
         "downloaded_records": actual,
-        "exports": sum(
-            r.get("flowCode") == "X" for r in all_records
-        ),
-        "imports": sum(
-            r.get("flowCode") == "M" for r in all_records
-        ),
+        "flow_codes": FLOWS,
+        "flow_counts": flow_counts,
         "status": "complete",
         "downloaded_at": datetime.now(timezone.utc).isoformat(),
         "csv": output_file.name,
@@ -478,9 +509,9 @@ def download_year(dataset):
     print(f"Records: {actual:,}")
 
 
-# --------------------------------------------------
+# ==================================================
 # MAIN
-# --------------------------------------------------
+# ==================================================
 
 def main():
 
@@ -489,7 +520,7 @@ def main():
     print(f"Years: {START_YEAR}-{END_YEAR}")
     print(f"API keys available: {len(API_KEYS)}")
     print("Workers: 1 (rate limited)")
-    print("Download method: Separate imports and exports")
+    print(f"Trade flow codes: {len(FLOWS)}")
 
     datasets = get_available_years()
 
