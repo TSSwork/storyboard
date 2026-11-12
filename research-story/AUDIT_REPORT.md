@@ -10,9 +10,25 @@ Scope: the ten slides (`storyboard/NN_*/storyboard.png`), their READMEs, `refere
 | Needs clarification | 2 |
 | Unsupported | 0 |
 
-No claim contradicts its source. Every issue below is a missing qualifier or loose wording. **No correction has been applied**: each is proposed, for you to approve.
+No claim contradicts its source. Every issue below is a missing qualifier or loose wording. This is the **initial audit**; the corrections you approved are listed in the next section.
 
-## Issues by severity
+## Corrections applied after approval (M1-M6, L1, L4)
+Rerunning `audit_claims.py` after the corrections gives **55 verified, 0 partially verified, 0 needs clarification, 0 unsupported**. The seven rows that changed now include a text check on the slide or README wording. Analysis outputs and statistical values are unchanged.
+
+| Item | What changed |
+|---|---|
+| M1 | Page 9 README: import share "peaks in low-production years (2014, 2017) and in 2022" |
+| M2 | Page 9 README: Pearson r on detrended paddy production vs FAO rice imports; -0.46 has n = 13 and single detrending; the all-years Spearman -0.59 is stated |
+| M3 | Page 9 slide caption and README: "Descriptive co-movement only; no pass-through estimate" |
+| M4 | Page 9 slide and README: the paddy-to-rice factor 0.67 is shown as an **assumption**. **Correction to this audit:** the project already documents it as an assumption (`research_audit/02_variable_catalogue.md` line 22, `feasibility_tests.py:30`). The initial audit's statement that no source appears anywhere was wrong; the gap was only that the slide and README did not say so. No external source for 0.67 has been found, and none is claimed. |
+| M5 | Page 3 slide footnote and README: the heat map uses a z-score anomaly, the strip the mm/100 forecasting anomaly |
+| M6 | `build_figures.py` now reads the stored v2 `evidence` column; the independent rule is removed. Page 6 renders identically |
+| L1 | Page 4 slide and README: "worsened pilot RMSE for all seven vegetables" |
+| L4 | `references/research_references.md`: accents restored, DOIs added, obsolete caveat replaced by an accurate verification note |
+
+Not applied (low priority, optional): L2 (quote the stored bootstrap p values on page 7), L3 ("point estimates" wording on page 7). L5 needed no change.
+
+## Issues by severity (initial audit)
 
 ### Medium — fix before publication
 | # | Where | Issue | Proposed correction |

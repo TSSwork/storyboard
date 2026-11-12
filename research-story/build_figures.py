@@ -38,15 +38,9 @@ ACTS = {**{i: "ACT I · UNDERSTANDING THE PROBLEM" for i in (1, 2, 3)},
         **{i: "ACT III · THE WIDER PICTURE" for i in (9, 10)}}
 
 
-def evidence(row_gain, p_holm):
-    """Label used in v2/validation (primary comparison)."""
-    if row_gain <= 0:
-        return "worse"
-    if p_holm < 0.05:
-        return "supported"
-    if p_holm < 0.15:
-        return "exploratory"
-    return "no evidence"
+# Stored v2 evidence label -> slide label (read from forecast_model_comparison_v2.csv, never re-derived)
+EVID_LABEL = {"supported (corrected)": "supported", "suggestive (uncorrected only)": "exploratory",
+              "no reliable evidence": "no evidence", "worse or no gain": "worse"}
 
 
 def frame(n, headline, source, sub=None):
@@ -203,12 +197,12 @@ def p03():
             h.text(j, i, f"{lag.values[i, j]:+.2f}", ha="center", va="center", fontsize=9, color="white" if abs(lag.values[i, j]) > 0.35 else INK)
     for sp in h.spines.values(): sp.set_visible(False)
     h.add_patch(Rectangle((0.5, -0.5), 1, 3, fill=False, ec=INK, lw=2))
-    fig.text(0.70, 0.30, "Corr. of price change with rain anomaly k months earlier", fontsize=9, color=MUTED)
+    fig.text(0.70, 0.325, "Corr. of de-seasonalised price change with a\nz-score rain anomaly k months earlier", fontsize=9, color=MUTED, va="top", linespacing=1.4)
     _, an = national_rain(); an = an.loc["2016":]
     b = fig.add_axes([0.05, 0.08, 0.55, 0.15])
     b.bar(an.index, an.values, width=24, color=[ACC if v >= 0 else EXPL for v in an.fillna(0)]); b.axhline(0, color=INK, lw=0.8)
     b.set_ylabel("rain anomaly\n(×100 mm)", fontsize=9); style_axes(b); b.tick_params(labelsize=8)
-    fig.text(0.70, 0.19, "Anomaly = rain − mean of the same calendar\nmonth in earlier years only, ÷ 100 mm.\nCorrelation motivates the test; it is not\nthe finding.", fontsize=10.5, va="top", linespacing=1.45)
+    fig.text(0.70, 0.215, "Strip: forecasting anomaly = rain minus the mean of\nthe same calendar month in earlier years, ÷ 100 mm.\nHeat map: z-score anomaly, a different construction.\nCorrelation motivates the test; it is not the finding.", fontsize=9.5, va="top", linespacing=1.45)
     save(fig, 3)
 
 
@@ -229,7 +223,7 @@ def p04():
         w.text(i * 0.075 + 0.035, 0.625, lab, ha="center", va="center", fontsize=11)
     w.text(0.0, 0.3, "A0 = month t · A3 (primary) = mean of t−2…t, overlaps A0 (corr 0.57)\nA3 (check) = mean of t−3…t−1, no overlap (corr −0.05)\nBoth use only rain already observed at t.", fontsize=10.5, va="top", linespacing=1.5)
     for i, t in enumerate(["Expanding window, refit at every origin", "Naive and seasonal-naive benchmarks scored too",
-                           "FX excluded: it worsened every pilot forecast", "No machine learning, no future rainfall"]):
+                           "FX excluded: it worsened pilot RMSE for all seven vegetables", "No machine learning, no future rainfall"]):
         w.text(0.42, 0.9 - i * 0.2, "•  " + t, fontsize=12, va="top")
     save(fig, 4)
 
@@ -260,7 +254,7 @@ def p05():
 
 def p06():
     c = mc(); gain, p = c.rmse_gain_vs_AR_pct.values, c.cw_p_holm.values
-    ev = [evidence(g, q) for g, q in zip(gain, p)]
+    ev = [EVID_LABEL[e] for e in c.evidence]
     fig = frame(6, "Rainfall helps some vegetables far more than others",
                 "forecast_model_comparison_v2.csv · Dambulla wholesale, national ERA5 rain, 62 forecasts each",
                 "Bar = size of improvement. Colour and label = strength of evidence (Holm-adjusted Clark–West p).")
@@ -337,8 +331,8 @@ def p09():
                 "ERA5-Land; DCS paddy; FAOSTAT; CBSL exchange rates. Context analyses; none feeds the forecasting model.",
                 "Weather, import exposure and exchange rates are shown side by side — never combined into one score.")
     cols = [(0.05, ACC, "WEATHER & PADDY", f"Yala rain vs harvested/sown, r = {r:+.2f}, n = {len(yl)}", "Short series, policy shocks: association only."),
-            (0.37, EXPL, "RICE IMPORTS", "Apparent import share of supply", "Not self-sufficiency; conversion assumed."),
-            (0.69, "#5a6270", "EXCHANGE RATE", "USD/LKR monthly mean (2022 shaded)", "Provisional: needs CPI/NCPI deflator.")]
+            (0.37, EXPL, "RICE IMPORTS", "Apparent import share of supply", "Not self-sufficiency. Paddy→rice factor\n0.67 is an assumption, not data."),
+            (0.69, "#5a6270", "EXCHANGE RATE", "USD/LKR monthly mean (2022 shaded)", "Descriptive co-movement only; no pass-through\nestimate (needs a CPI/NCPI deflator).")]
     for x0, c, h, cap, cav in cols:
         fig.add_artist(Rectangle((x0 - 0.005, 0.07), 0.29, 0.7, fc="white", ec=GRID, transform=fig.transFigure, zorder=0))
         fig.add_artist(Rectangle((x0 - 0.005, 0.74), 0.29, 0.03, fc=c, ec="none", transform=fig.transFigure))

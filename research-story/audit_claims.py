@@ -180,6 +180,33 @@ ref_rows = [
 for c, s, e in ref_rows:
     reg("refs", c, "research-story/references/research_references.md", "web check of publisher / repository record: " + e, s)
 
+# ---- wording / construction checks on the storyboard text itself (after corrections) ----
+def rd(path):
+    return (WORK / "research-story" / path).read_text()
+
+
+bf, r9, r3, r4, r6 = rd("build_figures.py"), rd("storyboard/09_wider_context/README.md"), rd("storyboard/03_prices_and_rain/README.md"), rd("storyboard/04_forecast_experiment/README.md"), rd("storyboard/06_main_result/README.md")
+
+
+def fix(prefix, cond, ev_add, note=None):
+    for r in rows:
+        if r["claim"].startswith(prefix):
+            if cond:
+                r["status"] = "verified"
+            r["evidence"] += " | storyboard text check: " + ev_add + (" (OK)" if cond else " (NOT FOUND)")
+            if note is not None and cond:
+                r["note"] = note
+
+
+fix("Evidence labels", "EVID_LABEL" in bf and "c.evidence" in bf and "def evidence(" not in bf, "build_figures.py reads the stored v2 evidence column", "Fixed: labels read from the stored v2 column.")
+fix("Anomaly = rain minus", "z-score anomaly, a different construction" in bf and "z-score rain anomaly" in r3, "slide 3 footnote and README distinguish z-score from mm/100", "Fixed: footnote added.")
+fix("Production vs imports r = -0.79", "Pearson r = -0.79" in r9 and "detrended paddy production" in r9, "README 09 names Pearson, detrended, FAO imports, n", "Fixed: qualifier added.")
+fix("Production vs imports r = -0.46", "dropping 2017 and 2022" in r9 and "-0.59" in r9, "README 09 gives n = 13, single detrending, and the Spearman -0.59", "Fixed: qualifier added.")
+fix("Apparent import share spikes", "low-production years (2014, 2017) and in 2022" in r9, "README 09 wording", "Fixed: wording corrected.")
+fix("Paddy to rice-equivalent", "0.67" in r9 and "assumption" in r9 and "assumption" in bf, "slide and README call 0.67 an assumption; documented in research_audit/02_variable_catalogue.md line 22 and feasibility_tests.py:30", "0.67 is a documented project assumption, now disclosed on the slide and README as an assumption (not as verified data).")
+fix("Exchange-rate panel is descriptive", "Descriptive co-movement only" in bf and "descriptive co-movement only" in r9, "slide 9 caption and README 09 limitation", "Fixed: explicit descriptive-only wording added.")
+fix("FX excluded because it worsened pilot forecasts", "pilot RMSE for all seven vegetables" in bf and "pilot RMSE for all seven vegetables" in r4, "slide 4 bullet and README 04", "Fixed: wording corrected.")
+
 out = pd.DataFrame(rows); out.insert(0, "id", range(1, len(out) + 1))
 out.to_csv(WORK / "research-story/CLAIM_SOURCE_REGISTER.csv", index=False)
 print(out.status.value_counts().to_string()); print("total", len(out))
