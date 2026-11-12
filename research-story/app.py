@@ -78,7 +78,9 @@ img { border: 1px solid var(--rule); border-radius: 8px; }
 ul.s-list { margin: 0; padding-left: 1.2rem; }
 ul.s-list li { margin-bottom: .55rem; line-height: 1.5; }
 [data-testid="stVerticalBlockBorderWrapper"] { border-color: var(--rule); }
-.nav-group { font-size: .78rem; color: var(--muted); font-weight: 500; margin: 1.4rem 0 .35rem .6rem; }
+.nav-group { font-size: .78rem; line-height: 1.4; color: var(--muted); font-weight: 500; margin: 1rem .2rem .75rem; padding: 1.1rem .4rem 0; border-top: 1px solid var(--rule); }
+.nav-group.first { border-top: none; margin-top: .5rem; padding-top: 0; }
+[data-testid="stSidebar"] [data-testid="stMarkdownContainer"]:has(.nav-group) { margin-bottom: 0; }
 [data-testid="stSidebar"] button[kind="tertiary"] { color: var(--ink); font-weight: 400; justify-content: flex-start; text-align: left; border: none; background: transparent; padding: .4rem .6rem; min-height: 2.25rem; border-radius: 8px; }
 [data-testid="stSidebar"] button[kind="tertiary"] > div { justify-content: flex-start; gap: .6rem; }
 [data-testid="stSidebar"] button[kind="tertiary"]:hover:not(:disabled) { background: #d9ecf4; color: var(--ink); }
@@ -111,12 +113,15 @@ def goto(k):
 
 with st.sidebar:
     st.markdown('<h3 class="brand">Research storyboard</h3>', unsafe_allow_html=True)
-    st.button("Start from page 1", icon=":material/play_arrow:", type="primary", key="start", width="stretch", on_click=goto, args=(0,))
+    if st.session_state.page != 0:
+        st.button("Start from page 1", icon=":material/play_arrow:", type="primary", key="start", width="stretch", on_click=goto, args=(0,))
+    else:  # same height, so the list below does not jump when the button appears
+        st.markdown('<div style="height:2.5rem"></div>', unsafe_allow_html=True)
     last_act = None
     for k in range(N):
         if ACTS[k + 1] != last_act:
             last_act = ACTS[k + 1]
-            st.markdown(f'<div class="nav-group">{last_act}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="nav-group{" first" if k == 0 else ""}">{last_act}</div>', unsafe_allow_html=True)
         on = k == st.session_state.page
         st.button(NAV[k], icon=ICONS[k], key=f"{'navon' if on else 'nav'}_{k}", type="tertiary", width="stretch", on_click=goto, args=(k,))
 i = st.session_state.page
