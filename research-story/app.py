@@ -21,7 +21,7 @@ h1, h2, h3 { letter-spacing: -0.01em; }
 .label { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 1.1rem 0 .15rem; }
 .body { font-size: 1.02rem; line-height: 1.55; margin: 0 0 .4rem; }
 .qual { border-left: 3px solid #b7791f; padding: .15rem 0 .15rem .8rem; }
-.flow { border: 1px solid var(--rule); background: #fff; padding: .9rem 1rem; border-radius: 6px; min-height: 9rem; }
+.flow { border: 1px solid var(--rule); background: #fff; padding: .9rem 1rem; border-radius: 6px; min-height: 12rem; }
 .flow.now { border-color: var(--accent); }
 img { border: 1px solid var(--rule); border-radius: 4px; }
 </style>
@@ -43,7 +43,7 @@ DOCS = [parse(p) for p in PAGES]
 labels = [d["title"] for d in DOCS]
 
 st.sidebar.markdown("### Research storyboard")
-mode = st.sidebar.radio("Mode", ["Author", "Presentation", "Story flow"], index=0)
+mode = st.sidebar.radio("Mode", ["Author", "Presentation", "Story flow"], index=0, key="mode")
 if "i" not in st.session_state:
     st.session_state.i = 0
 pick = st.sidebar.selectbox("Page", range(len(DOCS)), index=st.session_state.i, format_func=lambda k: labels[k])
@@ -69,9 +69,27 @@ def section(name: str, cls: str = "body"):
     st.markdown(f'<div class="{cls}">{body}</div>' if cls == "qual" else body)
 
 
+def leave_presentation():
+    st.session_state.mode = "Author"
+
+
 if mode == "Presentation":
+    # Audience view: no sidebar, no toolbar, no notes. The slide fills the width.
+    st.markdown(
+        "<style>[data-testid='stSidebar'],[data-testid='stToolbar'],header{display:none!important}"
+        ".block-container{padding-top:1rem;max-width:100%}</style>",
+        unsafe_allow_html=True,
+    )
     st.image(str(doc["img"]), width="stretch")
-    nav()
+    a, b, c, d = st.columns([1, 1, 1, 5])
+    if a.button("Previous", disabled=i == 0, key="prev"):
+        st.session_state.i = i - 1
+        st.rerun()
+    if b.button("Next", disabled=i == len(DOCS) - 1, key="next"):
+        st.session_state.i = i + 1
+        st.rerun()
+    c.button("Exit", on_click=leave_presentation, key="exit")
+    d.caption(f"Page {i + 1} of {len(DOCS)}")
 elif mode == "Author":
     nav()
     st.markdown(f"## {doc['title']}")
