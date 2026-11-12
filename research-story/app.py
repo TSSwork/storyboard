@@ -28,9 +28,8 @@ html, body, .stApp, [data-testid="stMarkdownContainer"] { font-family: "Noto San
 [data-testid="stMainBlockContainer"] > [data-testid="stVerticalBlock"] { min-height: calc(100vh - 6rem); }
 [data-testid="stLayoutWrapper"]:has(> .st-key-pbar) { margin-top: auto; }
 [data-testid="stSidebar"] { background: #e9f4f9; border-right: 1px solid var(--rule); }
-[data-testid="stSidebar"] [role="radiogroup"] { gap: .5rem; }
-[data-testid="stSidebar"] [role="radiogroup"] label { align-items: flex-start; line-height: 1.35; }
 h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.brand { margin-bottom: .75rem; }
 .brand::before { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--coral); margin-right: 8px; vertical-align: middle; }
 .act { color: var(--muted); font-size: .9rem; }
 .stButton > button { border: 1px solid var(--ink); color: var(--ink); background: transparent; border-radius: 8px; min-height: 2.5rem; transition: background-color .15s ease; }
@@ -79,6 +78,12 @@ img { border: 1px solid var(--rule); border-radius: 8px; }
 ul.s-list { margin: 0; padding-left: 1.2rem; }
 ul.s-list li { margin-bottom: .55rem; line-height: 1.5; }
 [data-testid="stVerticalBlockBorderWrapper"] { border-color: var(--rule); }
+.nav-group { font-size: .78rem; color: var(--muted); font-weight: 500; margin: 1.4rem 0 .35rem .6rem; }
+[data-testid="stSidebar"] button[kind="tertiary"] { color: var(--ink); font-weight: 400; justify-content: flex-start; text-align: left; border: none; background: transparent; padding: .4rem .6rem; min-height: 2.25rem; border-radius: 8px; }
+[data-testid="stSidebar"] button[kind="tertiary"] > div { justify-content: flex-start; gap: .6rem; }
+[data-testid="stSidebar"] button[kind="tertiary"]:hover:not(:disabled) { background: #d9ecf4; color: var(--ink); }
+[class*="st-key-navon_"] button { background: #d6ebf4 !important; font-weight: 600 !important; }
+[data-testid="stSidebar"] [data-testid="stVerticalBlock"] { gap: .25rem; }
 </style>
 """,
     unsafe_allow_html=True,
@@ -94,9 +99,26 @@ def go(delta):
     st.session_state.page = min(max(st.session_state.page + delta, 0), N - 1)
 
 
-# Sidebar: every page, click to jump
-st.sidebar.markdown('<h3 class="brand">Research storyboard</h3>', unsafe_allow_html=True)
-st.sidebar.radio("Pages", range(N), key="page", format_func=lambda k: f"{k + 1:02d}  {TITLES[k]}", label_visibility="collapsed")
+# Sidebar: brand, start button, pages grouped by act. Click a row to jump.
+NAV = ["Opening question", "Scope and data", "Prices and rain", "The experiment", "Evaluation", "Main result", "Robustness", "Accuracy", "Wider context", "Conclusions"]
+ICONS = [":material/help:", ":material/map:", ":material/show_chart:", ":material/account_tree:", ":material/fact_check:",
+         ":material/bar_chart:", ":material/tune:", ":material/ssid_chart:", ":material/public:", ":material/flag:"]
+
+
+def goto(k):
+    st.session_state.page = k
+
+
+with st.sidebar:
+    st.markdown('<h3 class="brand">Research storyboard</h3>', unsafe_allow_html=True)
+    st.button("Start from page 1", icon=":material/play_arrow:", type="primary", key="start", width="stretch", on_click=goto, args=(0,))
+    last_act = None
+    for k in range(N):
+        if ACTS[k + 1] != last_act:
+            last_act = ACTS[k + 1]
+            st.markdown(f'<div class="nav-group">{last_act}</div>', unsafe_allow_html=True)
+        on = k == st.session_state.page
+        st.button(NAV[k], icon=ICONS[k], key=f"{'navon' if on else 'nav'}_{k}", type="tertiary", width="stretch", on_click=goto, args=(k,))
 i = st.session_state.page
 n = i + 1
 
