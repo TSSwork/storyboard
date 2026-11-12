@@ -1,0 +1,8 @@
+commodity,price_months,missing_price_months_in_span,rows_usable,first_origin,last_origin,n_test,primary_only_sample_identical,n_test_primary_only
+Cabbage,123,1,111,2021-08-01,2026-09-01,62,True,62
+Brinjal,123,1,111,2021-08-01,2026-09-01,62,True,62
+Carrot,123,1,111,2021-08-01,2026-09-01,62,True,62
+Tomato,123,1,111,2021-08-01,2026-09-01,62,True,62
+Snake gourd,123,1,111,2021-08-01,2026-09-01,62,True,62
+Pumpkin,123,1,111,2021-08-01,2026-09-01,62,True,62
+Beans,123,1,111,2021-08-01,2026-09-01,62,True,62
