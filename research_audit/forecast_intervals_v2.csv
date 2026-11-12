@@ -1,0 +1,169 @@
+market,price_agg,commodity,model,n,nominal,coverage,mean_width_log,mean_width_lkr
+dambulla,mean,Beans,AR,62,0.8,0.6935,0.6364,232.3
+dambulla,mean,Beans,AR+rain:dam,62,0.8,0.7419,0.6962,251.3
+dambulla,mean,Beans,AR+rain:nat,62,0.8,0.7742,0.7134,253.4
+dambulla,mean,Beans,AR+rain:nat_fixedclim,62,0.8,0.7097,0.7039,254.2
+dambulla,mean,Beans,AR+rain:nat_z,62,0.8,0.6935,0.6929,247.5
+dambulla,mean,Beans,AR+rain:nuw,62,0.8,0.7742,0.6897,250.4
+dambulla,mean,Brinjal,AR,62,0.8,0.7097,0.7829,186.5
+dambulla,mean,Brinjal,AR+rain:dam,62,0.8,0.8226,0.7347,179.5
+dambulla,mean,Brinjal,AR+rain:nat,62,0.8,0.8387,0.7537,179.1
+dambulla,mean,Brinjal,AR+rain:nat_fixedclim,62,0.8,0.8226,0.7517,179.7
+dambulla,mean,Brinjal,AR+rain:nat_z,62,0.8,0.7742,0.6687,154.1
+dambulla,mean,Brinjal,AR+rain:nuw,62,0.8,0.8387,0.7529,183.3
+dambulla,mean,Cabbage,AR,62,0.8,0.6935,0.8344,140.2
+dambulla,mean,Cabbage,AR+rain:dam,62,0.8,0.8065,0.7266,121.9
+dambulla,mean,Cabbage,AR+rain:nat,62,0.8,0.7742,0.7128,125.1
+dambulla,mean,Cabbage,AR+rain:nat_fixedclim,62,0.8,0.7419,0.7804,139.1
+dambulla,mean,Cabbage,AR+rain:nat_z,62,0.8,0.7097,0.6941,117
+dambulla,mean,Cabbage,AR+rain:nuw,62,0.8,0.7903,0.6902,120.6
+dambulla,mean,Carrot,AR,62,0.8,0.7258,0.7903,206.4
+dambulla,mean,Carrot,AR+rain:dam,62,0.8,0.7258,0.8098,215.8
+dambulla,mean,Carrot,AR+rain:nat,62,0.8,0.7419,0.7852,206.6
+dambulla,mean,Carrot,AR+rain:nat_fixedclim,62,0.8,0.7258,0.7984,211
+dambulla,mean,Carrot,AR+rain:nat_z,62,0.8,0.7097,0.7827,207.2
+dambulla,mean,Carrot,AR+rain:nuw,62,0.8,0.7581,0.8008,211.3
+dambulla,mean,Pumpkin,AR,62,0.8,0.8387,1.048,107.3
+dambulla,mean,Pumpkin,AR+rain:dam,62,0.8,0.8548,1.091,114.6
+dambulla,mean,Pumpkin,AR+rain:nat,62,0.8,0.8387,1.045,106.4
+dambulla,mean,Pumpkin,AR+rain:nat_fixedclim,62,0.8,0.8065,1.023,103.2
+dambulla,mean,Pumpkin,AR+rain:nat_z,62,0.8,0.8548,1.056,109.2
+dambulla,mean,Pumpkin,AR+rain:nuw,62,0.8,0.8387,1.03,106.1
+dambulla,mean,Snake gourd,AR,62,0.8,0.7742,0.8374,155.9
+dambulla,mean,Snake gourd,AR+rain:dam,62,0.8,0.7097,0.7875,146.5
+dambulla,mean,Snake gourd,AR+rain:nat,62,0.8,0.7258,0.78,146.2
+dambulla,mean,Snake gourd,AR+rain:nat_fixedclim,62,0.8,0.7097,0.7874,147.3
+dambulla,mean,Snake gourd,AR+rain:nat_z,62,0.8,0.7581,0.8008,150.4
+dambulla,mean,Snake gourd,AR+rain:nuw,62,0.8,0.7097,0.7718,144.5
+dambulla,mean,Tomato,AR,62,0.8,0.6935,1.137,256.4
+dambulla,mean,Tomato,AR+rain:dam,62,0.8,0.7742,1.128,253.3
+dambulla,mean,Tomato,AR+rain:nat,62,0.8,0.7419,1.161,261.6
+dambulla,mean,Tomato,AR+rain:nat_fixedclim,62,0.8,0.7742,1.192,269.6
+dambulla,mean,Tomato,AR+rain:nat_z,62,0.8,0.7903,1.431,307
+dambulla,mean,Tomato,AR+rain:nuw,62,0.8,0.7581,1.146,256.5
+dambulla,median,Beans,AR,62,0.8,0.7258,0.6454,234.4
+dambulla,median,Beans,AR+rain:dam,62,0.8,0.7097,0.6776,245.6
+dambulla,median,Beans,AR+rain:nat,62,0.8,0.7581,0.7476,265.5
+dambulla,median,Beans,AR+rain:nat_fixedclim,62,0.8,0.7097,0.755,270
+dambulla,median,Beans,AR+rain:nat_z,62,0.8,0.7581,0.7088,256.9
+dambulla,median,Beans,AR+rain:nuw,62,0.8,0.7097,0.7149,256.4
+dambulla,median,Brinjal,AR,62,0.8,0.6774,0.8646,210.6
+dambulla,median,Brinjal,AR+rain:dam,62,0.8,0.7419,0.8595,209
+dambulla,median,Brinjal,AR+rain:nat,62,0.8,0.7581,0.8839,211.2
+dambulla,median,Brinjal,AR+rain:nat_fixedclim,62,0.8,0.7258,0.9045,219.2
+dambulla,median,Brinjal,AR+rain:nat_z,62,0.8,0.7258,0.7705,179
+dambulla,median,Brinjal,AR+rain:nuw,62,0.8,0.7419,0.871,212.5
+dambulla,median,Cabbage,AR,62,0.8,0.7419,0.9743,160.1
+dambulla,median,Cabbage,AR+rain:dam,62,0.8,0.8226,0.7868,128.9
+dambulla,median,Cabbage,AR+rain:nat,62,0.8,0.8226,0.756,128.1
+dambulla,median,Cabbage,AR+rain:nat_fixedclim,62,0.8,0.8065,0.8625,149.6
+dambulla,median,Cabbage,AR+rain:nat_z,62,0.8,0.7581,0.7212,115.8
+dambulla,median,Cabbage,AR+rain:nuw,62,0.8,0.8548,0.7144,121.6
+dambulla,median,Carrot,AR,62,0.8,0.7419,0.8907,228
+dambulla,median,Carrot,AR+rain:dam,62,0.8,0.7581,0.9085,237
+dambulla,median,Carrot,AR+rain:nat,62,0.8,0.7258,0.8822,238.3
+dambulla,median,Carrot,AR+rain:nat_fixedclim,62,0.8,0.7581,0.9159,246.1
+dambulla,median,Carrot,AR+rain:nat_z,62,0.8,0.7419,0.8743,236
+dambulla,median,Carrot,AR+rain:nuw,62,0.8,0.7581,0.9009,246.2
+dambulla,median,Pumpkin,AR,62,0.8,0.871,1.157,113.3
+dambulla,median,Pumpkin,AR+rain:dam,62,0.8,0.871,1.159,115
+dambulla,median,Pumpkin,AR+rain:nat,62,0.8,0.871,1.152,114.4
+dambulla,median,Pumpkin,AR+rain:nat_fixedclim,62,0.8,0.8548,1.125,112.3
+dambulla,median,Pumpkin,AR+rain:nat_z,62,0.8,0.8871,1.208,117.6
+dambulla,median,Pumpkin,AR+rain:nuw,62,0.8,0.871,1.169,120.1
+dambulla,median,Snake gourd,AR,62,0.8,0.7258,0.8481,156.7
+dambulla,median,Snake gourd,AR+rain:dam,62,0.8,0.6935,0.7859,144
+dambulla,median,Snake gourd,AR+rain:nat,62,0.8,0.7258,0.7961,147.6
+dambulla,median,Snake gourd,AR+rain:nat_fixedclim,62,0.8,0.7258,0.8191,153.3
+dambulla,median,Snake gourd,AR+rain:nat_z,62,0.8,0.7419,0.8026,147.5
+dambulla,median,Snake gourd,AR+rain:nuw,62,0.8,0.6774,0.7753,143.2
+dambulla,median,Tomato,AR,62,0.8,0.7097,1.252,282.5
+dambulla,median,Tomato,AR+rain:dam,62,0.8,0.7742,1.335,303
+dambulla,median,Tomato,AR+rain:nat,62,0.8,0.7903,1.379,313.4
+dambulla,median,Tomato,AR+rain:nat_fixedclim,62,0.8,0.8065,1.463,340.8
+dambulla,median,Tomato,AR+rain:nat_z,62,0.8,0.7258,1.412,295.7
+dambulla,median,Tomato,AR+rain:nuw,62,0.8,0.7903,1.348,294.4
+pettah,mean,Beans,AR,61,0.8,0.7213,0.7368,325.8
+pettah,mean,Beans,AR+rain:dam,61,0.8,0.7705,0.8272,371.6
+pettah,mean,Beans,AR+rain:nat,61,0.8,0.7541,0.8603,380.3
+pettah,mean,Beans,AR+rain:nat_fixedclim,61,0.8,0.7377,0.8557,384.4
+pettah,mean,Beans,AR+rain:nat_z,61,0.8,0.7377,0.8151,360
+pettah,mean,Beans,AR+rain:nuw,61,0.8,0.7213,0.847,375.4
+pettah,mean,Brinjal,AR,61,0.8,0.7869,0.874,249.5
+pettah,mean,Brinjal,AR+rain:dam,61,0.8,0.8033,0.8104,222.9
+pettah,mean,Brinjal,AR+rain:nat,61,0.8,0.8197,0.7985,221.4
+pettah,mean,Brinjal,AR+rain:nat_fixedclim,61,0.8,0.7705,0.7985,227.4
+pettah,mean,Brinjal,AR+rain:nat_z,61,0.8,0.7705,0.7291,196.4
+pettah,mean,Brinjal,AR+rain:nuw,61,0.8,0.7705,0.789,219.7
+pettah,mean,Cabbage,AR,61,0.8,0.6393,0.8598,167.8
+pettah,mean,Cabbage,AR+rain:dam,61,0.8,0.7869,0.7772,147.9
+pettah,mean,Cabbage,AR+rain:nat,61,0.8,0.6885,0.7388,134.8
+pettah,mean,Cabbage,AR+rain:nat_fixedclim,61,0.8,0.7705,0.76,145.6
+pettah,mean,Cabbage,AR+rain:nat_z,61,0.8,0.6393,0.6401,117.3
+pettah,mean,Cabbage,AR+rain:nuw,61,0.8,0.7541,0.7071,133.9
+pettah,mean,Carrot,AR,61,0.8,0.7213,0.8088,225.4
+pettah,mean,Carrot,AR+rain:dam,61,0.8,0.7377,0.7942,220.8
+pettah,mean,Carrot,AR+rain:nat,61,0.8,0.7705,0.8672,242
+pettah,mean,Carrot,AR+rain:nat_fixedclim,61,0.8,0.7541,0.8436,237.6
+pettah,mean,Carrot,AR+rain:nat_z,61,0.8,0.7049,0.8115,230.1
+pettah,mean,Carrot,AR+rain:nuw,61,0.8,0.7541,0.8526,248.7
+pettah,mean,Pumpkin,AR,61,0.8,0.8197,0.8935,109.4
+pettah,mean,Pumpkin,AR+rain:dam,61,0.8,0.8361,0.9414,114.7
+pettah,mean,Pumpkin,AR+rain:nat,61,0.8,0.8197,0.9312,113.2
+pettah,mean,Pumpkin,AR+rain:nat_fixedclim,61,0.8,0.7869,0.9237,113.5
+pettah,mean,Pumpkin,AR+rain:nat_z,61,0.8,0.8689,0.8955,104.8
+pettah,mean,Pumpkin,AR+rain:nuw,61,0.8,0.8361,0.9016,111.6
+pettah,mean,Snake gourd,AR,61,0.8,0.6885,0.6085,143.2
+pettah,mean,Snake gourd,AR+rain:dam,61,0.8,0.7213,0.6445,151.8
+pettah,mean,Snake gourd,AR+rain:nat,61,0.8,0.7213,0.6699,154.3
+pettah,mean,Snake gourd,AR+rain:nat_fixedclim,61,0.8,0.7049,0.6411,148.5
+pettah,mean,Snake gourd,AR+rain:nat_z,61,0.8,0.7049,0.6533,153
+pettah,mean,Snake gourd,AR+rain:nuw,61,0.8,0.6885,0.6267,146.2
+pettah,mean,Tomato,AR,61,0.8,0.7213,1.255,357
+pettah,mean,Tomato,AR+rain:dam,61,0.8,0.8525,1.312,339.6
+pettah,mean,Tomato,AR+rain:nat,61,0.8,0.8033,1.307,332.9
+pettah,mean,Tomato,AR+rain:nat_fixedclim,61,0.8,0.8361,1.341,356.4
+pettah,mean,Tomato,AR+rain:nat_z,61,0.8,0.8525,1.506,393.5
+pettah,mean,Tomato,AR+rain:nuw,61,0.8,0.8361,1.293,340.1
+pettah,median,Beans,AR,61,0.8,0.6721,0.7944,345
+pettah,median,Beans,AR+rain:dam,61,0.8,0.7213,0.8805,393.5
+pettah,median,Beans,AR+rain:nat,61,0.8,0.7705,0.9208,403.8
+pettah,median,Beans,AR+rain:nat_fixedclim,61,0.8,0.7869,0.9071,398.8
+pettah,median,Beans,AR+rain:nat_z,61,0.8,0.7541,0.8591,376.2
+pettah,median,Beans,AR+rain:nuw,61,0.8,0.7377,0.9101,400.2
+pettah,median,Brinjal,AR,61,0.8,0.7869,0.9276,262.7
+pettah,median,Brinjal,AR+rain:dam,61,0.8,0.7541,0.8079,227.4
+pettah,median,Brinjal,AR+rain:nat,61,0.8,0.7541,0.8724,245.9
+pettah,median,Brinjal,AR+rain:nat_fixedclim,61,0.8,0.7541,0.8512,243.7
+pettah,median,Brinjal,AR+rain:nat_z,61,0.8,0.7049,0.7745,208.5
+pettah,median,Brinjal,AR+rain:nuw,61,0.8,0.7541,0.848,246
+pettah,median,Cabbage,AR,61,0.8,0.6721,0.9511,179.6
+pettah,median,Cabbage,AR+rain:dam,61,0.8,0.7705,0.8656,167.1
+pettah,median,Cabbage,AR+rain:nat,61,0.8,0.8033,0.8269,149.6
+pettah,median,Cabbage,AR+rain:nat_fixedclim,61,0.8,0.7541,0.8021,152.4
+pettah,median,Cabbage,AR+rain:nat_z,61,0.8,0.7213,0.6919,122.5
+pettah,median,Cabbage,AR+rain:nuw,61,0.8,0.8033,0.834,159.6
+pettah,median,Carrot,AR,61,0.8,0.7541,0.9242,276.6
+pettah,median,Carrot,AR+rain:dam,61,0.8,0.7705,0.9014,256.6
+pettah,median,Carrot,AR+rain:nat,61,0.8,0.7869,1.008,275.6
+pettah,median,Carrot,AR+rain:nat_fixedclim,61,0.8,0.7869,0.9494,273.8
+pettah,median,Carrot,AR+rain:nat_z,61,0.8,0.7705,0.9257,264.8
+pettah,median,Carrot,AR+rain:nuw,61,0.8,0.7869,0.9778,275.3
+pettah,median,Pumpkin,AR,61,0.8,0.7541,0.9115,111
+pettah,median,Pumpkin,AR+rain:dam,61,0.8,0.8197,0.957,115.7
+pettah,median,Pumpkin,AR+rain:nat,61,0.8,0.7869,0.9299,110.1
+pettah,median,Pumpkin,AR+rain:nat_fixedclim,61,0.8,0.8033,0.9253,110.3
+pettah,median,Pumpkin,AR+rain:nat_z,61,0.8,0.7705,0.9205,108.9
+pettah,median,Pumpkin,AR+rain:nuw,61,0.8,0.7869,0.9052,108.9
+pettah,median,Snake gourd,AR,61,0.8,0.6885,0.6756,158.6
+pettah,median,Snake gourd,AR+rain:dam,61,0.8,0.6885,0.6875,160.4
+pettah,median,Snake gourd,AR+rain:nat,61,0.8,0.7213,0.7158,164.7
+pettah,median,Snake gourd,AR+rain:nat_fixedclim,61,0.8,0.6885,0.6781,156
+pettah,median,Snake gourd,AR+rain:nat_z,61,0.8,0.7049,0.6963,160.7
+pettah,median,Snake gourd,AR+rain:nuw,61,0.8,0.7049,0.6538,150.8
+pettah,median,Tomato,AR,61,0.8,0.7705,1.365,378.6
+pettah,median,Tomato,AR+rain:dam,61,0.8,0.8033,1.386,386.1
+pettah,median,Tomato,AR+rain:nat,61,0.8,0.8197,1.425,394.1
+pettah,median,Tomato,AR+rain:nat_fixedclim,61,0.8,0.8033,1.453,416.6
+pettah,median,Tomato,AR+rain:nat_z,61,0.8,0.8361,1.635,440.5
+pettah,median,Tomato,AR+rain:nuw,61,0.8,0.8033,1.347,372.4

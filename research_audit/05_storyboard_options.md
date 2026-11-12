@@ -1,18 +1,30 @@
 # 05 — Alternative Research Storyboards (ranked)
 
-Ranking = feasibility × analytical strength, judged on the evidence in `03_research_feasibility.md`, not on resemblance to the original idea.
+> **Update (S1+ decision).** After the pilot and the v2 backtest (`forecast_backtest_report_v2.md`), **S1+ is the primary chapter**. S2 (paddy) and S3/S4 (rice imports, FX exposure) are supporting chapters that give food-system context; they are not inputs to the forecasting model. S5 stays a descriptive synthesis table.
 
-| Rank | Storyboard | Feasibility | Analytical strength | Main reason |
+Ranking = feasibility x analytical strength, judged on the evidence in `03_research_feasibility.md`, not on resemblance to the original idea.
+
+| Role | Storyboard | Feasibility | Analytical strength | Main reason |
 |---|---|---|---|---|
-| 1 | **S1 Weather and vegetable prices** | High | High | ≈120 monthly observations, 7+ commodities, clean daily CBSL series, visible lagged signal |
-| 2 | **S2 Rice food system: weather → paddy → imports → price** | Medium-high | Medium-high | Every link has data; but n = 14–16 and national only (district-level fixes this) |
-| 3 | **S3 Import dependency structure (Comtrade + FAOSTAT)** | High | Medium | 15–64 years, partner detail; descriptive, no weather needed; dependency must be called "apparent" |
-| 4 | **S4 Exchange-rate exposure of food prices** | Medium | Medium | n = 131 months, but needs CPI to separate FX from inflation |
-| 5 | **S5 Integrated vulnerability index (original idea D)** | Medium-low as a stand-alone | Low-medium | Composite of S1–S4; weights arbitrary; best used as a synthesis, not a primary analysis |
+| **Primary** | **S1+ Weather-informed vegetable price forecasting** | High | High | ~120 monthly obs, 7 commodities, clean CBSL series, out-of-sample test possible; rain gains survive correction for cabbage, brinjal (and carrot, borderline) |
+| Supporting | S2 Rice food system: weather -> paddy -> imports -> price | Medium-high | Medium-high | Every link has data; n = 14-16, national only |
+| Supporting | S3 Import dependency structure (Comtrade + FAOSTAT) | High | Medium | Descriptive; dependency is "apparent" |
+| Supporting | S4 Exchange-rate exposure of food prices | Medium | Medium | Needs CPI to separate FX from inflation; FX did **not** improve vegetable forecasts, so it stays out of S1+ |
+| Synthesis | S5 Food-system vulnerability profile | Medium-low alone | Low-medium | Descriptive table only, no composite weights |
 
 ---
 
-## S1 — Rainfall Anomalies and Vegetable Price Dynamics in Sri Lanka (2016–2026)
+## S1+ - Weather-informed Vegetable Price Forecasting (PRIMARY)
+* **Central RQ:** Does adding rainfall information improve one-month-ahead forecasts of selected Sri Lankan vegetable prices, and does the improvement differ by commodity?
+* **Role of the model:** a research instrument (AR vs AR + rain), not a product. The storyboard must still make sense with the model removed (S1 below is that descriptive story).
+* **Data:** CBSL Dambulla wholesale daily prices -> monthly mean (>= 10 days) -> ln; corrected ERA5-Land rain (national primary; Dambulla and Nuwara Eliya boxes secondary); Pettah as a market robustness check.
+* **Design (frozen):** origin month t uses prices and rain through t to forecast month t+1; expanding window; past-only climatology (anomaly in mm primary, z-score sensitivity); AIC-chosen lag set shared by both models; baselines naive, seasonal naive, AR; no FX; 1-month horizon primary (2-3 months would need rainfall forecasts).
+* **Inference:** Clark-West (nested), HAC, moving-block bootstrap (3/6/12), Holm across 7 commodities for the primary spec; BH exploratory.
+* **v2 result (exploratory, 62 forecasts):** RMSE reduction vs price-only AR: cabbage 19.7 %, brinjal 12.4 %, carrot 8.2 %, tomato 4.8 %, snake gourd 1.8 %, pumpkin 1.8 %, beans -1.5 %. Holm-corrected CW p: cabbage 0.002, brinjal 0.001, carrot 0.029, others >= 0.11. 80 % intervals under-cover (0.69-0.84).
+* **Storyboard order:** problem -> data and quality -> price behaviour -> rain anomalies and regions -> exploratory rain-price association (S1 below) -> forecasting experiment -> which commodities benefit (with uncertainty) -> interpretation -> food-system context (S2-S4) -> limitations.
+* **Not claimed:** causality; representativeness beyond Dambulla/Pettah; calibrated intervals; skill at 2-3 months.
+
+## S1 — Rainfall Anomalies and Vegetable Price Dynamics in Sri Lanka (2016–2026) *(descriptive base of S1+)*
 * **Main RQ:** Do monthly rainfall anomalies precede price movements of vegetables in Sri Lankan wholesale/retail markets, and which vegetables are most sensitive?
 * **Supporting RQs:** (a) What are the lags (0–3 months, cumulative 3-month anomalies)? (b) Is the response stronger for up-country than low-country vegetables? (c) Do Pettah/Dambulla/Narahenpita and wholesale/retail respond differently? (d) Is the relationship stable before/after 2022?
 * **Datasets / variables:** `derived/era5_monthly.csv` (rain, t2m); `raw/cbsl-daily-prices.csv` (Beans, Carrot, Cabbage, Tomato, Brinjal, Pumpkin, Snake gourd… ×4 market-types); HARTI `retail_vegetables`, `summary_retail`; (optional) sub-regional ERA5 means.

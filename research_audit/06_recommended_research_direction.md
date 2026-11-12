@@ -1,53 +1,57 @@
-# 06 — Recommended Research Direction
+# 06 — Recommended Research Direction (revised: S1+ primary)
 
-## Verdict on the original idea
-The original chain (weather → production → imports → prices, with FX) is **not achievable as one integrated model across all commodities**, but it **is achievable as a narrowed, two-track study** built on rice and a handful of vegetables. Of the four things you wanted to know:
+## Decision
+**Primary chapter - S1+ Weather-informed vegetable price forecasting.**
+**Supporting chapters** - paddy production and weather (S2), rice import dependency (S3) and FX exposure (S4), providing food-system context. They do not feed the forecasting model.
 
-| Question | Verdict |
-|---|---|
-| 1. Defensible weather–paddy production analysis? | **Yes, partly.** Season-level, national, n = 16 per season; one credible signal (Yala rain vs harvested/sown, r = +0.68). Strong enough for a descriptive/associational chapter; much stronger once ERA5 is mapped to districts (needs district polygons). |
-| 2. Defensible agricultural import-dependency analysis? | **Yes.** FAOSTAT (1961–2024) + Comtrade (15 yrs, partners). Must be framed as *apparent* dependency. |
-| 3. Defensible food-price and exchange-rate analysis? | **Partly.** Strong data (131 months) but needs a CPI deflator to separate FX from general inflation. |
-| 4. Meaningful connection between the three? | **Yes for rice (annual, n ≈ 15) and for weather → vegetable prices (monthly, n ≈ 120).** A single model linking all links for all commodities is not supported. |
+**Title:** *Weather Variability and Short-term Vegetable Price Forecasting in Sri Lanka: An Empirical Study Using Rainfall and Market Price Data*
 
-## Recommended project
-**Title:** *Weather, Staple Supply and Food-Price Exposure in Sri Lanka: Evidence from Rice and Selected Vegetables, 2010–2026*
+**Central question:** Does incorporating rainfall information improve short-term forecasts of selected vegetable prices in Sri Lanka, and does the improvement differ between commodities?
 
-**Central question (narrowed):** How do seasonal weather conditions relate to rice production and vegetable prices, and how exposed are rice and other staples to import dependency and exchange-rate movements?
+The broader motivation (weather, food prices and import dependency) is unchanged. The forecasting experiment supplies the clearest empirical contribution because it is the only link with enough data (~120 monthly points) for an out-of-sample test.
 
-**Structure — three modules sharing one weather dataset:**
-1. **Module R (Rice chain, annual/seasonal)** — S2: rain/temperature → Maha/Yala sown/harvested/yield/production → rice imports (FAO/Comtrade/CBSL) → retail rice price and FX. Includes the 2014, 2017, 2022 shock years as case studies.
-2. **Module V (Vegetables, monthly)** — S1: rain anomalies → CBSL/HARTI vegetable prices, lag structure, commodity ranking.
-3. **Module D (Dependency & FX)** — S3 + S4: apparent import share and partner concentration for ≈15 staples; FX pass-through for imported vs domestic items (with CPI).
-A short synthesis table (S5) combines the three indicators per commodity descriptively.
+## Why this changed from the earlier "three-module" plan
+* The original integrated chain is only supportable for rice and only at n = 14-16.
+* The pilot and `forecast_backtest_v2.py` show a clean, commodity-specific result on 62 out-of-sample months.
+* FX did not improve forecasts, so it belongs to the supporting economic analysis, not the forecasting model.
 
-## Why this rather than the original
-* It uses each dataset where it is strongest (ERA5 + DCS for rice; ERA5 + CBSL for vegetables; Comtrade/FAOSTAT for dependency).
-* It avoids the three weak spots: non-paddy production (no seasonal data), self-sufficiency (no food balance), and a single all-commodity regression.
-* It keeps the integrated story where the data really do connect (rice).
+## What the evidence currently says (v2, exploratory)
+| Vegetable | RMSE gain vs price-only AR | Holm-adj. Clark-West p | Label |
+|---|---|---|---|
+| Cabbage | +19.7 % | 0.002 | supported (corrected) |
+| Brinjal | +12.4 % | 0.001 | supported (corrected), gain concentrated in 2nd half |
+| Carrot | +8.2 % | 0.029 | supported but borderline |
+| Tomato | +4.8 % | 0.109 | exploratory only |
+| Snake gourd | +1.8 % | 0.189 | no reliable evidence |
+| Pumpkin | +1.8 % | 0.235 | no reliable evidence |
+| Beans | -1.5 % | 0.557 | rain does not help |
 
-## Do first (order of work)
-1. **Adopt corrected ERA5**: use `derived/era5_*.csv`; never `raw/EAR5/processed` `tp`. Re-run the extraction (`extract.py`) with `tp` = 00 UTC(D+1) logic or keep derived files.
-2. **Collect two small items (only reasons to reopen acquisition):** CPI/CCPI monthly (CBSL/DCS) and district boundaries (GADM). Also derive sub-regional ERA5 means (Nuwara Eliya/Dambulla/Anuradhapura/Polonnaruwa boxes) from the existing `.nc`.
-3. Build the analysis dataset: monthly panel (weather, FX, CBSL/HARTI prices) and annual panel (production, imports, rain, rice price).
-4. Stabilise the evidence: pre-register the lag set and number of tests; apply FDR across commodities; run leave-one-year-out for 2017/2022.
-5. Fix HARTI extraction only if location-level imported-vs-local prices are needed (`retail_subsidiary` labels).
+Details, robustness (Dambulla/Nuwara Eliya boxes, monthly median, climatology variants, 2022 exclusion, Pettah) and caveats are in `forecast_backtest_report_v2.md`. The test window was already seen in the pilot, so this is not an independent confirmation.
 
-## What can be concluded vs not
+## What can and cannot be concluded
 | Supportable | Not supportable |
 |---|---|
-| Wetter-than-normal months are followed by higher cabbage/carrot/brinjal prices (association, lag ≈ 1 month, n ≈ 120) | That rain *causes* those price rises (national rainfall, unobserved supply) |
-| Shortfall years in paddy coincide with large rice imports (r = −0.79; direction robust to dropping 2017/2022, r = −0.46) | That imports are *caused* by the shortfall (policy, prices, 2022 FX crisis) |
-| Yala harvested/sown share is higher in wetter Yala seasons | Weather determines national paddy yield (yield r −0.16/−0.34, n.s.) |
-| Rice and imported-item prices co-move with LKR depreciation at 0–2 month lag | Pass-through magnitudes without a deflator |
-| Import structure and concentration by HS commodity and partner (2010–2025) | Self-sufficiency ratios or "food security" levels |
-| Three major datasets duplicate each other (FAO rice = DCS; CBSL = Comtrade rice) so evidence is thinner than the file count suggests | Treating each file as an independent confirmation |
+| Past rainfall adds out-of-sample 1-month-ahead information for Dambulla cabbage and brinjal (and modestly carrot) beyond past prices | That rain causes price changes |
+| Benefit differs by vegetable; some show none | That results hold for other markets, vegetables or national consumers |
+| Pettah shows the same pattern (consistency, not replication) | Skill at 2-3 month horizons (needs rainfall forecasts) |
+| Forecast errors remain large (MAPE about 24-40 %) | Calibrated 80 % intervals (empirical coverage 0.69-0.84) |
+| FX did not improve these forecasts | That FX is irrelevant to food prices |
+
+## Supporting chapters (unchanged conclusions)
+* **Paddy (S2):** season-level, n = 16; Yala rain vs harvested/sown ratio r = +0.68 is the most credible signal; district panel needs polygons.
+* **Rice imports (S3):** production vs imports r = -0.79 (n = 15), -0.46 without 2017 and 2022; apparent import share only, not self-sufficiency.
+* **FX (S4):** needs CPI/NCPI; rice and imported items co-move with LKR at 0-2 month lag; no pass-through magnitudes without a deflator.
+
+## Next steps
+1. Done: v2 backtest (`forecast_backtest_v2.py`) with outputs `forecast_results_v2.csv`, `forecast_model_comparison_v2.csv`, `forecast_intervals_v2.csv`, `forecast_backtest_report_v2.md`, `forecast_charts_v2/`.
+2. Cheap, worthwhile: collect CPI/NCPI (for S4 and an optional real-price check) and district polygons (to replace hand-drawn rain boxes).
+3. Optional sensitivities not yet run: other target markets, a fixed-lag-set variant matching the pilot, repeated-origin diagnostics on interval calibration.
+4. Do not add machine learning or an application. Keep the model as a research instrument.
+5. Wider-context chapters can be written from the existing 03 / 04 / 07 findings.
 
 ## Risks to manage
-* ERA5 `tp` bug found — any earlier result using `raw/EAR5/processed` precipitation must be recomputed.
-* Multiple-testing and trend: report the number of tests; always detrend or difference.
-* Comtrade 2018/2025 gaps: use FAOSTAT 2018 and CBSL 2025 for rice.
-* "SPOR" ambiguity: please confirm which file you meant (I found only the SPOT FX rate).
-
-## Acquisition status
-Provisionally **closed**. Reopen only for CPI (M1), district polygons (M2); optionally FAO Food Balance Sheets (M3). The "difficult DCS PDF" is not needed.
+* Multiple-testing: the Holm family is the 7 primary tests only; secondary specs are exploratory.
+* Pilot-selection caveat: the earlier look at the test window is not corrected for.
+* Anomaly-definition sensitivity: gains shrink with a fixed 2010-2015 climatology or z-scores.
+* ERA5 `tp` bug: only the corrected derived series are used.
+* Data caveats (CBSL gaps, HARTI duplicates, Comtrade 2018/2025) remain as in `07_data_quality_report.md`.
