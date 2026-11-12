@@ -2,25 +2,28 @@
 
 ![storyboard](storyboard.png)
 
-**Story stage:** Context
+**Demonstrates:** Problem framing and communication
 
-## What this page communicates
-Vegetable prices and rainfall are both visible and volatile; whether one helps predict the other is an empirical question.
+## Purpose
+Open with one question the audience can hold for the whole presentation.
 
-## Why this page exists
-Opens the story. The audience needs a question to follow before any method or number appears.
+## Story
+Vegetable prices swing sharply and weather might carry advance information. Whether it does is an empirical question, not an assumption.
 
-## What I explain
-Prices matter to consumers and farmers; weather may carry information about supply. I do not assume rain causes price moves. I ask something narrower and testable: does observed rainfall improve one-month-ahead forecasts?
+## Visual
+Two stacked time series on a shared axis: Dambulla cabbage wholesale price (line) above national monthly rainfall (bars), 2016-2026. Chosen because the eye naturally asks whether the two move together; that is the question.
 
 ## Evidence
-CBSL Dambulla wholesale cabbage price (monthly mean, nominal LKR/kg) and ERA5-Land national monthly rainfall, 2016-2026.
+CBSL daily wholesale prices (`raw/cbsl-daily-prices.csv`), monthly mean; ERA5-Land corrected national rainfall (`research_audit/derived/era5_regional_monthly.csv`).
 
-## Important qualification
-The picture invites the eye to line up wet months with price spikes. That impression is exactly what the later test is designed to check; do not claim it here.
+## Explanation
+Prices matter to consumers and farmers. I do not claim rain causes price changes. I ask a narrower, testable thing: does observed rainfall improve one-month-ahead forecasts beyond what past prices already tell us?
 
-## Chart specification
-Top: line, monthly cabbage price. Bottom: bars, monthly national rain (mm). Shared time axis. Source: `raw/cbsl-daily-prices.csv`, `research_audit/derived/era5_regional_monthly.csv`.
+## Interpretation
+No result yet. The picture invites an impression that the later pages test properly.
 
-## Connection to the next page
-Page 2 pins down exactly which market, vegetables and horizon the study covers.
+## Limitations
+Do not read the picture as evidence of a relationship. Nominal prices, one vegetable shown.
+
+## Transition
+To test the question we must define exactly what is being forecast and from which data (page 2).

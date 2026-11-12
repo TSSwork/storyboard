@@ -1,22 +1,27 @@
-# Story map
+# Story map (10 pages)
 
-| Stage | Pages | Audience understands |
-|---|---|---|
-| Context | 01-05 | Prices and weather matter; scope, data and predictor are defined |
-| Dispute | 06 | Past prices may not hold all short-term information; correlations hint but do not prove |
-| Investigation | 07-08 | The fair test: price-only AR vs AR + rain, 62 out-of-sample forecasts |
-| Evidence | 09 | Benefit differs sharply by vegetable |
-| Challenge | 10-12 | Result survives window and geography checks; errors remain large |
-| Resolution | 13 | What is and is not established |
-| Wider implication | 14-17 | Paddy, imports and FX are distinct dimensions of vulnerability |
-| Close | 18 | Answer, limits, boundary: research finding, not a tool |
+Audience: the public, and industry professionals who may assess the work. Each page must be understandable on its own, and the README carries the technical depth. Each page demonstrates a specific skill:
 
-Balance: about two thirds forecasting (01-13), about a quarter context (14-17), the rest close.
+| Act | Page | Title | Demonstrates |
+|---|---|---|---|
+| I Understanding the problem | 01 | Can rainfall help anticipate vegetable prices? | Problem framing and communication |
+| | 02 | One market, seven vegetables, two data sources | Scope and data-source understanding |
+| | 03 | Prices have their own dynamics, and some follow last month's rain | Data processing and exploratory analysis |
+| II Testing the idea | 04 | The test: does rainfall improve a model that already knows past prices? | Model design and methodology |
+| | 05 | How we judge it: 62 real forecasts | Statistical reasoning and validation |
+| | 06 | Rainfall helps some vegetables far more than others | Results interpretation and visual communication |
+| | 07 | The ranking holds up under alternative specifications | Robustness and research judgement |
+| | 08 | Better does not mean accurate | Uncertainty and model limitations |
+| III The wider picture | 09 | Beyond vegetables: three separate sources of vulnerability | Linking to a wider industry problem |
+| | 10 | What have we learned? | Critical thinking and conclusions |
+
+Narrative arc: context (1-3) -> investigation (4-5) -> evidence (6) -> challenge (7-8) -> wider implication and resolution (9-10).
+Balance: eight pages on the forecasting study, one on context, one on conclusions.
 
 ## Transitions
-01 question -> 02 scope -> 03 data -> 04 target -> 05 predictor -> 06 hint -> 07 design -> 08 scoring -> 09 result -> 10 window check -> 11 geography check -> 12 uncertainty -> 13 summary -> 14 paddy -> 15 imports -> 16 FX -> 17 side-by-side -> 18 close.
+1 question -> 2 scope/data -> 3 behaviour and hint -> 4 design -> 5 scoring -> 6 result -> 7 do other choices change it -> 8 how accurate -> 9 wider system -> 10 what we learned.
 
 ## Open items
-- CPI/NCPI for page 16 (pass-through).
-- Comtrade partner-concentration visual for page 15.
-- Target presentation length (pages can be merged: 10+11, 14+15).
+- CPI/NCPI deflator for the exchange-rate panel on page 9.
+- Comtrade partner-concentration panel (optional) for page 9.
+- Optional merged-page versions if a 6-page cut is ever needed: 2+3, 4+5, 7+8, 9+10.

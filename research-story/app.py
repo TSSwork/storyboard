@@ -35,8 +35,8 @@ def parse(path: Path) -> dict:
     title = re.match(r"# (.+)", text).group(1)
     parts = re.split(r"^## ", text, flags=re.M)[1:]
     secs = {p.split("\n", 1)[0].strip(): p.split("\n", 1)[1].strip() for p in parts}
-    stage = re.search(r"\*\*Story stage:\*\* (.+)", text)
-    return {"title": title, "stage": stage.group(1) if stage else "", "secs": secs, "img": path / "storyboard.png"}
+    demo = re.search(r"\*\*Demonstrates:\*\* (.+)", text)
+    return {"title": title, "stage": demo.group(1) if demo else "", "secs": secs, "img": path / "storyboard.png"}
 
 
 DOCS = [parse(p) for p in PAGES]
@@ -75,34 +75,35 @@ if mode == "Presentation":
 elif mode == "Author":
     nav()
     st.markdown(f"## {doc['title']}")
-    st.caption(f"Story stage: {doc['stage']}")
+    st.caption(f"Demonstrates: {doc['stage']}")
     left, right = st.columns([3, 2], gap="large")
     left.image(str(doc["img"]), width="stretch")
     with left:
-        section("Chart specification")
+        section("Visual")
         section("Evidence")
+        section("Explanation")
     with right:
-        section("What this page communicates")
-        section("Why this page exists")
-        section("What I explain")
-        st.markdown('<div class="label">Important qualification</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="qual body">{doc["secs"]["Important qualification"]}</div>', unsafe_allow_html=True)
-        section("Connection to the next page")
+        section("Purpose")
+        section("Story")
+        section("Interpretation")
+        st.markdown('<div class="label">Limitations</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="qual body">{doc["secs"]["Limitations"]}</div>', unsafe_allow_html=True)
+        section("Transition")
 else:
     st.markdown("## Story flow")
     st.caption("Check that each page picks up where the last one left off.")
-    prev_take = DOCS[i - 1]["secs"]["What this page communicates"] if i else "Start of the story."
+    prev_take = DOCS[i - 1]["secs"]["Story"] if i else "Start of the story."
     c1, c2, c3 = st.columns(3, gap="medium")
-    c1.markdown(f'<div class="flow"><div class="label">Previous takeaway</div>{prev_take}</div>', unsafe_allow_html=True)
+    c1.markdown(f'<div class="flow"><div class="label">Previous page says</div>{prev_take}</div>', unsafe_allow_html=True)
     c2.markdown(
-        f'<div class="flow now"><div class="label">This page: {doc["title"]}</div>{doc["secs"]["Why this page exists"]}</div>',
+        f'<div class="flow now"><div class="label">This page: {doc["title"]}</div>{doc["secs"]["Purpose"]}</div>',
         unsafe_allow_html=True,
     )
     c3.markdown(
-        f'<div class="flow"><div class="label">Hands over to next</div>{doc["secs"]["Connection to the next page"]}</div>',
+        f'<div class="flow"><div class="label">Hands over to next</div>{doc["secs"]["Transition"]}</div>',
         unsafe_allow_html=True,
     )
-    st.markdown('<div class="label">All takeaways</div>', unsafe_allow_html=True)
-    st.table({"Page": [f"{k + 1:02d}" for k in range(len(DOCS))], "Stage": [d["stage"] for d in DOCS],
-              "Takeaway": [d["secs"]["What this page communicates"] for d in DOCS]})
+    st.markdown('<div class="label">All pages</div>', unsafe_allow_html=True)
+    st.table({"Page": [f"{k + 1:02d}" for k in range(len(DOCS))], "Demonstrates": [d["stage"] for d in DOCS],
+              "Story": [d["secs"]["Story"] for d in DOCS]})
     nav()
