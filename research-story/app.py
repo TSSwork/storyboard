@@ -6,6 +6,7 @@ import re
 from pathlib import Path
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 from live_charts import LIVE
 
@@ -31,6 +32,13 @@ h1, h2, h3 { font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
 .stButton > button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .brand::before { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--coral); margin-right: 8px; vertical-align: middle; }
 img { border: 1px solid var(--rule); border-radius: 8px; }
+.progress { height: 3px; background: var(--tint); border-radius: 2px; margin: 12px 0 8px; }
+.progress > div { height: 3px; background: var(--ink); border-radius: 2px; transition: width .25s ease; }
+.pager { text-align: center; color: var(--muted); font-size: 1rem; font-variant-numeric: tabular-nums; }
+.pager b { color: var(--ink); font-weight: 600; }
+.st-key-pbar .stButton > button { min-height: 2.5rem; }
+.st-key-pbar .stButton > button[kind="primary"] { background: var(--ink); color: #fff; }
+.st-key-pbar .stButton > button[kind="primary"]:hover:not(:disabled) { background: #0b3c5a; color: #fff; }
 </style>
 """,
     unsafe_allow_html=True,
@@ -101,15 +109,39 @@ if mode == "Presentation":
         unsafe_allow_html=True,
     )
     visual()
-    a, b, c, d = st.columns([1, 1, 1, 5])
-    if a.button("Previous", disabled=i == 0, key="prev"):
-        st.session_state.i = i - 1
-        st.rerun()
-    if b.button("Next", disabled=i == len(DOCS) - 1, key="next"):
-        st.session_state.i = i + 1
-        st.rerun()
-    c.button("Exit", on_click=leave_presentation, key="exit")
-    d.caption(f"Page {i + 1} of {len(DOCS)}")
+    with st.container(key="pbar"):
+        st.markdown(f'<div class="progress"><div style="width:{(i + 1) / len(DOCS) * 100:.0f}%"></div></div>', unsafe_allow_html=True)
+        left, mid, right = st.columns([2, 3, 2], vertical_alignment="center")
+        left.button("Exit", icon=":material/close:", on_click=leave_presentation, key="exit")
+        mid.markdown(f'<div class="pager"><b>{i + 1}</b> / {len(DOCS)}</div>', unsafe_allow_html=True)
+        r1, r2 = right.columns(2)
+        if r1.button("Previous", icon=":material/arrow_back:", disabled=i == 0, key="prev", width="stretch"):
+            st.session_state.i = i - 1
+            st.rerun()
+        if r2.button("Next", icon=":material/arrow_forward:", icon_position="right", type="primary", disabled=i == len(DOCS) - 1, key="next", width="stretch"):
+            st.session_state.i = i + 1
+            st.rerun()
+    # Keyboard: right arrow / page down = next, left arrow / page up = previous, Escape = exit.
+    components.html(
+        """<script>
+const d = window.parent.document;
+if (!window.parent.__storyKeys) {
+  window.parent.__storyKeys = true;
+  d.addEventListener('keydown', (e) => {
+    const t = e.target, tag = (t.tagName || '').toLowerCase();
+    if (['input', 'textarea', 'select'].includes(tag) || t.isContentEditable || t.getAttribute('role') === 'slider') return;
+    const press = (label) => {
+      const b = [...d.querySelectorAll('.st-key-pbar button')].find(x => x.innerText.includes(label) && !x.disabled);
+      if (b) { e.preventDefault(); b.click(); }
+    };
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') press('Next');
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') press('Previous');
+    else if (e.key === 'Escape') press('Exit');
+  });
+}
+</script>""",
+        height=0,
+    )
 elif mode == "Author":
     nav()
     st.markdown(f"## {doc['title']}")
