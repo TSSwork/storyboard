@@ -21,7 +21,8 @@ st.markdown(
 :root { --ink:#002941; --muted:#52707f; --rule:#d8e6ee; --coral:#fd6e6e; --soft:#b6dfed; --tint:#e3f1f7; --paper:#f6fafc; }
 html, body, .stApp, [data-testid="stMarkdownContainer"] { font-family: "Noto Sans", system-ui, sans-serif; }
 .stApp { background: var(--paper); color: var(--ink); }
-[data-testid="stToolbar"], [data-testid="stDecoration"] { display: none !important; }
+/* hide Deploy and the app menu, but keep the toolbar: it holds the button that reopens the sidebar */
+[data-testid="stToolbarActions"], [data-testid="stMainMenu"], [data-testid="stAppDeployButton"], [data-testid="stDecoration"] { display: none !important; }
 .block-container { padding-top: 1.5rem; max-width: 100%; }
 [data-testid="stSidebar"] { background: #e9f4f9; border-right: 1px solid var(--rule); }
 [data-testid="stSidebar"] [role="radiogroup"] { gap: .5rem; }
