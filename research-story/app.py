@@ -116,7 +116,7 @@ with st.sidebar:
     if st.session_state.page != 0:
         st.button("Start from page 1", icon=":material/play_arrow:", type="primary", key="start", width="stretch", on_click=goto, args=(0,))
     else:  # same height, so the list below does not jump when the button appears
-        st.markdown('<div style="height:2.5rem"></div>', unsafe_allow_html=True)
+        st.markdown('<div style="height:3.5rem"></div>', unsafe_allow_html=True)
     last_act = None
     for k in range(N):
         if ACTS[k + 1] != last_act:
