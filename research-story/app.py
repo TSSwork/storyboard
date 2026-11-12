@@ -6,7 +6,6 @@ import re
 from pathlib import Path
 
 import streamlit as st
-import streamlit.components.v1 as components
 
 from live_charts import LIVE
 
@@ -122,7 +121,7 @@ if mode == "Presentation":
             st.session_state.i = i + 1
             st.rerun()
     # Keyboard: right arrow / page down = next, left arrow / page up = previous, Escape = exit.
-    components.html(
+    st.iframe(
         """<script>
 const d = window.parent.document;
 if (!window.parent.__storyKeys) {
@@ -140,7 +139,7 @@ if (!window.parent.__storyKeys) {
   });
 }
 </script>""",
-        height=0,
+        height=1,
     )
 elif mode == "Author":
     nav()
