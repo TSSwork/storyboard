@@ -8,8 +8,8 @@ from pathlib import Path
 
 import streamlit as st
 
-import build_figures as bf
-from live_charts import LIVE
+import slides
+from slide_copy import ACTS
 
 ROOT = Path(__file__).resolve().parent
 PAGES = sorted(p for p in (ROOT / "storyboard").iterdir() if p.is_dir() and (p / "README.md").exists())
@@ -23,7 +23,10 @@ html, body, .stApp, [data-testid="stMarkdownContainer"] { font-family: "Noto San
 .stApp { background: var(--paper); color: var(--ink); }
 /* hide Deploy and the app menu, but keep the toolbar: it holds the button that reopens the sidebar */
 [data-testid="stToolbarActions"], [data-testid="stMainMenu"], [data-testid="stAppDeployButton"], [data-testid="stDecoration"] { display: none !important; }
-.block-container { padding-top: 1.5rem; max-width: 100%; }
+.block-container { padding-top: 4.25rem; padding-bottom: 1.5rem; max-width: 100%; }
+/* control bar sits at the bottom of the screen even on short slides */
+[data-testid="stMainBlockContainer"] > [data-testid="stVerticalBlock"] { min-height: calc(100vh - 6rem); }
+[data-testid="stLayoutWrapper"]:has(> .st-key-pbar) { margin-top: auto; }
 [data-testid="stSidebar"] { background: #e9f4f9; border-right: 1px solid var(--rule); }
 [data-testid="stSidebar"] [role="radiogroup"] { gap: .5rem; }
 [data-testid="stSidebar"] [role="radiogroup"] label { align-items: flex-start; line-height: 1.35; }
@@ -40,6 +43,42 @@ img { border: 1px solid var(--rule); border-radius: 8px; }
 .progress > div { height: 3px; background: var(--ink); border-radius: 2px; transition: width .25s ease; }
 .pager { text-align: center; color: var(--muted); font-size: 1rem; font-variant-numeric: tabular-nums; }
 .pager b { color: var(--ink); font-weight: 600; }
+
+.s-label { color: var(--muted); font-size: .95rem; font-weight: 500; margin-bottom: .25rem; }
+.s-label .sq { display: inline-block; width: 8px; height: 8px; background: var(--coral); margin-right: 10px; vertical-align: middle; }
+.s-h1 { font-size: 2.1rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 .35rem; padding: 0; color: var(--ink); }
+.s-sub { color: var(--muted); font-size: 1.05rem; margin: 0 0 1rem; }
+.s-foot { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--rule); padding-top: .6rem; margin-top: 1rem; }
+.s-cards { display: grid; gap: 1rem; margin-bottom: .5rem; }
+.s-card { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 1.1rem 1.25rem; min-height: 14rem; }
+.s-card-h { font-weight: 600; font-size: 1.1rem; margin-bottom: .6rem; color: var(--ink); }
+.s-card p, .s-card li { font-size: 1rem; line-height: 1.55; }
+.s-card ol { padding-left: 1.2rem; margin: 0; }
+.s-card li { margin-bottom: .75rem; }
+.s-card-top { background: #fff; border: 1px solid var(--rule); border-bottom: none; border-radius: 8px 8px 0 0; padding: .9rem 1.1rem .2rem; }
+.s-capt { font-size: .95rem; }
+.s-cav { color: var(--muted); font-size: .85rem; margin-top: .25rem; }
+.s-facts { display: grid; grid-template-columns: 9rem 1fr; gap: .6rem 1rem; align-items: baseline; }
+.s-k { color: var(--muted); font-weight: 500; }
+.s-v { font-size: 1.05rem; }
+.s-flow { display: flex; align-items: center; gap: .6rem; margin-top: 1.6rem; }
+.s-box { border: 1px solid var(--rule); background: #fff; padding: .85rem 1rem; border-radius: 8px; flex: 1; text-align: center; }
+.s-box.dark { background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 500; }
+.s-arr { color: var(--muted); font-size: 1.3rem; }
+.s-arr.big { font-size: 2rem; }
+.s-note { font-size: .95rem; line-height: 1.6; margin-top: 1rem; }
+.s-diagram { display: flex; align-items: center; gap: 1.2rem; margin: 1rem 0 1.6rem; }
+.s-stack { display: flex; flex-direction: column; gap: .9rem; flex: 1.3; }
+.s-mc { border: 1px solid var(--rule); background: #fff; border-radius: 8px; padding: 1rem 1.2rem; line-height: 1.5; flex: 1; }
+.s-mc.hi { background: var(--tint); border: 1.5px solid var(--ink); }
+.s-mc.mid { flex: .8; text-align: center; }
+.s-two { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.s-chips { display: flex; gap: .5rem; }
+.s-chip { border: 1px solid var(--rule); background: #fff; padding: .5rem 1.1rem; border-radius: 8px; font-variant-numeric: tabular-nums; }
+.s-chip.on { background: var(--tint); border: 2px solid var(--ink); font-weight: 600; }
+ul.s-list { margin: 0; padding-left: 1.2rem; }
+ul.s-list li { margin-bottom: .55rem; line-height: 1.5; }
+[data-testid="stVerticalBlockBorderWrapper"] { border-color: var(--rule); }
 </style>
 """,
     unsafe_allow_html=True,
@@ -61,21 +100,14 @@ st.sidebar.radio("Pages", range(N), key="page", format_func=lambda k: f"{k + 1:0
 i = st.session_state.page
 n = i + 1
 
-# Slide: interactive chart where one exists (tab 1), always the static slide (tab 2)
-if n in LIVE:
-    live, static = st.tabs(["Interactive", "Static slide"])
-    with live:
-        st.markdown(f"#### {TITLES[i]}")
-        LIVE[n]()
-    static.image(str(PAGES[i] / "storyboard.png"), width="stretch")
-else:
-    st.image(str(PAGES[i] / "storyboard.png"), width="stretch")
+# Slide: native, vector; sharp at any size
+slides.render(n)
 
 # Control bar: act (left), page n / total (centre), previous and next (right)
 with st.container(key="pbar"):
     st.markdown(f'<div class="progress"><div style="width:{n / N * 100:.0f}%"></div></div>', unsafe_allow_html=True)
     left, mid, right = st.columns([2, 3, 2], vertical_alignment="center")
-    left.markdown(f'<div class="act">{bf.ACTS[n]}</div>', unsafe_allow_html=True)
+    left.markdown(f'<div class="act">{ACTS[n]}</div>', unsafe_allow_html=True)
     mid.markdown(f'<div class="pager"><b>{n}</b> / {N}</div>', unsafe_allow_html=True)
     r1, r2 = right.columns(2)
     r1.button("Previous", icon=":material/arrow_back:", disabled=i == 0, key="prev", width="stretch", on_click=go, args=(-1,))

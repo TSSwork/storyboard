@@ -10,7 +10,7 @@ This is a research study, not a prediction product. Forecasting models are instr
 | Visual storyboard | `storyboard/NN_*/storyboard.png` (10 pages) | What the audience sees; understandable without paragraphs |
 | Storytelling notes | `storyboard/NN_*/README.md` | Why the page exists, what I say, evidence, qualification, next page |
 
-`STORY_MAP.md` gives the sequence and the argument. `app.py` is the audience view: all ten pages are listed in the sidebar (click to jump), with Previous and Next, the arrow keys or Page Up and Page Down to move, and a progress line. Pages 3, 5, 6, 7 and 8 have an **Interactive** tab (Plotly, `live_charts.py`: hover, vegetable and specification selectors, a forecast-origin slider and a zoom slider) next to the **Static slide** tab. Defaults show the primary specification; every other view is labelled exploratory. The page notes are not shown in the app; they live in each page's `README.md`.
+`STORY_MAP.md` gives the sequence and the argument. `app.py` is the audience view; every slide is native (Plotly charts and HTML, vector, sharp at any size) in `slides.py`, with all slide text in `slide_copy.py`. The PNG files from `build_figures.py` are an export only and are no longer used by the app. In the app: all ten pages are listed in the sidebar (click to jump), with Previous and Next, the arrow keys or Page Up and Page Down to move, and a progress line. Pages 3, 5, 6, 7 and 8 also have selectors and sliders (`live_charts.py`: vegetable and specification selectors, a forecast-origin slider, a zoom slider) and every chart has hover values. Defaults show the primary specification; every other view is labelled exploratory. The page notes are not shown in the app; they live in each page's `README.md`.
 
 ## Run
 ```

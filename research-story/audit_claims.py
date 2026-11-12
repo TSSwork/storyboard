@@ -185,7 +185,7 @@ def rd(path):
     return (WORK / "research-story" / path).read_text()
 
 
-bf, r9, r3, r4, r6 = rd("build_figures.py"), rd("storyboard/09_wider_context/README.md"), rd("storyboard/03_prices_and_rain/README.md"), rd("storyboard/04_forecast_experiment/README.md"), rd("storyboard/06_main_result/README.md")
+bf, r9, r3, r4, r6 = rd("build_figures.py") + rd("slide_copy.py") + rd("live_charts.py"), rd("storyboard/09_wider_context/README.md"), rd("storyboard/03_prices_and_rain/README.md"), rd("storyboard/04_forecast_experiment/README.md"), rd("storyboard/06_main_result/README.md")
 
 
 def fix(prefix, cond, ev_add, note=None):

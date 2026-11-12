@@ -16,6 +16,7 @@ from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.lines import Line2D
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
 
+import slide_copy as SC
 from matplotlib import font_manager
 for _w in ("Regular", "Medium", "SemiBold"):          # static Noto Sans cuts, when installed (falls back to DejaVu Sans)
     _f = Path(f"/usr/share/fonts/google-noto/NotoSans-{_w}.ttf")
@@ -44,9 +45,7 @@ plt.rcParams.update({"font.family": ["Noto Sans", "DejaVu Sans"], "axes.edgecolo
 VEGS = ["Cabbage", "Brinjal", "Carrot", "Tomato", "Snake gourd", "Pumpkin", "Beans"]
 SLUGS = {1: "opening", 2: "scope_and_data", 3: "prices_and_rain", 4: "forecast_experiment", 5: "evaluation",
          6: "main_result", 7: "robustness", 8: "accuracy", 9: "wider_context", 10: "conclusions"}
-ACTS = {**{i: "Act I · Understanding the problem" for i in (1, 2, 3)},
-        **{i: "Act II · Testing the idea" for i in (4, 5, 6, 7, 8)},
-        **{i: "Act III · The wider picture" for i in (9, 10)}}
+ACTS = SC.ACTS
 
 
 # Stored v2 evidence label -> slide label (read from forecast_model_comparison_v2.csv, never re-derived)
@@ -54,7 +53,8 @@ EVID_LABEL = {"supported (corrected)": "supported", "suggestive (uncorrected onl
               "no reliable evidence": "no evidence", "worse or no gain": "worse"}
 
 
-def frame(n, headline, source, sub=None):
+def frame(n):
+    headline, source, sub = SC.HEAD[n]
     fig = plt.figure(figsize=(16, 9), dpi=100)
     fig.add_artist(Line2D([0.0535], [0.9475], marker="s", color=CORAL, markersize=6, linestyle="none", transform=fig.transFigure))
     fig.text(0.064, 0.945, f"{n:02d}  ·  {ACTS[n]}", fontsize=11, color=MUTED, fontweight="medium")
@@ -134,9 +134,7 @@ def mc(market="dambulla", agg="mean", model="AR+rain:nat"):
 
 
 def p01():
-    fig = frame(1, "Can rainfall help anticipate vegetable prices?",
-                "CBSL daily wholesale prices (Dambulla); ERA5-Land corrected national rainfall",
-                "Vegetable prices swing sharply. Does last month's rain tell us anything about next month's price?")
+    fig = frame(1)
     pr = prices()["Cabbage"].loc["2016":]
     a = fig.add_axes([0.06, 0.45, 0.88, 0.27])
     a.plot(pr.index, pr.values, color=ACC, lw=2)
@@ -151,9 +149,7 @@ def p01():
 
 
 def p02():
-    fig = frame(2, "One market, seven vegetables, two data sources",
-                "CBSL daily prices; ERA5-Land (corrected accumulation); research_audit/07_data_quality_report.md",
-                "Daily prices and hourly rainfall become monthly variables with explicit missing-data rules.")
+    fig = frame(2)
     g = json.load(open(WORK / "raw/chirp/boundaries/countries.geojson"))
     f = [x for x in g["features"] if x["properties"].get("ISO3166-1-Alpha-3") == "LKA"][0]
     ax = fig.add_axes([0.04, 0.08, 0.28, 0.7])
@@ -165,21 +161,16 @@ def p02():
         ax.plot(x, y, "o", color=c, ms=7); ax.annotate(nme, (x + 0.34, y + 0.12), fontsize=10, color=c)
     ax.plot(79.85, 6.94, "s", color=INK, ms=7); ax.text(79.95, 6.94, "Pettah", fontsize=10, va="center")
     ax.set_aspect(1); ax.axis("off")
-    ax.text(0.5, -0.02, "dashed boxes = rainfall proxies, not growing areas", transform=ax.transAxes, ha="center", fontsize=9, color=MUTED)
+    ax.text(0.5, -0.02, SC.P02_MAPNOTE, transform=ax.transAxes, ha="center", fontsize=9, color=MUTED)
     r = blank(fig, (0.36, 0.1, 0.6, 0.68))
-    items = [("MAIN MARKET", "CBSL Dambulla wholesale (Pettah = robustness check)"),
-             ("VEGETABLES", "cabbage · brinjal · carrot · tomato · snake gourd · pumpkin · beans"),
-             ("TARGET", "log monthly mean price, one month ahead"),
-             ("PRICE RULE", "monthly mean needs ≥10 valid daily prices; nominal LKR/kg"),
-             ("RAIN RULE", "hourly ERA5 → daily → monthly; incomplete months set to missing")]
-    for i, (k, v) in enumerate(items):
+    for i, (k, v) in enumerate(SC.P02_ITEMS):
         y = 0.96 - i * 0.135
-        r.text(0, y, k.capitalize(), fontsize=10.5, color=MUTED, fontweight="medium", va="top")
+        r.text(0, y, k, fontsize=10.5, color=MUTED, fontweight="medium", va="top")
         r.text(0, y - 0.04, v, fontsize=12.5, va="top")
-    box(r, (0.0, 0.1), 0.28, 0.14, "CBSL daily prices", fs=10.5); box(r, (0.33, 0.1), 0.28, 0.14, "ERA5-Land hourly rain", fs=10.5)
-    box(r, (0.69, 0.1), 0.3, 0.14, "monthly variables", fc=ACC, ec=ACC, tc="white", fs=10.5, bold=True)
+    box(r, (0.0, 0.1), 0.28, 0.14, SC.P02_FLOW[0], fs=10.5); box(r, (0.33, 0.1), 0.28, 0.14, SC.P02_FLOW[1], fs=10.5)
+    box(r, (0.69, 0.1), 0.3, 0.14, SC.P02_FLOW[2], fc=ACC, ec=ACC, tc="white", fs=10.5, bold=True)
     arrow(r, (0.28, 0.17), (0.33, 0.17)); arrow(r, (0.61, 0.17), (0.69, 0.17))
-    r.text(0.0, 0.01, "An earlier ERA5 precipitation bug (overstated totals) is fixed; only corrected series are used.", fontsize=10, color=INK)
+    r.text(0.0, 0.01, SC.P02_NOTE, fontsize=10, color=INK)
     save(fig, 2)
 
 
@@ -188,9 +179,7 @@ def p03():
                         2: [0.16, -0.29, 0.20, 0.01, -0.15, 0.04, 0.03], 3: [-0.06, 0.18, 0.00, -0.26, -0.14, -0.07, -0.09]}, index=VEGS)
     (OUT / "03_prices_and_rain/assets").mkdir(parents=True, exist_ok=True)
     lag.to_csv(OUT / "03_prices_and_rain/assets/lag_correlations.csv")
-    fig = frame(3, "Prices have their own dynamics — and some follow last month's rain",
-                "CBSL Dambulla wholesale; ERA5-Land; lag correlations from research_audit/_profiles/prices_out.txt (section D)",
-                "Descriptive only: 10 of 28 correlation tests were p<0.05 (about 1.4 expected by chance).")
+    fig = frame(3)
     pr = prices()
     gs = fig.add_gridspec(2, 4, left=0.05, right=0.60, bottom=0.36, top=0.78, hspace=0.5, wspace=0.3)
     for i, v in enumerate(VEGS):
@@ -219,35 +208,28 @@ def p03():
 
 
 def p04():
-    fig = frame(4, "The test: does rainfall improve a model that already knows past prices?",
-                "forecast_backtest_v2.py; forecast_validation_v2/predictor_overlap.csv",
-                "At the end of month t, two models forecast the price of month t+1.")
+    fig = frame(4)
     ax = blank(fig, (0.05, 0.42, 0.9, 0.38))
-    box(ax, (0.02, 0.58), 0.33, 0.38, "Price-only AR\nlags of the log price\n(lag set chosen by AIC, training window only)", fs=11.5, bold=True)
-    box(ax, (0.02, 0.04), 0.33, 0.46, "AR + rainfall\nthe SAME price lags\n+ A0 (rain in month t)\n+ A3 (3-month rain window)", fc=TINT, ec=ACC, fs=11.5, bold=True)
-    box(ax, (0.5, 0.35), 0.2, 0.3, "Forecast of\nprice in t+1", fs=13, bold=True)
+    box(ax, (0.02, 0.58), 0.33, 0.38, SC.P04_A, fs=11.5, bold=True)
+    box(ax, (0.02, 0.04), 0.33, 0.46, SC.P04_B, fc=TINT, ec=ACC, fs=11.5, bold=True)
+    box(ax, (0.5, 0.35), 0.2, 0.3, SC.P04_FORECAST, fs=13, bold=True)
     arrow(ax, (0.35, 0.77), (0.5, 0.55)); arrow(ax, (0.35, 0.27), (0.5, 0.45))
-    box(ax, (0.79, 0.35), 0.19, 0.3, "Compare\nout-of-sample\nerrors", fs=12); arrow(ax, (0.7, 0.5), (0.8, 0.5))
+    box(ax, (0.79, 0.35), 0.19, 0.3, SC.P04_COMPARE, fs=12); arrow(ax, (0.7, 0.5), (0.8, 0.5))
     w = blank(fig, (0.05, 0.08, 0.9, 0.28))
     for i, lab in enumerate(["t−3", "t−2", "t−1", "t"]):
         fc = TINT if i == 3 else "white"
         w.add_patch(Rectangle((i * 0.075, 0.45), 0.07, 0.35, fc=fc, ec=ACC if i == 3 else GRID, lw=2 if i == 3 else 1))
         w.text(i * 0.075 + 0.035, 0.625, lab, ha="center", va="center", fontsize=11)
-    w.text(0.0, 0.3, "A0 = month t · A3 (primary) = mean of t−2…t, overlaps A0 (corr 0.57)\nA3 (check) = mean of t−3…t−1, no overlap (corr −0.05)\nBoth use only rain already observed at t.", fontsize=10.5, va="top", linespacing=1.5)
-    for i, t in enumerate(["Expanding window, refit at every origin", "Naive and seasonal-naive benchmarks scored too",
-                           "FX excluded: it worsened pilot RMSE for all seven vegetables", "No machine learning, no future rainfall"]):
+    w.text(0.0, 0.3, SC.P04_WINDOW, fontsize=10.5, va="top", linespacing=1.5)
+    for i, t in enumerate(SC.P04_BULLETS):
         w.text(0.42, 0.9 - i * 0.2, "•  " + t, fontsize=12, va="top")
     save(fig, 4)
 
 
 def p05():
-    fig = frame(5, "How we judge it: 62 real forecasts, three layers of scrutiny",
-                "forecast_validation_v2/evaluation_samples.csv; forecast_backtest_report_v2.md",
-                "Technical detail lives in the README and report; the slide shows the logic.")
+    fig = frame(5)
     ax = blank(fig, (0.05, 0.47, 0.9, 0.33))
-    cards = [("1  Score", ACC, "RMSE of the log price, AR+rain\nvs price-only AR, same dates.\nGain = % reduction.\n62 forecasts per vegetable."),
-             ("2  Test", ACC, "Clark–West (nested models,\nNewey–West lag 3), one-sided.\nDiebold–Mariano as supplement.\nMoving-block bootstrap (3/6/12)."),
-             ("3  Correct", ACC, "Holm correction across the seven\nvegetables. Evidence label needs\nHolm p < 0.05 and every\nbootstrap p < 0.10.")]
+    cards = [(h, ACC, t) for h, t in SC.P05_CARDS]
     for i, (h, c, t) in enumerate(cards):
         x0 = i * 0.34
         ax.add_patch(Rectangle((x0, 0.0), 0.31, 1.0, fc="white", ec=GRID)); ax.add_patch(Rectangle((x0, 0.985), 0.31, 0.015, fc=c, ec="none"))
@@ -259,17 +241,15 @@ def p05():
         tl.add_patch(Rectangle((0.0, y), w, 0.17, fc=TINT, ec="none")); tl.add_patch(Rectangle((w, y), 0.03, 0.17, fc=ACC, ec="none"))
         tl.text(w / 2, y + 0.085, "training window (grows)", ha="center", va="center", fontsize=10)
         tl.text(w + 0.045, y + 0.085, "forecast t+1", va="center", fontsize=10, color=ACC)
-    tl.text(0.66, 0.85, "Origins Aug 2021 → Sep 2026\nTargets Sep 2021 → Oct 2026\nAIC lag choice: training rows only", fontsize=11.5, va="top", linespacing=1.5)
-    tl.text(0.66, 0.35, "Test window was seen in the pilot →\nexploratory. Errors are serially dependent.", fontsize=10.5, color=EXPL, va="top", linespacing=1.5)
+    tl.text(0.66, 0.85, SC.P05_TL1, fontsize=11.5, va="top", linespacing=1.5)
+    tl.text(0.66, 0.35, SC.P05_TL2, fontsize=10.5, color=EXPL, va="top", linespacing=1.5)
     save(fig, 5)
 
 
 def p06():
     c = mc(); gain, p = c.rmse_gain_vs_AR_pct.values, c.cw_p_holm.values
     ev = [EVID_LABEL[e] for e in c.evidence]
-    fig = frame(6, "Rainfall helps some vegetables far more than others",
-                "forecast_model_comparison_v2.csv · Dambulla wholesale, national ERA5 rain, 62 forecasts each",
-                "Bar = size of improvement. Colour and label = strength of evidence (Holm-adjusted Clark–West p).")
+    fig = frame(6)
     a = fig.add_axes([0.14, 0.15, 0.5, 0.6]); y = np.arange(7)[::-1]
     a.barh(y, gain, color=[EVID_COL[e] for e in ev], height=0.62, edgecolor=[NAVY if e == "exploratory" else "none" for e in ev], linewidth=1.6); a.axvline(0, color=INK, lw=1)
     a.set_yticks(y); a.set_yticklabels(VEGS, fontsize=13); a.set_xlabel("RMSE reduction vs price-only AR (%)", fontsize=11); a.tick_params(length=0, labelsize=10)
@@ -294,9 +274,7 @@ def p07():
              ("Nuwara Eliya rain box", "#7a8f9c", "^", 60, [rw.loc[(v, "nuw_incl"), "rmse_gain_vs_AR_pct"] for v in VEGS]),
              ("Pettah market", "#1d5878", "D", 45, list(pet.rmse_gain_vs_AR_pct.values)),
              ("Monthly median price", BASE, "X", 55, list(med.rmse_gain_vs_AR_pct.values))]
-    fig = frame(7, "The ranking holds up under alternative specifications",
-                "forecast_validation_v2/rain_window_comparison.csv; forecast_model_comparison_v2.csv",
-                "Each dot is one specification's RMSE gain vs price-only AR. Cabbage, brinjal, carrot stay clear of zero; beans stay at or below it.")
+    fig = frame(7)
     a = fig.add_axes([0.12, 0.17, 0.56, 0.56]); y = np.arange(7)[::-1]
     a.axvline(0, color=INK, lw=1); a.grid(axis="y", color=GRID); a.set_axisbelow(True)
     for lab, c, m, s, vals in marks:
@@ -314,9 +292,7 @@ def p08():
     r = r[(r.market == "dambulla") & (r.price_agg == "mean") & (r.commodity == "Cabbage")]
     ar = r[r.model == "AR"].set_index("target_month"); rn = r[r.model == "AR+rain:nat"].set_index("target_month")
     m = mc(); ic = pd.read_csv(V2 / "interval_coverage.csv"); ic = ic[ic.model == "nat_incl"].set_index("commodity").loc[VEGS]
-    fig = frame(8, "Better does not mean accurate: errors stay large, bands under-cover",
-                "forecast_results_v2.csv; forecast_validation_v2/interval_coverage.csv",
-                "Cabbage, Dambulla. Empirical 80% bands from past out-of-sample errors.")
+    fig = frame(8)
     a = fig.add_axes([0.06, 0.1, 0.56, 0.64])
     a.fill_between(rn.index, rn.lo80_lkr, rn.hi80_lkr, color=ACC, alpha=0.14, lw=0, label="AR+rain 80% band")
     a.plot(ar.index, ar.actual_lkr, color=INK, lw=2, label="Actual"); a.plot(ar.index, ar.pred_lkr, color=BASE, lw=1.6, label="Price-only AR")
@@ -340,12 +316,9 @@ def p09():
     x, yv = dt(yl.rain.values, yl.y.values), dt(yl.hs.values, yl.y.values); r = np.corrcoef(x, yv)[0, 1]
     rb = pd.read_csv(D / "rice_annual_balance.csv"); rb = rb[(rb.y >= 2010) & (rb.y <= 2025)]
     fx = pd.read_csv(WORK / "raw/pdf/Indicative Rate of the USD_LKR SPOT Exchange Rate.csv", parse_dates=["Date"]).set_index("Date")["Exchange Rate"].resample("MS").mean()
-    fig = frame(9, "Beyond vegetables: three separate sources of food-system vulnerability",
-                "ERA5-Land; DCS paddy; FAOSTAT; CBSL exchange rates. Context analyses; none feeds the forecasting model.",
-                "Weather, import exposure and exchange rates are shown side by side — never combined into one score.")
-    cols = [(0.05, NAVY, "Weather and paddy", f"Yala rain vs harvested/sown, r = {r:+.2f}, n = {len(yl)}", "Short series, policy shocks: association only."),
-            (0.37, MID, "Rice imports", "Apparent import share of supply", "Not self-sufficiency. Paddy→rice factor\n0.67 is an assumption, not data."),
-            (0.69, BASE, "Exchange rate", "USD/LKR monthly mean (2022 shaded)", "Descriptive co-movement only; no pass-through\nestimate (needs a CPI/NCPI deflator).")]
+    fig = frame(9)
+    cols = [(0.05, NAVY, SC.P09[0][0], SC.P09[0][1].format(r=r, n=len(yl)), SC.P09[0][2]),
+            (0.37, MID, *SC.P09[1]), (0.69, BASE, *SC.P09[2])]
     for x0, c, h, cap, cav in cols:
         fig.add_artist(Rectangle((x0 - 0.005, 0.07), 0.29, 0.7, fc="white", ec=GRID, transform=fig.transFigure, zorder=0))
         fig.add_artist(Rectangle((x0 - 0.005, 0.764), 0.29, 0.006, fc=c, ec="none", transform=fig.transFigure))
@@ -363,12 +336,9 @@ def p09():
 
 def p10():
     import textwrap
-    fig = frame(10, "Rainfall helps some vegetable forecasts — not all, and not precisely",
-                "Synthesis of pages 1–9")
+    fig = frame(10)
     ax = blank(fig, (0.05, 0.1, 0.9, 0.72))
-    cols = [("Findings", NAVY, ["Adding observed rain improves one-month-ahead forecasts for cabbage, brinjal and carrot beyond past prices.", "The benefit is commodity-specific: snake gourd, pumpkin, beans show little or none; tomato is exploratory.", "Paddy, imports and exchange rates are distinct, context-setting dimensions of vulnerability."]),
-            ("Limitations", CORAL, ["The test window was seen in the pilot: exploratory, not independent confirmation.", "Rain series are proxies, not growing-area rainfall; 62 forecast errors are dependent.", "Context analyses: short series, crisis confounding, incomplete trade data, no deflator yet."]),
-            ("Implications and next steps", MID, ["A research finding on where rainfall adds information; not a deployable forecasting tool.", "Next: out-of-sample test on newly published months; growing-area rainfall; CPI/NCPI deflator.", "Longer horizons would need rainfall forecasts, a separate study."])]
+    cols = [(h, c, items) for (h, items), c in zip(SC.P10, (NAVY, CORAL, MID))]
     for i, (h, c, items) in enumerate(cols):
         x0 = i * 0.34
         ax.add_patch(Rectangle((x0, 0.0), 0.31, 1.0, fc="white", ec=GRID)); ax.add_patch(Rectangle((x0, 0.985), 0.31, 0.015, fc=c, ec="none"))

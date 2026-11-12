@@ -53,13 +53,17 @@ def page3():
     style(fig, 560)
     left, right = st.columns([3, 1], gap="large")
     left.plotly_chart(fig, width="stretch")
-    c = LAG.loc[v]
-    lagfig = go.Figure(go.Bar(x=[f"lag {k}" for k in c.index], y=c.values, marker_color=[NAVY if x >= 0 else CORAL for x in c.values],
-                              text=[f"{x:+.2f}" for x in c.values], textposition="outside", hovertemplate="%{x}: r = %{y:+.2f}<extra></extra>"))
-    lagfig.update_yaxes(range=[-0.7, 0.7]); style(lagfig, 300, legend=False)
-    lagfig.update_layout(title=dict(text=f"{v}: correlation with rain k months earlier", font=dict(size=13)))
-    right.plotly_chart(lagfig, width="stretch")
-    right.caption("Z-score rain anomaly vs de-seasonalised price change. Exploratory: 10 of 28 tests had p<0.05 (about 1.4 expected by chance). The strip uses the mm/100 forecasting anomaly. Shaded: 2022.")
+    hm = go.Figure(go.Heatmap(z=LAG.values, x=[f"lag {k}" for k in LAG.columns], y=VEGS, zmin=-0.6, zmax=0.6,
+                              colorscale=[[0, CORAL], [0.5, "#ffffff"], [0.72, "#8cc0d6"], [1, NAVY]], showscale=False,
+                              text=[[f"{x:+.2f}" for x in row] for row in LAG.values], texttemplate="%{text}", textfont=dict(size=12),
+                              hovertemplate="%{y}, %{x}: r = %{z:+.2f}<extra></extra>", xgap=2, ygap=2))
+    k = VEGS.index(v)
+    hm.add_shape(type="rect", x0=-0.5, x1=3.5, y0=k - 0.5, y1=k + 0.5, line=dict(color=NAVY, width=2.5))
+    hm.update_yaxes(autorange="reversed"); hm.update_xaxes(side="top")
+    style(hm, 400, legend=False)
+    hm.update_layout(margin=dict(l=10, r=10, t=40, b=10))
+    right.plotly_chart(hm, width="stretch")
+    right.caption("Correlation of price change with rain k months earlier (z-score rain anomaly, de-seasonalised price change), all seven vegetables; the selected one is outlined. Exploratory. The strip uses the mm/100 forecasting anomaly. Shaded: 2022.")
 
 
 # ---------------- page 5: expanding-window forecasts ----------------
