@@ -11,7 +11,7 @@ The centrepiece: answer whether rainfall helps, vegetable by vegetable.
 Cabbage, brinjal and carrot improve materially and survive correction. Tomato is only suggestive. Snake gourd and pumpkin show little. Beans get slightly worse.
 
 ## Visual
-Horizontal bars for RMSE gain, fixed vegetable order, zero line, with Holm p and an evidence label beside each bar. Colour is teal for supported, amber for exploratory, grey for none, red for worse, and the label repeats it so colour is not the only cue. Size and strength are kept separate on purpose. Evidence labels are read from the stored v2 `evidence` column (supported (corrected), suggestive (uncorrected only), no reliable evidence, worse or no gain), not re-derived.
+Horizontal bars for RMSE gain, fixed vegetable order, zero line, with Holm p and an evidence label beside each bar. Colour is midnight navy for supported, soft blue with a navy outline for exploratory, grey for none and coral for worse, and the label repeats it so colour is not the only cue. Size and strength are kept separate on purpose. Evidence labels are read from the stored v2 `evidence` column (supported (corrected), suggestive (uncorrected only), no reliable evidence, worse or no gain), not re-derived.
 
 ## Evidence
 `forecast_model_comparison_v2.csv`: Dambulla, mean price, national rain. Gains 19.7 / 12.4 / 8.2 / 4.8 / 1.8 / 1.8 / -1.5 percent; Holm CW p 0.0018 / 0.0009 / 0.0285 / 0.109 / 0.189 / 0.235 / 0.557.

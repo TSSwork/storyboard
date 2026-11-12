@@ -14,16 +14,21 @@ st.set_page_config(page_title="Research storyboard", layout="wide")
 st.markdown(
     """
 <style>
-:root { --ink:#1c2430; --muted:#667085; --rule:#e6e2d9; --accent:#0f6b78; --paper:#fbfaf7; }
+:root { --ink:#002941; --muted:#52707f; --rule:#d8e6ee; --accent:#002941; --coral:#fd6e6e; --soft:#b6dfed; --tint:#e3f1f7; --paper:#f6fafc; }
+html, body, .stApp, [data-testid="stMarkdownContainer"] { font-family: "Noto Sans", system-ui, sans-serif; }
 .stApp { background: var(--paper); color: var(--ink); }
-[data-testid="stSidebar"] { background: #f4f1ea; border-right: 1px solid var(--rule); }
-h1, h2, h3 { letter-spacing: -0.01em; }
-.label { font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; margin: 1.1rem 0 .15rem; }
-.body { font-size: 1.02rem; line-height: 1.55; margin: 0 0 .4rem; }
-.qual { border-left: 3px solid #b7791f; padding: .15rem 0 .15rem .8rem; }
-.flow { border: 1px solid var(--rule); background: #fff; padding: .9rem 1rem; border-radius: 6px; min-height: 12rem; }
-.flow.now { border-color: var(--accent); }
-img { border: 1px solid var(--rule); border-radius: 4px; }
+[data-testid="stSidebar"] { background: #e9f4f9; border-right: 1px solid var(--rule); }
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+.label { font-size: .8rem; color: var(--muted); font-weight: 500; margin: 1.25rem 0 .25rem; }
+.body { font-size: 1rem; line-height: 1.6; margin: 0 0 .5rem; }
+.qual { border-left: 3px solid var(--coral); padding: .25rem 0 .25rem .75rem; }
+.flow { border: 1px solid var(--rule); background: #fff; padding: 1rem; border-radius: 8px; min-height: 12rem; }
+.flow.now { border-color: var(--ink); background: var(--tint); }
+.stButton > button { border: 1px solid var(--ink); color: var(--ink); background: transparent; border-radius: 8px; transition: background-color .15s ease; }
+.stButton > button:hover:not(:disabled) { background: var(--soft); border-color: var(--ink); color: var(--ink); }
+.stButton > button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.brand::before { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--coral); margin-right: 8px; vertical-align: middle; }
+img { border: 1px solid var(--rule); border-radius: 8px; }
 </style>
 """,
     unsafe_allow_html=True,
@@ -42,7 +47,7 @@ def parse(path: Path) -> dict:
 DOCS = [parse(p) for p in PAGES]
 labels = [d["title"] for d in DOCS]
 
-st.sidebar.markdown("### Research storyboard")
+st.sidebar.markdown('<h3 class="brand">Research storyboard</h3>', unsafe_allow_html=True)
 mode = st.sidebar.radio("Mode", ["Author", "Presentation", "Story flow"], index=0, key="mode")
 if "i" not in st.session_state:
     st.session_state.i = 0

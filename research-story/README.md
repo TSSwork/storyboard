@@ -25,3 +25,6 @@ Figures read `research_audit/` outputs only; raw data are never touched. Image t
 3. Exploratory is labelled exploratory; no causal claims; no composite vulnerability score.
 4. The tomato result stays exploratory (the one corrected regional cell is not promoted).
 5. The resolution is the empirical answer, not a product.
+
+## Visual identity
+Midnight navy `#002941` (ink and primary marks), soft blue `#b6dfed` (tints and the exploratory state), coral `#fd6e6e` (the single accent: the act marker, the "worse" state and caution callouts; never used for text). Type is Noto Sans in regular, medium and semibold. Evidence classes are always carried by a label as well as by colour.
