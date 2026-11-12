@@ -1,0 +1,266 @@
+
+### cbsl-daily-prices.csv
+rows=2463  meta=['# Prices and inflation: Daily food prices, Pettah and Dambulla', '# Daily; units as published', '# Source: the Central Bank of Sri Lanka via Macro Lab', '# Macro Lab page: /data/prices-and-inflation/daily-prices/']
+- period [str] null=0.0% nuniq=>=2000 min=2016-08-01 max=2026-11-09
+- Beans (wholesale, pettah) (Rs/kg) [float64] null=3.2% nuniq=164 min=30.0 max=1200.0
+- Beans (wholesale, dambulla) (Rs/kg) [float64] null=2.5% nuniq=166 min=30.0 max=1100.0
+- Beans (retail, dambulla) (Rs/kg) [float64] null=4.0% nuniq=175 min=45.0 max=1130.0
+- Beans (retail, narahenpita) (Rs/kg) [float64] null=38.6% nuniq=52 min=90.0 max=1600.0
+- Carrot (wholesale, pettah) (Rs/kg) [float64] null=3.2% nuniq=164 min=35.0 max=2000.0
+- Carrot (wholesale, dambulla) (Rs/kg) [float64] null=2.9% nuniq=180 min=25.0 max=1950.0
+- Carrot (retail, dambulla) (Rs/kg) [float64] null=4.4% nuniq=184 min=45.0 max=1980.0
+- Carrot (retail, narahenpita) (Rs/kg) [float64] null=38.6% nuniq=55 min=90.0 max=2800.0
+- Cabbage (wholesale, pettah) (Rs/kg) [float64] null=3.2% nuniq=131 min=15.0 max=700.0
+- Cabbage (wholesale, dambulla) (Rs/kg) [float64] null=2.4% nuniq=144 min=10.0 max=675.0
+- Cabbage (retail, dambulla) (Rs/kg) [float64] null=3.9% nuniq=148 min=25.0 max=705.0
+- Cabbage (retail, narahenpita) (Rs/kg) [float64] null=38.6% nuniq=48 min=25.0 max=1000.0
+- Tomato (wholesale, pettah) (Rs/kg) [float64] null=3.2% nuniq=154 min=20.0 max=850.0
+- Tomato (wholesale, dambulla) (Rs/kg) [float64] null=2.4% nuniq=169 min=7.0 max=745.0
+- Tomato (retail, dambulla) (Rs/kg) [float64] null=3.9% nuniq=173 min=27.0 max=775.0
+- Tomato (retail, narahenpita) (Rs/kg) [float64] null=38.5% nuniq=51 min=50.0 max=1200.0
+- Brinjal (wholesale, pettah) (Rs/kg) [float64] null=3.2% nuniq=125 min=25.0 max=800.0
+- Brinjal (wholesale, dambulla) (Rs/kg) [float64] null=2.4% nuniq=135 min=9.0 max=625.0
+- Brinjal (retail, dambulla) (Rs/kg) [float64] null=3.8% nuniq=142 min=24.0 max=655.0
+- Brinjal (retail, narahenpita) (Rs/kg) [float64] null=38.6% nuniq=46 min=70.0 max=1000.0
+- Pumpkin (wholesale, pettah) (Rs/kg) [float64] null=3.2% nuniq=108 min=15.0 max=350.0
+- Pumpkin (wholesale, dambulla) (Rs/kg) [float64] null=2.6% nuniq=117 min=8.0 max=275.0
+- Pumpkin (retail, dambulla) (Rs/kg) [float64] null=4.1% nuniq=113 min=25.0 max=305.0
+- Pumpkin (retail, narahenpita) (Rs/kg) [float64] null=38.6% nuniq=38 min=55.0 max=560.0
+- Snake gourd (wholesale, pettah) (Rs/kg) [float64] null=3.3% nuniq=100 min=30.0 max=550.0
+- Snake gourd (wholesale, dambulla) (Rs/kg) [float64] null=3.0% nuniq=109 min=13.0 max=450.0
+- Snake gourd (retail, dambulla) (Rs/kg) [float64] null=4.4% nuniq=113 min=33.0 max=480.0
+- Snake gourd (retail, narahenpita) (Rs/kg) [float64] null=38.6% nuniq=41 min=60.0 max=800.0
+- Green chilli (wholesale, pettah) (Rs/kg) [float64] null=30.7% nuniq=99 min=50.0 max=1500.0
+- Green chilli (wholesale, dambulla) (Rs/kg) [float64] null=29.2% nuniq=183 min=45.0 max=1900.0
+- Green chilli (retail, dambulla) (Rs/kg) [float64] null=30.7% nuniq=195 min=65.0 max=1930.0
+- Green chilli (retail, narahenpita) (Rs/kg) [float64] null=38.7% nuniq=48 min=80.0 max=2400.0
+- Lime (wholesale, pettah) (Rs/kg) [float64] null=30.6% nuniq=92 min=40.0 max=2300.0
+- Lime (wholesale, dambulla) (Rs/kg) [float64] null=29.3% nuniq=192 min=25.0 max=1950.0
+- Lime (retail, dambulla) (Rs/kg) [float64] null=30.7% nuniq=200 min=45.0 max=1980.0
+- Lime (retail, narahenpita) (Rs/kg) [float64] null=38.9% nuniq=54 min=100.0 max=3200.0
+- Red onion (local) (wholesale, dambulla) (Rs/kg) [float64] null=11.7% nuniq=166 min=45.0 max=625.0
+- Red onion (local) (retail, dambulla) (Rs/kg) [float64] null=13.0% nuniq=181 min=68.0 max=645.0
+- Red onion (local) (retail, narahenpita) (Rs/kg) [float64] null=78.5% nuniq=29 min=180.0 max=800.0
+- Red onion (imp) (wholesale, pettah) (Rs/kg) [float64] null=22.4% nuniq=291 min=60.0 max=600.0
+- Big onion (imp) (wholesale, pettah) (Rs/kg) [float64] null=2.8% nuniq=311 min=40.0 max=663.0
+- Big onion (imp) (wholesale, dambulla) (Rs/kg) [float64] null=4.7% nuniq=182 min=38.0 max=595.0
+- Big onion (imp) (retail, dambulla) (Rs/kg) [float64] null=6.2% nuniq=180 min=48.0 max=615.0
+- Big onion (imp) (retail, narahenpita) (Rs/kg) [float64] null=41.2% nuniq=58 min=60.0 max=640.0
+- Potato (local) (wholesale, pettah) (Rs/kg) [float64] null=3.0% nuniq=298 min=75.0 max=465.0
+- Potato (local) (wholesale, dambulla) (Rs/kg) [float64] null=20.6% nuniq=127 min=61.0 max=415.0
+- Potato (local) (retail, dambulla) (Rs/kg) [float64] null=22.1% nuniq=129 min=71.0 max=435.0
+- Potato (local) (retail, narahenpita) (Rs/kg) [float64] null=41.4% nuniq=39 min=140.0 max=660.0
+- Potato (imp) (wholesale, pettah) (Rs/kg) [float64] null=2.2% nuniq=194 min=40.0 max=307.0
+- Potato (imp) (retail, narahenpita) (Rs/kg) [float64] null=40.7% nuniq=31 min=95.0 max=325.0
+- Dried chilli (imp) (wholesale, pettah) (Rs/kg) [float64] null=2.5% nuniq=327 min=25.0 max=1858.0
+- Dried chilli (imp) (retail, narahenpita) (Rs/kg) [float64] null=39.0% nuniq=74 min=460.0 max=1900.0
+- Coconut (avg.) (wholesale, dambulla) (Rs/nut) [float64] null=42.1% nuniq=75 min=48.0 max=185.0
+- Coconut (avg.) (retail, dambulla) (Rs/nut) [float64] null=43.4% nuniq=76 min=54.0 max=190.0
+- Coconut (avg.) (retail, narahenpita) (Rs/nut) [float64] null=42.4% nuniq=42 min=48.0 max=240.0
+- Coconut oil (wholesale, pettah) (Rs/litre) [float64] null=3.7% nuniq=264 min=40.0 max=927.0
+- Coconut oil (retail, narahenpita) (Rs/litre) [float64] null=39.7% nuniq=65 min=85.0 max=963.0
+- Sugar (white) (wholesale, pettah) (Rs/kg) [float64] null=41.6% nuniq=179 min=95.0 max=328.0
+- Sugar (white) (retail, narahenpita) (Rs/kg) [float64] null=42.3% nuniq=87 min=80.0 max=340.0
+- Egg (white) (wholesale, pettah) (Rs/each) [float64] null=46.1% nuniq=79 min=12.5 max=60.0
+- Egg (white) (retail, narahenpita) (Rs/each) [float64] null=44.5% nuniq=59 min=13.5 max=62.0
+- Banana (sour) (wholesale, pettah) (Rs/kg) [float64] null=4.1% nuniq=33 min=40.0 max=250.0
+- Banana (sour) (wholesale, dambulla) (Rs/kg) [float64] null=42.0% nuniq=62 min=13.0 max=220.0
+- Banana (sour) (retail, dambulla) (Rs/kg) [float64] null=43.4% nuniq=64 min=38.0 max=250.0
+- Banana (sour) (retail, narahenpita) (Rs/kg) [float64] null=38.7% nuniq=33 min=55.0 max=390.0
+- Papaw (wholesale, dambulla) (Rs/kg) [float64] null=42.1% nuniq=83 min=9.0 max=325.0
+- Papaw (retail, dambulla) (Rs/kg) [float64] null=43.5% nuniq=87 min=29.0 max=355.0
+- Papaw (retail, narahenpita) (Rs/kg) [float64] null=38.7% nuniq=40 min=60.0 max=500.0
+- Pineapple (wholesale, dambulla) (Rs/kg) [float64] null=42.0% nuniq=157 min=38.0 max=815.0
+- Pineapple (retail, dambulla) (Rs/kg) [float64] null=43.4% nuniq=159 min=65.0 max=845.0
+- Pineapple (retail, narahenpita) (Rs/kg) [float64] null=38.7% nuniq=56 min=80.0 max=1000.0
+- Samba (wholesale, pettah) (Rs/kg) [float64] null=4.2% nuniq=114 min=75.0 max=260.0
+- Samba (wholesale, marandagahamula) (Rs/kg) [float64] null=2.8% nuniq=158 min=69.0 max=268.0
+- Samba (retail, dambulla) (Rs/kg) [float64] null=36.1% nuniq=59 min=83.0 max=272.0
+- Nadu (wholesale, pettah) (Rs/kg) [float64] null=3.7% nuniq=129 min=60.0 max=250.0
+- Nadu (wholesale, marandagahamula) (Rs/kg) [float64] null=2.8% nuniq=151 min=62.0 max=268.0
+- Nadu (retail, dambulla) (Rs/kg) [float64] null=31.8% nuniq=77 min=81.0 max=253.0
+- Nadu (retail, narahenpita) (Rs/kg) [float64] null=41.9% nuniq=34 min=90.0 max=230.0
+- Kekulu (white) (wholesale, pettah) (Rs/kg) [float64] null=3.8% nuniq=133 min=55.0 max=248.0
+- Kekulu (white) (wholesale, marandagahamula) (Rs/kg) [float64] null=4.0% nuniq=142 min=57.0 max=248.0
+- Kekulu (white) (retail, dambulla) (Rs/kg) [float64] null=32.0% nuniq=83 min=77.0 max=245.0
+- Kekulu (white) (retail, narahenpita) (Rs/kg) [float64] null=44.0% nuniq=34 min=93.0 max=250.0
+- Kekulu (red) (wholesale, pettah) (Rs/kg) [float64] null=4.1% nuniq=128 min=54.0 max=260.0
+- Kekulu (red) (wholesale, marandagahamula) (Rs/kg) [float64] null=5.6% nuniq=144 min=56.0 max=290.0
+- Kekulu (red) (retail, dambulla) (Rs/kg) [float64] null=37.6% nuniq=70 min=71.0 max=230.0
+- Kekulu (red) (retail, narahenpita) (Rs/kg) [float64] null=43.1% nuniq=36 min=92.0 max=260.0
+- Kelawalla (wholesale, peliyagoda) (Rs/kg) [float64] null=12.4% nuniq=65 min=350.0 max=2500.0
+- Kelawalla (wholesale, negombo) (Rs/kg) [float64] null=6.8% nuniq=96 min=330.0 max=1900.0
+- Kelawalla (retail, negombo) (Rs/kg) [float64] null=7.6% nuniq=135 min=520.0 max=2860.0
+- Kelawalla (retail, narahenpita) (Rs/kg) [float64] null=42.8% nuniq=141 min=600.0 max=3480.0
+- Thalapath (wholesale, peliyagoda) (Rs/kg) [float64] null=26.8% nuniq=73 min=400.0 max=2700.0
+- Thalapath (retail, narahenpita) (Rs/kg) [float64] null=44.7% nuniq=111 min=94.0 max=3380.0
+- Balaya (retail, narahenpita) (Rs/kg) [float64] null=53.6% nuniq=91 min=300.0 max=1820.0
+- Paraw (wholesale, negombo) (Rs/kg) [float64] null=27.9% nuniq=87 min=250.0 max=1750.0
+- Paraw (retail, negombo) (Rs/kg) [float64] null=28.4% nuniq=176 min=340.0 max=2925.0
+- Paraw (retail, narahenpita) (Rs/kg) [float64] null=55.8% nuniq=120 min=320.0 max=3160.0
+- Salaya (wholesale, negombo) (Rs/kg) [float64] null=8.9% nuniq=83 min=50.0 max=900.0
+- Salaya (retail, negombo) (Rs/kg) [float64] null=9.5% nuniq=94 min=80.0 max=1150.0
+- Salaya (retail, narahenpita) (Rs/kg) [float64] null=41.3% nuniq=67 min=140.0 max=1160.0
+- Hurulla (wholesale, negombo) (Rs/kg) [float64] null=18.4% nuniq=108 min=110.0 max=1400.0
+- Hurulla (retail, negombo) (Rs/kg) [float64] null=19.0% nuniq=122 min=220.0 max=1640.0
+- Hurulla (retail, narahenpita) (Rs/kg) [float64] null=59.4% nuniq=88 min=300.0 max=2440.0
+- Dried chilli (imp) (wholesale, dambulla) (Rs/kg) [float64] null=12.4% nuniq=316 min=145.0 max=1975.0
+- Dried chilli (imp) (retail, dambulla) (Rs/kg) [float64] null=13.3% nuniq=334 min=138.0 max=2005.0
+- Coconut (avg.) (wholesale, pettah) (Rs/nut) [float64] null=46.3% nuniq=62 min=65.0 max=195.0
+- Papaw (wholesale, pettah) (Rs/kg) [float64] null=4.3% nuniq=47 min=40.0 max=360.0
+- Thalapath (wholesale, negombo) (Rs/kg) [float64] null=16.6% nuniq=113 min=480.0 max=2500.0
+- Thalapath (retail, negombo) (Rs/kg) [float64] null=18.8% nuniq=136 min=650.0 max=3150.0
+- Balaya (wholesale, peliyagoda) (Rs/kg) [float64] null=13.2% nuniq=63 min=150.0 max=1500.0
+- Balaya (wholesale, negombo) (Rs/kg) [float64] null=41.9% nuniq=82 min=140.0 max=1450.0
+- Balaya (retail, negombo) (Rs/kg) [float64] null=41.9% nuniq=107 min=260.0 max=2400.0
+- Paraw (wholesale, peliyagoda) (Rs/kg) [float64] null=20.4% nuniq=57 min=300.0 max=2000.0
+- Salaya (wholesale, peliyagoda) (Rs/kg) [float64] null=7.6% nuniq=65 min=60.0 max=1000.0
+- Hurulla (wholesale, peliyagoda) (Rs/kg) [float64] null=21.9% nuniq=70 min=40.0 max=1600.0
+- Red onion (local) (wholesale, pettah) (Rs/kg) [float64] null=13.3% nuniq=276 min=65.0 max=618.0
+- Red onion (imp) (wholesale, dambulla) (Rs/kg) [float64] null=42.5% nuniq=166 min=53.0 max=625.0
+- Red onion (imp) (retail, dambulla) (Rs/kg) [float64] null=42.9% nuniq=177 min=21.0 max=655.0
+- Samba (retail, narahenpita) (Rs/kg) [float64] null=59.5% nuniq=29 min=90.0 max=240.0
+- Beans (retail, pettah) (Rs/kg) [float64] null=6.0% nuniq=148 min=67.0 max=1250.0
+- Carrot (retail, pettah) (Rs/kg) [float64] null=6.0% nuniq=167 min=60.0 max=2100.0
+- Cabbage (retail, pettah) (Rs/kg) [float64] null=6.0% nuniq=121 min=40.0 max=750.0
+- Tomato (retail, pettah) (Rs/kg) [float64] null=6.0% nuniq=155 min=40.0 max=950.0
+- Brinjal (retail, pettah) (Rs/kg) [float64] null=6.0% nuniq=122 min=20.0 max=850.0
+- Pumpkin (retail, pettah) (Rs/kg) [float64] null=6.3% nuniq=88 min=37.0 max=400.0
+- Snake gourd (retail, pettah) (Rs/kg) [float64] null=6.0% nuniq=96 min=50.0 max=600.0
+- Green chilli (retail, pettah) (Rs/kg) [float64] null=33.3% nuniq=82 min=120.0 max=1600.0
+- Lime (retail, pettah) (Rs/kg) [float64] null=33.3% nuniq=82 min=60.0 max=2500.0
+- Red onion (imp) (retail, pettah) (Rs/kg) [float64] null=34.0% nuniq=94 min=80.0 max=700.0
+- Big onion (imp) (retail, pettah) (Rs/kg) [float64] null=7.1% nuniq=174 min=50.0 max=775.0
+- Potato (imp) (retail, pettah) (Rs/kg) [float64] null=6.4% nuniq=95 min=60.0 max=307.0
+- Dried chilli (imp) (retail, pettah) (Rs/kg) [float64] null=6.6% nuniq=128 min=190.0 max=2000.0
+- Sugar (white) (retail, pettah) (Rs/kg) [float64] null=45.5% nuniq=69 min=110.0 max=350.0
+- Samba (retail, pettah) (Rs/kg) [float64] null=11.0% nuniq=64 min=85.0 max=260.0
+- Nadu (retail, pettah) (Rs/kg) [float64] null=11.2% nuniq=67 min=70.0 max=260.0
+- Kekulu (white) (retail, pettah) (Rs/kg) [float64] null=11.9% nuniq=74 min=63.0 max=280.0
+- Kekulu (red) (retail, pettah) (Rs/kg) [float64] null=10.5% nuniq=74 min=64.0 max=280.0
+- Coconut oil (retail, pettah) (Rs/litre) [float64] null=6.7% nuniq=113 min=200.0 max=973.0
+- Egg (white) (retail, pettah) (Rs/each) [float64] null=48.3% nuniq=103 min=13.5 max=60.5
+- Red onion (local) (retail, pettah) (Rs/kg) [float64] null=34.9% nuniq=121 min=85.0 max=690.0
+- Potato (local) (retail, pettah) (Rs/kg) [float64] null=7.5% nuniq=108 min=100.0 max=480.0
+- Coconut (avg.) (retail, pettah) (Rs/nut) [float64] null=47.5% nuniq=44 min=65.0 max=250.0
+- Banana (sour) (retail, pettah) (Rs/kg) [float64] null=6.6% nuniq=35 min=60.0 max=300.0
+- Papaw (retail, pettah) (Rs/kg) [float64] null=6.6% nuniq=46 min=55.0 max=400.0
+- Pineapple (retail, pettah) (Rs/kg) [float64] null=6.7% nuniq=73 min=85.0 max=675.0
+- Apple (imp) (retail, pettah) (Rs/each) [float64] null=29.4% nuniq=37 min=35.0 max=250.0
+- Orange (imp) (retail, pettah) (Rs/each) [float64] null=30.0% nuniq=43 min=35.0 max=350.0
+- Big onion (local) (retail, narahenpita) (Rs/kg) [float64] null=93.7% nuniq=16 min=90.0 max=380.0
+- Big onion (local) (retail, pettah) (Rs/kg) [float64] null=81.0% nuniq=59 min=65.0 max=400.0
+- Apple (imp) (retail, narahenpita) (Rs/each) [float64] null=49.4% nuniq=31 min=60.0 max=380.0
+- Orange (imp) (retail, narahenpita) (Rs/each) [float64] null=50.2% nuniq=35 min=50.0 max=450.0
+- Big onion (local) (wholesale, dambulla) (Rs/kg) [float64] null=66.9% nuniq=127 min=45.0 max=515.0
+- Big onion (local) (wholesale, pettah) (Rs/kg) [float64] null=75.5% nuniq=162 min=53.0 max=400.0
+- Linna (wholesale, peliyagoda) (Rs/kg) [float64] null=52.2% nuniq=74 min=300.0 max=1550.0
+- Linna (wholesale, negombo) (Rs/kg) [float64] null=52.4% nuniq=95 min=320.0 max=1380.0
+- Linna (retail, negombo) (Rs/kg) [float64] null=52.4% nuniq=101 min=480.0 max=12220.0
+- Linna (retail, narahenpita) (Rs/kg) [float64] null=52.8% nuniq=86 min=420.0 max=1790.0
+- Potato (imp) (wholesale, dambulla) (Rs/kg) [float64] null=51.2% nuniq=72 min=90.0 max=335.0
+- Big onion (local) (retail, dambulla) (Rs/kg) [float64] null=67.7% nuniq=123 min=58.0 max=535.0
+- Potato (imp) (retail, dambulla) (Rs/kg) [float64] null=51.2% nuniq=74 min=100.0 max=355.0
+- Ponni samba (imp) (wholesale, pettah) (Rs/kg) [float64] null=59.5% nuniq=92 min=116.0 max=283.0
+- Ponni samba (imp) (retail, narahenpita) (Rs/kg) [float64] null=61.7% nuniq=36 min=128.0 max=315.0
+- Ponni samba (imp) (retail, pettah) (Rs/kg) [float64] null=61.8% nuniq=44 min=125.0 max=300.0
+- Sprat (imp) (wholesale, pettah) (Rs/kg) [float64] null=55.0% nuniq=56 min=800.0 max=1600.0
+- Sprat (imp) (retail, pettah) (Rs/kg) [float64] null=55.0% nuniq=48 min=900.0 max=1800.0
+- Sprat (imp) (retail, narahenpita) (Rs/kg) [float64] null=60.9% nuniq=13 min=1000.0 max=2850.0
+- Red dhal (wholesale, pettah) (Rs/kg) [float64] null=61.8% nuniq=86 min=224.0 max=360.0
+- Red dhal (retail, pettah) (Rs/kg) [float64] null=61.9% nuniq=34 min=245.0 max=380.0
+- Red dhal (retail, narahenpita) (Rs/kg) [float64] null=62.2% nuniq=12 min=260.0 max=380.0
+- Katta (imp) (wholesale, pettah) (Rs/kg) [float64] null=72.1% nuniq=39 min=1500.0 max=2267.0
+- Katta (imp) (retail, pettah) (Rs/kg) [float64] null=72.1% nuniq=28 min=1900.0 max=3000.0
+- Dhal (wholesale, pettah) (Rs/kg) [float64] null=45.0% nuniq=210 min=95.0 max=618.0
+- Dhal (retail, narahenpita) (Rs/kg) [float64] null=79.9% nuniq=51 min=140.0 max=640.0
+- Katta (retail, narahenpita) (Rs/kg) [float64] null=66.9% nuniq=26 min=1000.0 max=3600.0
+- Sprat (retail, narahenpita) (Rs/kg) [float64] null=83.8% nuniq=17 min=680.0 max=1280.0
+- Pineapple (wholesale, pettah) (Rs/kg) [float64] null=63.2% nuniq=37 min=80.0 max=350.0
+- Apple (imp) (wholesale, dambulla) (Rs/each) [float64] null=95.3% nuniq=17 min=28.0 max=59.0
+- Orange (imp) (wholesale, dambulla) (Rs/each) [float64] null=95.3% nuniq=12 min=47.0 max=80.0
+- Katta (wholesale, pettah) (Rs/kg) [float64] null=31.9% nuniq=53 min=775.0 max=2500.0
+- Sprat (wholesale, pettah) (Rs/kg) [float64] null=48.6% nuniq=46 min=440.0 max=1050.0
+- Red onion (imp) (retail, narahenpita) (Rs/kg) [float64] null=54.1% nuniq=38 min=140.0 max=750.0
+- Dhal (retail, pettah) (Rs/kg) [float64] null=48.8% nuniq=90 min=65.0 max=630.0
+- Katta (retail, pettah) (Rs/kg) [float64] null=34.8% nuniq=31 min=825.0 max=2700.0
+- Sprat (retail, pettah) (Rs/kg) [float64] null=52.3% nuniq=18 min=460.0 max=1200.0
+- Kelawalla (retail, dambulla) (Rs/kg) [float64] null=97.2% nuniq=16 min=740.0 max=1160.0
+- Paraw (retail, dambulla) (Rs/kg) [float64] null=98.5% nuniq=15 min=740.0 max=1430.0
+- Salaya (retail, dambulla) (Rs/kg) [float64] null=97.9% nuniq=16 min=180.0 max=390.0
+- Hurulla (retail, dambulla) (Rs/kg) [float64] null=97.4% nuniq=20 min=410.0 max=650.0
+- Linna (retail, dambulla) (Rs/kg) [float64] null=97.3% nuniq=20 min=480.0 max=690.0
+- Thalapath (retail, dambulla) (Rs/kg) [float64] null=98.0% nuniq=14 min=1280.0 max=1690.0
+- Balaya (retail, dambulla) (Rs/kg) [float64] null=98.7% nuniq=16 min=430.0 max=790.0
+- Nadu (imp) (wholesale, pettah) (Rs/kg) [float64] null=77.8% nuniq=65 min=110.0 max=235.0
+- Kekulu (white) (imp) (wholesale, pettah) (Rs/kg) [float64] null=77.0% nuniq=73 min=100.0 max=220.0
+- Ponni samba (imp) (wholesale, marandagahamula) (Rs/kg) [float64] null=86.6% nuniq=52 min=120.0 max=255.0
+- Nadu (imp) (wholesale, marandagahamula) (Rs/kg) [float64] null=87.0% nuniq=43 min=110.0 max=240.0
+- Kekulu (white) (imp) (wholesale, marandagahamula) (Rs/kg) [float64] null=87.0% nuniq=37 min=104.0 max=230.0
+- Nadu (imp) (retail, narahenpita) (Rs/kg) [float64] null=82.9% nuniq=24 min=85.0 max=250.0
+- Kekulu (white) (imp) (retail, narahenpita) (Rs/kg) [float64] null=76.8% nuniq=24 min=110.0 max=245.0
+- Kekulu (white) (imp) (retail, pettah) (Rs/kg) [float64] null=78.9% nuniq=25 min=115.0 max=240.0
+- Nadu (imp) (retail, pettah) (Rs/kg) [float64] null=80.7% nuniq=24 min=120.0 max=260.0
+- Katta (imp) (retail, narahenpita) (Rs/kg) [float64] null=85.2% nuniq=9 min=2200.0 max=3400.0
+- Kelawalla (retail, peliyagoda) (Rs/kg) [float64] null=63.8% nuniq=45 min=540.0 max=1100.0
+- Thalapath (retail, peliyagoda) (Rs/kg) [float64] null=69.3% nuniq=40 min=577.0 max=1100.0
+- Balaya (retail, peliyagoda) (Rs/kg) [float64] null=63.0% nuniq=30 min=250.0 max=650.0
+- Salaya (retail, peliyagoda) (Rs/kg) [float64] null=61.8% nuniq=27 min=120.0 max=450.0
+- Hurulla (retail, peliyagoda) (Rs/kg) [float64] null=65.4% nuniq=34 min=250.0 max=750.0
+- Coconut (wholesale, pettah) (Rs/nut) [float64] null=63.9% nuniq=54 min=30.0 max=85.0
+- Coconut (retail, pettah) (Rs/nut) [float64] null=61.8% nuniq=45 min=37.0 max=95.0
+- Coconut (wholesale, dambulla) (Rs/nut) [float64] null=60.9% nuniq=57 min=23.0 max=83.0
+- Coconut (retail, dambulla) (Rs/nut) [float64] null=61.1% nuniq=54 min=32.0 max=88.0
+- Coconut oil (wholesale, pettah, rs/kg) (Rs/kg) [float64] null=99.9% nuniq=1 min=220.0 max=220.0 top={'220.0': 2}
+- Coconut oil (retail, pettah, rs/kg) (Rs/kg) [float64] null=99.9% nuniq=1 min=250.0 max=250.0 top={'250.0': 2}
+- Sugar (wholesale, pettah) (Rs/kg) [float64] null=60.7% nuniq=30 min=90.0 max=130.0
+- Sugar (retail, pettah) (Rs/kg) [float64] null=61.9% nuniq=21 min=95.0 max=142.0
+- Egg (wholesale, pettah) (Rs/each) [float64] null=61.3% nuniq=37 min=9.0 max=22.0
+- Egg (retail, pettah) (Rs/each) [float64] null=61.9% nuniq=46 min=9.5 max=23.0
+- Paraw (retail, peliyagoda) (Rs/kg) [float64] null=65.9% nuniq=48 min=420.0 max=1150.0
+- Apple (imp) (retail, pettah, rs/kg) (Rs/kg) [float64] null=99.6% nuniq=4 min=45.0 max=51.0 top={'45.0': 5, '50.0': 4, '48.0': 1, '51.0': 1}
+- Orange (imp) (retail, pettah, rs/kg) (Rs/kg) [float64] null=99.6% nuniq=4 min=48.0 max=60.0 top={'50.0': 5, '48.0': 3, '53.0': 2, '60.0': 1}
+- Dhal (whole) (wholesale, pettah) (Rs/kg) [float64] null=99.8% nuniq=4 min=145.0 max=160.0 top={'150.0': 2, '160.0': 2, '145.0': 1, '155.0': 1}
+- Dhal (small) (wholesale, pettah) (Rs/kg) [float64] null=96.0% nuniq=7 min=135.0 max=163.0 top={'140.0': 46, '135.0': 25, '160.0': 12, '138.0': 10, '137.0': 3, '163.0': 1, '145.0': 1}
+- Beans (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=6 min=65.0 max=135.0 top={'130.0': 4, '65.0': 2, '120.0': 2, '95.0': 1, '135.0': 1, '110.0': 1}
+- Carrot (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=8 min=70.0 max=100.0 top={'90.0': 4, '88.0': 1, '75.0': 1, '95.0': 1, '70.0': 1, '80.0': 1, '85.0': 1, '100.0': 1}
+- Cabbage (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=6 min=55.0 max=80.0 top={'65.0': 4, '75.0': 2, '70.0': 2, '55.0': 1, '60.0': 1, '80.0': 1}
+- Tomato (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=4 min=45.0 max=70.0 top={'60.0': 5, '70.0': 3, '48.0': 2, '45.0': 1}
+- Brinjal (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=6 min=55.0 max=100.0 top={'80.0': 4, '65.0': 2, '90.0': 2, '55.0': 1, '100.0': 1, '85.0': 1}
+- Pumpkin (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=6 min=55.0 max=80.0 top={'60.0': 4, '65.0': 3, '55.0': 1, '70.0': 1, '80.0': 1, '75.0': 1}
+- Snake gourd (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=5 min=65.0 max=140.0 top={'65.0': 3, '110.0': 3, '120.0': 3, '140.0': 1, '130.0': 1}
+- Banana (sour) (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=3 min=70.0 max=100.0 top={'80.0': 7, '100.0': 3, '70.0': 1}
+- Papaw (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=7 min=65.0 max=120.0 top={'80.0': 3, '70.0': 2, '120.0': 2, '65.0': 1, '85.0': 1, '90.0': 1, '100.0': 1}
+- Pineapple (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=4 min=100.0 max=130.0 top={'120.0': 5, '130.0': 3, '110.0': 2, '100.0': 1}
+- Samba (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=1 min=90.0 max=90.0 top={'90.0': 9}
+- Nadu (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=1 min=90.0 max=90.0 top={'90.0': 9}
+- Kelawalla (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=7 min=620.0 max=1200.0 top={'880.0': 3, '1200.0': 2, '890.0': 2, '620.0': 1, '1100.0': 1, '850.0': 1, '700.0': 1}
+- Thalapath (wholesale, narahenpita) (Rs/kg) [float64] null=99.8% nuniq=3 min=780.0 max=1000.0 top={'780.0': 2, '1000.0': 1, '950.0': 1}
+- Paraw (wholesale, narahenpita) (Rs/kg) [float64] null=99.7% nuniq=6 min=700.0 max=1200.0 top={'1200.0': 2, '850.0': 2, '700.0': 1, '880.0': 1, '950.0': 1, '1020.0': 1}
+- Salaya (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=8 min=250.0 max=360.0 top={'300.0': 3, '360.0': 2, '345.0': 1, '250.0': 1, '260.0': 1, '280.0': 1, '340.0': 1, '350.0': 1}
+- Red onion (imp) (wholesale, narahenpita) (Rs/kg) [float64] null=99.8% nuniq=4 min=200.0 max=380.0 top={'200.0': 1, '220.0': 1, '240.0': 1, '380.0': 1}
+- Big onion (imp) (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=6 min=60.0 max=80.0 top={'65.0': 4, '80.0': 2, '70.0': 2, '68.0': 1, '75.0': 1, '60.0': 1}
+- Potato (local) (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=6 min=130.0 max=200.0 top={'160.0': 4, '135.0': 2, '180.0': 2, '143.0': 1, '130.0': 1, '200.0': 1}
+- Coconut (wholesale, narahenpita) (Rs/nut) [float64] null=99.6% nuniq=5 min=65.0 max=75.0 top={'75.0': 5, '65.0': 2, '73.0': 2, '68.0': 1, '70.0': 1}
+- Coconut oil (wholesale, narahenpita) (Rs/litre) [float64] null=99.6% nuniq=3 min=493.0 max=563.0 top={'493.0': 6, '563.0': 3, '507.0': 2}
+- Dhal (small) (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=2 min=160.0 max=170.0 top={'170.0': 9, '160.0': 2}
+- Sugar (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=4 min=112.0 max=120.0 top={'120.0': 5, '119.0': 3, '118.0': 2, '112.0': 1}
+- Egg (wholesale, narahenpita) (Rs/each) [float64] null=99.6% nuniq=2 min=13.0 max=14.0 top={'13.0': 10, '14.0': 1}
+- Katta (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=3 min=1550.0 max=1650.0 top={'1600.0': 6, '1650.0': 3, '1550.0': 2}
+- Sprat (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=3 min=590.0 max=800.0 top={'720.0': 5, '590.0': 3, '800.0': 3}
+- Green chilli (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=8 min=75.0 max=160.0 top={'150.0': 2, '140.0': 2, '160.0': 2, '90.0': 1, '75.0': 1, '85.0': 1, '130.0': 1, '120.0': 1}
+- Lime (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=8 min=400.0 max=650.0 top={'550.0': 4, '400.0': 1, '415.0': 1, '480.0': 1, '520.0': 1, '560.0': 1, '650.0': 1, '600.0': 1}
+- Balaya (wholesale, narahenpita) (Rs/kg) [float64] null=99.8% nuniq=5 min=300.0 max=480.0 top={'480.0': 2, '380.0': 1, '300.0': 1, '320.0': 1, '440.0': 1}
+- Potato (imp) (wholesale, narahenpita) (Rs/kg) [float64] null=99.6% nuniq=5 min=80.0 max=110.0 top={'110.0': 3, '95.0': 2, '80.0': 2, '100.0': 2, '105.0': 1}
+- Apple (imp) (wholesale, pettah) (Rs/each) [float64] null=99.3% nuniq=7 min=38.0 max=50.0 top={'38.0': 7, '40.0': 3, '50.0': 2, '42.0': 2, '48.0': 1, '44.0': 1, '45.0': 1}
+- Orange (imp) (wholesale, pettah) (Rs/each) [float64] null=99.3% nuniq=6 min=39.0 max=50.0 top={'45.0': 11, '49.0': 2, '39.0': 1, '40.0': 1, '50.0': 1, '44.0': 1}
+- Hurulla (wholesale, narahenpita) (Rs/kg) [float64] null=99.9% nuniq=2 min=540.0 max=600.0 top={'540.0': 1, '600.0': 1}
+- Dried chilli (imp) (wholesale, narahenpita) (Rs/kg) [float64] null=99.7% nuniq=3 min=500.0 max=600.0 top={'500.0': 5, '600.0': 2, '540.0': 1}
+- Red onion (local) (wholesale, narahenpita) (Rs/kg) [float64] null=99.7% nuniq=4 min=260.0 max=300.0 top={'300.0': 3, '290.0': 2, '280.0': 1, '260.0': 1}
+- Coconut (retail, narahenpita) (Rs/nut) [float64] null=96.5% nuniq=7 min=65.0 max=80.0 top={'73.0': 51, '70.0': 23, '75.0': 5, '65.0': 5, '68.0': 1, '78.0': 1, '80.0': 1}
+- Dhal (small) (retail, narahenpita) (Rs/kg) [float64] null=96.7% nuniq=5 min=140.0 max=170.0 top={'160.0': 38, '170.0': 14, '150.0': 14, '140.0': 9, '148.0': 7}
+- Sugar (retail, narahenpita) (Rs/kg) [float64] null=96.7% nuniq=6 min=112.0 max=135.0 top={'130.0': 47, '135.0': 24, '125.0': 6, '115.0': 3, '116.0': 1, '112.0': 1}
+- Egg (retail, narahenpita) (Rs/each) [float64] null=96.8% nuniq=8 min=15.0 max=23.0 top={'20.0': 35, '22.0': 17, '21.0': 14, '17.0': 6, '15.0': 4, '23.0': 2, '16.0': 1, '19.0': 1}
+- Dhal (small) (retail, pettah) (Rs/kg) [float64] null=96.8% nuniq=3 min=145.0 max=150.0 top={'150.0': 52, '145.0': 24, '148.0': 2}
+- Apple (imp) (retail, dambulla) (Rs/each) [float64] null=99.7% nuniq=7 min=33.0 max=70.0 top={'50.0': 2, '44.0': 1, '33.0': 1, '64.0': 1, '63.0': 1, '67.0': 1, '70.0': 1}
+- Orange (imp) (retail, dambulla) (Rs/each) [float64] null=99.7% nuniq=3 min=60.0 max=70.0 top={'60.0': 6, '70.0': 1, '65.0': 1}

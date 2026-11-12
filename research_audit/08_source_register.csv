@@ -1,0 +1,22 @@
+source,dataset,file_location,format,records,start,end,frequency,geography,git_ignored,independent_of_others,analytically_usable,notes
+FAOSTAT,Crop & livestock production (Sri Lanka),raw/FAOSTAT/extracted/sri_lanka_crop_production.csv,CSV,14143,1961,2024,annual,national,no (bulk zip/csv ignored),no for rice (=DCS paddy),yes,120 items; flags A/E/I/X/M
+FAOSTAT,Crop & livestock trade (Sri Lanka),raw/FAOSTAT_TRADE/extracted/sri_lanka_agricultural_trade.csv,CSV,80140,1961,2024,annual,national,no (bulk ignored),partly (customs same as Comtrade),yes with care,487 items incl. aggregates; mixed units
+UN Comtrade,Annual all-flow HS trade (15 yrs),raw/COMTRADE/annual_api/sri_lanka_trade_all_flows_YYYY.csv,CSV,"~140k-400k per year",2010,2025,annual (2018 missing),national x partner x HS,yes,partly,yes (2025 incomplete),HS revision H3->H6; use partnerCode=0 or partner rows not both; flowCode M only for imports
+UN Comtrade,Monthly JSON,raw/COMTRADE/monthly/,JSON,0 usable (2012 only),2012,2012,monthly,national,yes,-,no,other months empty stubs
+ECMWF,ERA5-Land hourly t2m/d2m/tp,raw/EAR5/downloads/*.nc,NetCDF,147693 hours x 51x31,2010-01,2026-11,hourly,0.1 deg grid (541 land cells),yes,yes,yes (use derived/),tp accumulated; ERA5T 2026-09..11
+ECMWF,ERA5 national (existing processed),raw/EAR5/processed/*.csv,CSV,147693 / 203,2010,2026,hourly(mislabelled daily)/monthly,national,no,-,t2m/d2m yes; tp NO,tp overstated 12-21x
+Audit-derived,ERA5 corrected daily & monthly,research_audit/derived/era5_daily.csv + era5_monthly.csv,CSV,6153 / 203,2010-01-01,2026-11-06,daily/monthly,national,no,-,yes,tp(D)=00UTC(D+1)
+CHIRPS,Daily rainfall,raw/chirp/,GeoTIFF+CSV,1 day,2010-01-01,2010-01-01,daily,0.05 deg,no (tif tracked?),yes,no,single day only
+DCS,Paddy national Maha/Yala,raw/pdf/PaddyExtent_{Maha_Season-1951-2024|Yala_Season-1951-2024}.xlsx,XLSX,75 + 74 seasons,1951,2025,seasonal,national,no,no (FAO copies it),yes,sown/harvested/yield/production
+DCS,Paddy district production/extent/yield,raw/pdf/{Production|Sown_Extent|Harvested_Extent|Average_Yeild}-*.xlsx,XLSX,2726 + 31920 cells,1978/79,2025/26,seasonal,district (30-32 labels),no,yes,yes with name cleaning,tidy in derived/dcs_district_*.csv
+HARTI,Weekly food commodities bulletin tables,raw/pdf/HARTI/tables/*.csv,CSV,"36k-120k per table",2015-06-12,2026-10-16,weekly (516 weeks),market,tables no / PDFs yes,partly (CBSL),summary_retail+retail_rice+retail_vegetables yes; retail_subsidiary/wholesale_rice no,38 gaps >7d; duplicate weeks; labels
+World Bank,Real-time food prices (RTFP) Sri Lanka,raw/world_bank/food_prices_lka.csv,CSV,10516 (44 markets x 239 mo),2007-01,2026-11,monthly,market,csv no / jsonl yes,no,marginal,only 3 observed series; modelled indices
+CBSL,Daily food prices,raw/cbsl-daily-prices.csv,CSV,2463,2016-08-01,2026-11-09,daily,Pettah/Dambulla/Narahenpita,no,partly (HARTI),yes,vegetables; ~45 series
+CBSL,Exchange rates (annual),raw/CBSL-exchange-rates.csv,CSV,40,1986,2025,annual,national,no,yes,yes (long-run only),
+CBSL,Food & beverage imports (LKR mn),raw/CBSL-food-and -beverages.csv,CSV,237,2007-01,2026-09,monthly,national,no,partly,yes,
+CBSL,Vegetable imports (USD mn),raw/CBSL-vegetable-imports.csv,CSV,237,2007-01,2026-09,monthly,national,no,partly,yes,
+CBSL,Rice import quantity ('000 MT),raw/CBSL-rice-imports-quanitties.csv,CSV,68,2021-01,2026-08,monthly,national,no,no (= Comtrade),yes,fills Comtrade 2025
+CBSL,USD/LKR spot,raw/pdf/Indicative Rate of the USD_LKR SPOT Exchange Rate.csv,CSV,3532,2010-05-07,2026-11-11,daily,national,no,yes,yes,probable meaning of 'SPOR'
+CBSL,Indicative rates (6 currencies),raw/pdf/Indicative Exchange Rates.csv,CSV,21039,2010-05-07,2026-11-11,daily,national,no,partly,yes,
+CBSL,Buy & sell rates (4 currencies),raw/pdf/Buy and Sell Exchange Rates.csv,CSV,13500,2010-05-07,2026-11-11,daily,national,no,partly,yes with care,JPY sell max 2785.9 anomaly
+SPOR,(not found),-,-,-,-,-,-,-,-,-,-,no dataset named SPOR exists in the project

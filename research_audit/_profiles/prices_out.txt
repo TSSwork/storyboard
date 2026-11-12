@@ -1,0 +1,46 @@
+Spearman paddy(detr) vs FAO imports: -0.59 | excl 2017 & 2022 r= -0.46
+FX rows 3532 2010-05-07 2026-11-11 dup dates 0 USDLKR range 109.5 364.8
+retail_rice locations per week (median): 29.0  | price mid range 47.5 1943.5
+monthly months: 132 2015-06-01 2026-10-01 | Colombo-only coverage: {'Keeri Samba': 56, 'Nadu 1': 127, 'Nadu 2': 99, 'Raw Red': 132, 'Raw White': 132, 'Samba 1': 132, 'Samba 2': 90, 'Samba 3': 9}
+
+== C1. HARTI rice (all-location mean) vs USD/LKR, monthly log-differences
+  Samba 1                      dlog(price) vs dlog(USDLKR) lag0..6: [np.float64(0.36), np.float64(0.36), np.float64(0.2), np.float64(0.06), np.float64(-0.15), np.float64(-0.2), np.float64(-0.1)] n= 131
+  Nadu 1                       dlog(price) vs dlog(USDLKR) lag0..6: [np.float64(0.36), np.float64(0.35), np.float64(0.25), np.float64(0.1), np.float64(-0.13), np.float64(-0.32), np.float64(-0.11)] n= 131
+  Raw Red                      dlog(price) vs dlog(USDLKR) lag0..6: [np.float64(0.34), np.float64(0.28), np.float64(0.17), np.float64(0.06), np.float64(-0.1), np.float64(-0.18), np.float64(-0.16)] n= 131
+  Raw White                    dlog(price) vs dlog(USDLKR) lag0..6: [np.float64(0.3), np.float64(0.27), np.float64(0.15), np.float64(0.02), np.float64(-0.13), np.float64(-0.16), np.float64(-0.12)] n= 131
+  Keeri Samba                  dlog(price) vs dlog(USDLKR) lag0..6: [np.float64(0.13), np.float64(0.12), np.float64(0.1), np.float64(-0.06), np.float64(-0.1), np.float64(-0.08), np.float64(-0.08)] n= 59
+  Dec-2021->Dec-2022: Nadu1 +53%  USDLKR +80%
+
+summary_retail candidate series (weeks): {'Big Onion | Imported': 408, 'Coconut | Large': 483, 'Dried Chillies | Imported': 409, 'Potato | Imported': 408, "Potato | N'Eliya": 408, 'Potato | Welimada': 175, 'Pulses | Red Dhal': 409, 'Rice > Local | Keeri Samba': 215, 'Rice > Local | Nadu 1': 407, 'Rice > Local | Nadu 2': 317, 'Rice > Local | Raw (Red)': 407, 'Rice > Local | Raw (White)': 407, 'Rice > Local | Samba 1': 407, 'Rice > Local | Samba 2': 319, 'Root Crops | Sweet Potato': 409}
+== C2. 2021-12 -> 2022-12 change (%), imported vs local items, and corr of dlog with dlog(USDLKR) lag0..3
+  Big Onion | Imported                 n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(0.05), np.float64(0.06), np.float64(0.0), np.float64(-0.06)]
+  Coconut | Large                      n_months=125 chg2022=   nan%  r_lag0..3=[np.float64(-0.02), np.float64(0.01), np.float64(-0.04), np.float64(0.0)]
+  Dried Chillies | Imported            n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(0.32), np.float64(0.31), np.float64(0.17), np.float64(0.11)]
+  Potato | Imported                    n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(0.13), np.float64(0.18), np.float64(0.04), np.float64(0.07)]
+  Potato | N'Eliya                     n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(-0.02), np.float64(0.08), np.float64(0.14), np.float64(0.27)]
+  Potato | Welimada                    n_months= 47 chg2022=   nan%  r_lag0..3=[np.float64(0.08), np.float64(0.38), np.float64(0.22), np.float64(-0.05)]
+  Pulses | Red Dhal                    n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(0.38), np.float64(0.33), np.float64(0.13), np.float64(0.03)]
+  Rice > Local | Keeri Samba           n_months= 54 chg2022=   nan%  r_lag0..3=[np.float64(0.22), np.float64(0.23), np.float64(0.15), np.float64(-0.04)]
+  Rice > Local | Nadu 1                n_months= 99 chg2022=   nan%  r_lag0..3=[np.float64(0.29), np.float64(0.32), np.float64(0.17), np.float64(0.11)]
+  Rice > Local | Nadu 2                n_months= 72 chg2022=   nan%  r_lag0..3=[np.float64(0.4), np.float64(0.47), np.float64(0.3), np.float64(0.18)]
+  Rice > Local | Raw (Red)             n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(0.26), np.float64(0.28), np.float64(0.19), np.float64(0.09)]
+  Rice > Local | Raw (White)           n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(0.29), np.float64(0.32), np.float64(0.23), np.float64(0.08)]
+  Rice > Local | Samba 1               n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(0.25), np.float64(0.29), np.float64(0.12), np.float64(0.07)]
+  Rice > Local | Samba 2               n_months= 63 chg2022=   nan%  r_lag0..3=[np.float64(0.32), np.float64(0.44), np.float64(0.23), np.float64(0.12)]
+  Root Crops | Sweet Potato            n_months=104 chg2022=   nan%  r_lag0..3=[np.float64(0.13), np.float64(0.08), np.float64(0.1), np.float64(0.08)]
+
+CBSL daily obs per month (min over series): 6 | months 124 2016-08-01 2026-11-01
+== D. dlog(veg price), de-seasonalised, vs ERA5 national rain z-anomaly (lag in months), perm p; n tests = 28
+lag             0     1     2     3
+veg                                
+Beans        0.21  0.08  0.03 -0.09
+Brinjal      0.03  0.40 -0.29  0.18
+Cabbage      0.10  0.60  0.16 -0.06
+Carrot      -0.06  0.44  0.20  0.00
+Pumpkin      0.02  0.14  0.04 -0.07
+Snake gourd  0.16  0.20 -0.15 -0.14
+Tomato       0.19  0.26  0.01 -0.26
+significant at 5%: 10 of 28 (≈1.4 expected by chance); min p=0.000
+3-mo cumulative anomaly lag1: [('Beans', np.float64(0.01), np.float64(0.906)), ('Carrot', np.float64(0.34), np.float64(0.001)), ('Cabbage', np.float64(0.37), np.float64(0.0)), ('Tomato', np.float64(0.0), np.float64(0.961)), ('Brinjal', np.float64(0.15), np.float64(0.094)), ('Pumpkin', np.float64(0.06), np.float64(0.515)), ('Snake gourd', np.float64(-0.05), np.float64(0.575))]
+
+HARTI retail_vegetables items: ['Beetroot', 'Butter Beans', 'Cabbage', 'Carrot', 'Green Beans', 'Knol Khol', 'Leeks', 'Raddish', 'Tomato'] weeks 516
