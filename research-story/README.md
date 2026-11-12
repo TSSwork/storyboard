@@ -10,7 +10,7 @@ This is a research study, not a prediction product. Forecasting models are instr
 | Visual storyboard | `storyboard/NN_*/storyboard.png` (10 pages) | What the audience sees; understandable without paragraphs |
 | Storytelling notes | `storyboard/NN_*/README.md` | Why the page exists, what I say, evidence, qualification, next page |
 
-`STORY_MAP.md` gives the sequence and the argument. `app.py` is a Streamlit review and rehearsal tool that reads these files directly. In Presentation mode use the arrow keys (or Page Up and Page Down) to move and Escape to exit. Pages 3, 5, 6, 7 and 8 also have an **Interactive** tab (Plotly, `live_charts.py`: hover, vegetable and specification selectors, a forecast-origin slider and a zoom slider) next to the **Static slide** tab. Defaults show the primary specification; every other view is labelled exploratory.
+`STORY_MAP.md` gives the sequence and the argument. `app.py` is the audience view: all ten pages are listed in the sidebar (click to jump), with Previous and Next, the arrow keys or Page Up and Page Down to move, and a progress line. Pages 3, 5, 6, 7 and 8 have an **Interactive** tab (Plotly, `live_charts.py`: hover, vegetable and specification selectors, a forecast-origin slider and a zoom slider) next to the **Static slide** tab. Defaults show the primary specification; every other view is labelled exploratory. The page notes are not shown in the app; they live in each page's `README.md`.
 
 ## Run
 ```
