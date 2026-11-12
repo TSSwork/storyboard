@@ -7,6 +7,8 @@ from pathlib import Path
 
 import streamlit as st
 
+from live_charts import LIVE
+
 ROOT = Path(__file__).resolve().parent
 PAGES = sorted(p for p in (ROOT / "storyboard").iterdir() if p.is_dir() and (p / "README.md").exists())
 
@@ -74,6 +76,19 @@ def section(name: str, cls: str = "body"):
     st.markdown(f'<div class="{cls}">{body}</div>' if cls == "qual" else body)
 
 
+def visual():
+    """Interactive chart where one exists (tab 1), always the static slide (tab 2)."""
+    n = i + 1
+    if n in LIVE:
+        live, static = st.tabs(["Interactive", "Static slide"])
+        with live:
+            st.markdown(f"#### {doc['title'].split(' - ', 1)[-1]}")
+            LIVE[n]()
+        static.image(str(doc["img"]), width="stretch")
+    else:
+        st.image(str(doc["img"]), width="stretch")
+
+
 def leave_presentation():
     st.session_state.mode = "Author"
 
@@ -85,7 +100,7 @@ if mode == "Presentation":
         ".block-container{padding-top:1rem;max-width:100%}</style>",
         unsafe_allow_html=True,
     )
-    st.image(str(doc["img"]), width="stretch")
+    visual()
     a, b, c, d = st.columns([1, 1, 1, 5])
     if a.button("Previous", disabled=i == 0, key="prev"):
         st.session_state.i = i - 1
@@ -100,8 +115,8 @@ elif mode == "Author":
     st.markdown(f"## {doc['title']}")
     st.caption(f"Demonstrates: {doc['stage']}")
     left, right = st.columns([3, 2], gap="large")
-    left.image(str(doc["img"]), width="stretch")
     with left:
+        visual()
         section("Visual")
         section("Evidence")
         section("Explanation")
