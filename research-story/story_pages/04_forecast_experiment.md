@@ -1,6 +1,6 @@
 # 04 - The test: does rainfall improve a model that already knows past prices?
 
-![storyboard](storyboard.png)
+![slide](../storyboard/04_forecast_experiment/storyboard.png)
 
 **Demonstrates:** Model design and forecasting methodology
 

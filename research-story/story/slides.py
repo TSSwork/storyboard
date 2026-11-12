@@ -11,9 +11,9 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
-import build_figures as bf
-import live_charts as lc
-import slide_copy as SC
+from story import common as bf
+from story import live_charts as lc
+from story import slide_copy as SC
 
 NAVY, SOFT, CORAL, MID, BASE, TINT, GRID, MUTED, RAIN = bf.NAVY, bf.SOFT, bf.CORAL, bf.MID, bf.BASE, bf.TINT, bf.GRID, bf.MUTED, bf.RAIN
 esc = html.escape
@@ -63,7 +63,7 @@ def s1():
 
 # ---------------- 2 ----------------
 def s2():
-    g = json.load(open(bf.WORK / "raw/chirp/boundaries/countries.geojson"))
+    g = json.load(open(bf.DATA / "sri_lanka_boundary.geojson"))
     f = [x for x in g["features"] if x["properties"].get("ISO3166-1-Alpha-3") == "LKA"][0]
     fig = go.Figure()
     for poly in f["geometry"]["coordinates"]:
@@ -111,14 +111,14 @@ def s5():
 # ---------------- 9 ----------------
 @st.cache_data
 def p9_data():
-    mon = pd.read_csv(bf.D / "era5_monthly.csv", parse_dates=["month"]).set_index("month")
-    yl = pd.read_csv(bf.D / "dcs_national_yala.csv"); yl["y"] = yl.season_label.astype(str).str[:4].astype(int); yl = yl[(yl.y >= 2010) & (yl.y <= 2025)].copy()
+    mon = pd.read_csv(bf.DATA / "era5_monthly.csv", parse_dates=["month"]).set_index("month")
+    yl = pd.read_csv(bf.DATA / "dcs_national_yala.csv"); yl["y"] = yl.season_label.astype(str).str[:4].astype(int); yl = yl[(yl.y >= 2010) & (yl.y <= 2025)].copy()
     yl["rain"] = [mon.loc[f"{y}-03":f"{y}-08", "rain_mm"].sum() for y in yl.y]; yl["hs"] = yl.harv_000ha / yl.sown_000ha
     dt = lambda s, yr: s - np.polyval(np.polyfit(yr, s, 1), yr)
     x, y = dt(yl.rain.values, yl.y.values), dt(yl.hs.values, yl.y.values)
-    rb = pd.read_csv(bf.D / "rice_annual_balance.csv"); rb = rb[(rb.y >= 2010) & (rb.y <= 2025)]
+    rb = pd.read_csv(bf.DATA / "rice_annual_balance.csv"); rb = rb[(rb.y >= 2010) & (rb.y <= 2025)]
     share = (rb.fao_rice_imp_000t / (rb.rice_eq_000t + rb.fao_rice_imp_000t) * 100)
-    fx = pd.read_csv(bf.WORK / "raw/pdf/Indicative Rate of the USD_LKR SPOT Exchange Rate.csv", parse_dates=["Date"]).set_index("Date")["Exchange Rate"].resample("MS").mean()
+    fx = pd.read_csv(bf.DATA / "usd_lkr_spot_rate.csv", parse_dates=["Date"]).set_index("Date")["Exchange Rate"].resample("MS").mean()
     return x, y, float(np.corrcoef(x, y)[0, 1]), len(yl), rb.y.values, share.values, fx
 
 

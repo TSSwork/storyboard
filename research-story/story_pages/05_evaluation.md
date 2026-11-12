@@ -1,6 +1,6 @@
 # 05 - How we judge it: 62 real forecasts, three layers of scrutiny
 
-![storyboard](storyboard.png)
+![slide](../storyboard/05_evaluation/storyboard.png)
 
 **Demonstrates:** Statistical reasoning and validation
 

@@ -1,6 +1,6 @@
 # 07 - The ranking holds up under alternative specifications
 
-![storyboard](storyboard.png)
+![slide](../storyboard/07_robustness/storyboard.png)
 
 **Demonstrates:** Robustness testing and research judgement
 

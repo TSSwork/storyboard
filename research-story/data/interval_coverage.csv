@@ -1,0 +1,22 @@
+commodity,model,n,coverage,mean_width_lkr
+Beans,AR,62,0.6935,232.3
+Beans,nat_incl,62,0.7742,253.4
+Beans,nat_prior,62,0.7097,250.5
+Brinjal,AR,62,0.7097,186.5
+Brinjal,nat_incl,62,0.8387,179.1
+Brinjal,nat_prior,62,0.8548,184.2
+Cabbage,AR,62,0.6935,140.2
+Cabbage,nat_incl,62,0.7742,125.1
+Cabbage,nat_prior,62,0.7903,129.1
+Carrot,AR,62,0.7258,206.4
+Carrot,nat_incl,62,0.7419,206.6
+Carrot,nat_prior,62,0.7097,209.3
+Pumpkin,AR,62,0.8387,107.3
+Pumpkin,nat_incl,62,0.8387,106.4
+Pumpkin,nat_prior,62,0.8226,108.2
+Snake gourd,AR,62,0.7742,155.9
+Snake gourd,nat_incl,62,0.7258,146.2
+Snake gourd,nat_prior,62,0.7258,145.3
+Tomato,AR,62,0.6935,256.4
+Tomato,nat_incl,62,0.7419,261.6
+Tomato,nat_prior,62,0.7581,245.4

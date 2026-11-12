@@ -1,6 +1,6 @@
 # 08 - Better does not mean accurate
 
-![storyboard](storyboard.png)
+![slide](../storyboard/08_accuracy/storyboard.png)
 
 **Demonstrates:** Understanding of uncertainty and model limitations
 

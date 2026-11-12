@@ -1,6 +1,6 @@
 # 09 - Beyond vegetables: three separate sources of food-system vulnerability
 
-![storyboard](storyboard.png)
+![slide](../storyboard/09_wider_context/storyboard.png)
 
 **Demonstrates:** Connecting analysis to a wider industry problem
 

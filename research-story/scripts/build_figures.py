@@ -1,11 +1,15 @@
-"""Build the 18 storyboard images (storyboard/NN_slug/storyboard.png) from existing derived data.
+"""Optional: export the ten slides as PNG images (storyboard/NN_slug/storyboard.png) with matplotlib.
 
-Reads only; never modifies raw or research_audit files.
-Run:  uv run python research-story/build_figures.py [page numbers...]
+The Streamlit app does not use these images (its slides are native and vector); this is only for a static copy
+(for example to paste into a document). Needs the "export" extra:  uv run --extra export python scripts/build_figures.py [pages...]
+Reads only data/ and story/slide_copy.py.
 """
-import json
 import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))  # make the story/ package importable
+
+import json
 
 import matplotlib
 matplotlib.use("Agg")
@@ -16,41 +20,25 @@ from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.lines import Line2D
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
 
-import slide_copy as SC
 from matplotlib import font_manager
-for _w in ("Regular", "Medium", "SemiBold"):          # static Noto Sans cuts, when installed (falls back to DejaVu Sans)
-    _f = Path(f"/usr/share/fonts/google-noto/NotoSans-{_w}.ttf")
+
+from story import slide_copy as SC
+from story.common import (ACC, BAD, BASE, CORAL, DATA, EVID_COL, EVID_LABEL, EXPL, EXPORT, GRID, INK, MID, MUTED, NAVY, PAPER,
+                          RAIN, SLUGS, SOFT, TINT, VEGS, national_rain, prices, comparison)
+
+ROOT = Path(__file__).resolve().parent.parent
+for _w in ("Regular", "Medium", "SemiBold"):          # Noto Sans bundled in static/fonts
+    _f = ROOT / "static" / "fonts" / f"NotoSans-{_w}.ttf"
     if _f.exists():
         font_manager.fontManager.addfont(str(_f))
+OUT = EXPORT
 
-ROOT = Path(__file__).resolve().parent
-WORK = ROOT.parent
-RA = WORK / "research_audit"
-D = RA / "derived"
-V2 = RA / "forecast_validation_v2"
-OUT = ROOT / "storyboard"
-
-# ---- design tokens (one accent; evidence class carried by colour AND label) ----
-# Palette: midnight navy (ink + primary), soft blue (tint), coral (the one accent: marks and caution only, never text)
-NAVY, SOFT, CORAL = "#002941", "#b6dfed", "#fd6e6e"
-PAPER, INK, MUTED, GRID = "#f6fafc", NAVY, "#52707f", "#d8e6ee"
-TINT, RAIN, MID, BASE = "#e3f1f7", "#8cc0d6", "#2f7292", "#8aa3b2"
-ACC, EXPL, BAD = NAVY, MID, CORAL
-EVID_COL = {"supported": NAVY, "exploratory": SOFT, "no evidence": "#a9bcc7", "worse": CORAL}
 plt.rcParams.update({"font.family": ["Noto Sans", "DejaVu Sans"], "axes.edgecolor": GRID, "axes.labelcolor": MUTED,
                      "xtick.color": MUTED, "ytick.color": MUTED, "text.color": INK,
                      "axes.spines.top": False, "axes.spines.right": False, "axes.facecolor": PAPER,
                      "figure.facecolor": PAPER, "axes.grid": False})
 
-VEGS = ["Cabbage", "Brinjal", "Carrot", "Tomato", "Snake gourd", "Pumpkin", "Beans"]
-SLUGS = {1: "opening", 2: "scope_and_data", 3: "prices_and_rain", 4: "forecast_experiment", 5: "evaluation",
-         6: "main_result", 7: "robustness", 8: "accuracy", 9: "wider_context", 10: "conclusions"}
 ACTS = SC.ACTS
-
-
-# Stored v2 evidence label -> slide label (read from forecast_model_comparison_v2.csv, never re-derived)
-EVID_LABEL = {"supported (corrected)": "supported", "suggestive (uncorrected only)": "exploratory",
-              "no reliable evidence": "no evidence", "worse or no gain": "worse"}
 
 
 def frame(n):
@@ -90,33 +78,8 @@ def blank(fig, rect=(0.05, 0.08, 0.9, 0.7)):
     return ax
 
 
-# ---- data ----
-def prices():
-    cb = pd.read_csv(WORK / "raw/cbsl-daily-prices.csv", comment="#", parse_dates=["period"]).set_index("period")
-    out = {}
-    for v in VEGS:
-        col = [c for c in cb.columns if c.startswith(v + " (wholesale, dambulla)")][0]
-        s = cb[col].dropna()
-        cnt = s.resample("MS").count()
-        m = s.resample("MS").mean()[cnt >= 10]
-        out[v] = m
-    return pd.DataFrame(out)
-
-
-def national_rain():
-    m = pd.read_csv(D / "era5_regional_monthly.csv", parse_dates=["month"]).set_index("month")
-    r = m.rain_nat.where(m.n_nat == m.days_in_month)
-    clim = []
-    for t in r.index:
-        past = r[(r.index.month == t.month) & (r.index.year < t.year)].dropna()
-        clim.append(past.mean() if len(past) else np.nan)
-    return r, (r - pd.Series(clim, index=r.index)) / 100
-
-
 def comp():
-    c = pd.read_csv(RA / "forecast_model_comparison_v2.csv")
-    c = c[(c.market == "dambulla") & (c.price_agg == "mean") & (c.model == "AR+rain:nat")].set_index("commodity")
-    return c.loc[VEGS]
+    return comparison()
 
 
 def style_axes(ax, grid_y=True):
@@ -127,10 +90,7 @@ def style_axes(ax, grid_y=True):
 
 
 # ---------------- pages ----------------
-def mc(market="dambulla", agg="mean", model="AR+rain:nat"):
-    c = pd.read_csv(RA / "forecast_model_comparison_v2.csv")
-    c = c[(c.market == market) & (c.price_agg == agg) & (c.model == model)].set_index("commodity")
-    return c.loc[VEGS]
+mc = comparison
 
 
 def p01():
@@ -150,7 +110,7 @@ def p01():
 
 def p02():
     fig = frame(2)
-    g = json.load(open(WORK / "raw/chirp/boundaries/countries.geojson"))
+    g = json.load(open(DATA / "sri_lanka_boundary.geojson"))
     f = [x for x in g["features"] if x["properties"].get("ISO3166-1-Alpha-3") == "LKA"][0]
     ax = fig.add_axes([0.04, 0.08, 0.28, 0.7])
     for poly in f["geometry"]["coordinates"]:
@@ -175,10 +135,7 @@ def p02():
 
 
 def p03():
-    lag = pd.DataFrame({0: [0.10, 0.03, -0.06, 0.19, 0.16, 0.02, 0.21], 1: [0.60, 0.40, 0.44, 0.26, 0.20, 0.14, 0.08],
-                        2: [0.16, -0.29, 0.20, 0.01, -0.15, 0.04, 0.03], 3: [-0.06, 0.18, 0.00, -0.26, -0.14, -0.07, -0.09]}, index=VEGS)
-    (OUT / "03_prices_and_rain/assets").mkdir(parents=True, exist_ok=True)
-    lag.to_csv(OUT / "03_prices_and_rain/assets/lag_correlations.csv")
+    lag = pd.read_csv(DATA / "lag_correlations.csv", index_col=0)          # single source: data/lag_correlations.csv
     fig = frame(3)
     pr = prices()
     gs = fig.add_gridspec(2, 4, left=0.05, right=0.60, bottom=0.36, top=0.78, hspace=0.5, wspace=0.3)
@@ -266,7 +223,7 @@ def p06():
 
 
 def p07():
-    rw = pd.read_csv(V2 / "rain_window_comparison.csv").set_index(["commodity", "model"])
+    rw = pd.read_csv(DATA / "rain_window_comparison.csv").set_index(["commodity", "model"])
     pet, med = mc("pettah"), mc("dambulla", "median")
     marks = [("Primary: national rain, A3 = t−2…t", NAVY, "o", 110, [rw.loc[(v, "nat_incl"), "rmse_gain_vs_AR_pct"] for v in VEGS]),
              ("Non-overlapping A3 = t−3…t−1", "#5b9ab7", "o", 60, [rw.loc[(v, "nat_prior"), "rmse_gain_vs_AR_pct"] for v in VEGS]),
@@ -288,10 +245,10 @@ def p07():
 
 
 def p08():
-    r = pd.read_csv(RA / "forecast_results_v2.csv", parse_dates=["origin", "target_month"])
+    r = pd.read_csv(DATA / "forecast_results_v2.csv", parse_dates=["origin", "target_month"])
     r = r[(r.market == "dambulla") & (r.price_agg == "mean") & (r.commodity == "Cabbage")]
     ar = r[r.model == "AR"].set_index("target_month"); rn = r[r.model == "AR+rain:nat"].set_index("target_month")
-    m = mc(); ic = pd.read_csv(V2 / "interval_coverage.csv"); ic = ic[ic.model == "nat_incl"].set_index("commodity").loc[VEGS]
+    m = mc(); ic = pd.read_csv(DATA / "interval_coverage.csv"); ic = ic[ic.model == "nat_incl"].set_index("commodity").loc[VEGS]
     fig = frame(8)
     a = fig.add_axes([0.06, 0.1, 0.56, 0.64])
     a.fill_between(rn.index, rn.lo80_lkr, rn.hi80_lkr, color=ACC, alpha=0.14, lw=0, label="AR+rain 80% band")
@@ -309,13 +266,13 @@ def p08():
 
 
 def p09():
-    mon = pd.read_csv(D / "era5_monthly.csv", parse_dates=["month"]).set_index("month")
-    yl = pd.read_csv(D / "dcs_national_yala.csv"); yl["y"] = yl.season_label.astype(str).str[:4].astype(int); yl = yl[(yl.y >= 2010) & (yl.y <= 2025)].copy()
+    mon = pd.read_csv(DATA / "era5_monthly.csv", parse_dates=["month"]).set_index("month")
+    yl = pd.read_csv(DATA / "dcs_national_yala.csv"); yl["y"] = yl.season_label.astype(str).str[:4].astype(int); yl = yl[(yl.y >= 2010) & (yl.y <= 2025)].copy()
     yl["rain"] = [mon.loc[f"{y}-03":f"{y}-08", "rain_mm"].sum() for y in yl.y]; yl["hs"] = yl.harv_000ha / yl.sown_000ha
     dt = lambda s, yr: s - np.polyval(np.polyfit(yr, s, 1), yr)
     x, yv = dt(yl.rain.values, yl.y.values), dt(yl.hs.values, yl.y.values); r = np.corrcoef(x, yv)[0, 1]
-    rb = pd.read_csv(D / "rice_annual_balance.csv"); rb = rb[(rb.y >= 2010) & (rb.y <= 2025)]
-    fx = pd.read_csv(WORK / "raw/pdf/Indicative Rate of the USD_LKR SPOT Exchange Rate.csv", parse_dates=["Date"]).set_index("Date")["Exchange Rate"].resample("MS").mean()
+    rb = pd.read_csv(DATA / "rice_annual_balance.csv"); rb = rb[(rb.y >= 2010) & (rb.y <= 2025)]
+    fx = pd.read_csv(DATA / "usd_lkr_spot_rate.csv", parse_dates=["Date"]).set_index("Date")["Exchange Rate"].resample("MS").mean()
     fig = frame(9)
     cols = [(0.05, NAVY, SC.P09[0][0], SC.P09[0][1].format(r=r, n=len(yl)), SC.P09[0][2]),
             (0.37, MID, *SC.P09[1]), (0.69, BASE, *SC.P09[2])]

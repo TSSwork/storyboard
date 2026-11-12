@@ -1,6 +1,6 @@
 # 10 - What have we learned?
 
-![storyboard](storyboard.png)
+![slide](../storyboard/10_conclusions/storyboard.png)
 
 **Demonstrates:** Critical thinking and communicating conclusions
 

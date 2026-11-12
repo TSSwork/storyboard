@@ -1,23 +1,26 @@
-"""Research storyboard: audience view. Pages in the sidebar; slide or interactive chart in the main area.
+"""Research storyboard: audience view. Pages in the sidebar; native slide (Plotly + HTML) in the main area.
 
-Reads storyboard/NN_*/storyboard.png and the page title from each README. Notes live in the READMEs, not here.
-Run: uv run streamlit run research-story/app.py
+Slide text: story/slide_copy.py. Data: data/. Page titles come from story_pages/*.md (the speaking guides are not shown here).
+Run from this folder:  uv run streamlit run app.py
 """
 import re
 from pathlib import Path
 
 import streamlit as st
 
-import slides
-from slide_copy import ACTS
+from story import slides
+from story.slide_copy import ACTS
 
 ROOT = Path(__file__).resolve().parent
-PAGES = sorted(p for p in (ROOT / "storyboard").iterdir() if p.is_dir() and (p / "README.md").exists())
+PAGES = sorted((ROOT / "story_pages").glob("[0-9][0-9]_*.md"))
 
 st.set_page_config(page_title="Research storyboard", layout="wide")
 st.markdown(
     """
 <style>
+@font-face { font-family: "Noto Sans"; font-weight: 400; src: url("app/static/fonts/NotoSans-Regular.ttf"); }
+@font-face { font-family: "Noto Sans"; font-weight: 500; src: url("app/static/fonts/NotoSans-Medium.ttf"); }
+@font-face { font-family: "Noto Sans"; font-weight: 600; src: url("app/static/fonts/NotoSans-SemiBold.ttf"); }
 :root { --ink:#002941; --muted:#52707f; --rule:#d8e6ee; --coral:#fd6e6e; --soft:#b6dfed; --tint:#e3f1f7; --paper:#f6fafc; }
 html, body, .stApp, [data-testid="stMarkdownContainer"] { font-family: "Noto Sans", system-ui, sans-serif; }
 .stApp { background: var(--paper); color: var(--ink); }
@@ -91,7 +94,7 @@ ul.s-list li { margin-bottom: .55rem; line-height: 1.5; }
     unsafe_allow_html=True,
 )
 
-TITLES = [re.match(r"# \d+ - (.+)", (p / "README.md").read_text()).group(1) for p in PAGES]
+TITLES = [re.match(r"# \d+ - (.+)", p.read_text()).group(1) for p in PAGES]
 N = len(PAGES)
 if "page" not in st.session_state:
     st.session_state.page = 0

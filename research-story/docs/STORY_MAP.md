@@ -1,6 +1,6 @@
 # Story map (10 pages)
 
-Audience: the public, and industry professionals who may assess the work. Each page must be understandable on its own, and the README carries the technical depth. Each page demonstrates a specific skill:
+Audience: the public, and industry professionals who may assess the work. Each page must be understandable on its own, and the page's speaking guide in `story_pages/` carries the technical depth. Each page demonstrates a specific skill:
 
 | Act | Page | Title | Demonstrates |
 |---|---|---|---|

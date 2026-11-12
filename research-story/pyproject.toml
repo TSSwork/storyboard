@@ -1,0 +1,18 @@
+[project]
+name = "research-story"
+version = "1.0.0"
+description = "Weather, vegetable prices and food-system vulnerability in Sri Lanka: an interactive research storyboard"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "streamlit>=1.50",
+    "plotly>=6",
+    "pandas>=2.2",
+    "numpy>=1.26",
+]
+
+[project.optional-dependencies]
+export = ["matplotlib>=3.8"]          # only for scripts/build_figures.py (PNG export)
+
+[tool.uv]
+package = false

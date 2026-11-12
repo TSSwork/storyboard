@@ -1,6 +1,6 @@
 # 06 - Rainfall helps some vegetables far more than others
 
-![storyboard](storyboard.png)
+![slide](../storyboard/06_main_result/storyboard.png)
 
 **Demonstrates:** Results interpretation and visual communication
 

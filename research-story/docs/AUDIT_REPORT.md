@@ -1,6 +1,8 @@
 # Evidence and citation audit — 10-page storyboard
 
-Scope: the ten slides (`storyboard/NN_*/storyboard.png`), their READMEs, `references/`, and every number or claim in them. Register: `CLAIM_SOURCE_REGISTER.csv` (55 rows). Reproduce with `uv run python research-story/audit_claims.py`, which recomputes values from `research_audit/` and `raw/` (read-only; it re-runs `forecast_pilot.py` without changing it).
+> Folder layout note: this audit was written before the folder was reorganised. "README" below means the page's speaking guide in `story_pages/`; `build_figures.py` is now `scripts/build_figures.py` (slide text is in `story/slide_copy.py`); the audit script is `scripts/audit_claims.py`.
+
+Scope: the ten slides, their speaking guides (`story_pages/NN_*.md`; called "READMEs" below because that was their name when the audit was run), `docs/references/`, and every number or claim in them. Register: `docs/CLAIM_SOURCE_REGISTER.csv` (55 rows). Reproduce with `uv run python scripts/audit_claims.py` (run from `research-story/`; it needs the full research project one level up, because it recomputes numbers from `research_audit/` and `raw/`), which recomputes values from `research_audit/` and `raw/` (read-only; it re-runs `forecast_pilot.py` without changing it).
 
 ## Result
 | Status | Count |

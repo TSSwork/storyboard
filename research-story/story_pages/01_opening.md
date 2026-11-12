@@ -1,6 +1,6 @@
 # 01 - Can rainfall help anticipate vegetable prices?
 
-![storyboard](storyboard.png)
+![slide](../storyboard/01_opening/storyboard.png)
 
 **Demonstrates:** Problem framing and communication
 

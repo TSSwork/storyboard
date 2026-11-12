@@ -1,6 +1,6 @@
 """Recompute every numeric claim shown in the storyboard from the source outputs and write CLAIM_SOURCE_REGISTER.csv.
 
-Read-only on research_audit/ and raw/. Run: uv run python research-story/audit_claims.py
+Read-only on research_audit/ and raw/. Needs the full research project one level up (research_audit/, raw/). Run: uv run python scripts/audit_claims.py
 Status values: verified | partially verified | unsupported | needs clarification
 """
 import re
@@ -10,7 +10,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-WORK = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent      # research-story/
+WORK = ROOT.parent                                    # the full research project (needed: this script reads its outputs)
 RA, D, V = WORK / "research_audit", WORK / "research_audit/derived", WORK / "research_audit/forecast_validation_v2"
 VEGS = ["Cabbage", "Brinjal", "Carrot", "Tomato", "Snake gourd", "Pumpkin", "Beans"]
 rows = []
@@ -110,7 +111,7 @@ parsed = {}
 for v in VEGS:
     m = re.search(rf"^{v}\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)", blk, flags=re.M)
     parsed[v] = [float(x) for x in m.groups()]
-shown = pd.read_csv(WORK / "research-story/storyboard/03_prices_and_rain/assets/lag_correlations.csv", index_col=0)
+shown = pd.read_csv(ROOT / "data/lag_correlations.csv", index_col=0)
 diff = max(abs(shown.loc[v].values - np.array(parsed[v])).max() for v in VEGS)
 reg(3, "Lag 0-3 correlation heat map values", "research_audit/_profiles/prices_out.txt section D; lag_correlations.csv", f"max abs difference between slide table and source = {diff:.3f}", "verified" if diff < .006 else "unsupported",
     "Values were copied by hand into the CSV; this check parses the source text and compares. The source output was produced by research_audit/feasibility_prices.py (not re-run here).")
@@ -178,14 +179,14 @@ ref_rows = [
     ("Munoz-Sabater et al. (2021) Earth System Science Data 13(9): 4349-4383", "verified", "ESSD page essd.copernicus.org/articles/13/4349/2021; DOI 10.5194/essd-13-4349-2021"),
 ]
 for c, s, e in ref_rows:
-    reg("refs", c, "research-story/references/research_references.md", "web check of publisher / repository record: " + e, s)
+    reg("refs", c, "docs/references/research_references.md", "web check of publisher / repository record: " + e, s)
 
 # ---- wording / construction checks on the storyboard text itself (after corrections) ----
 def rd(path):
-    return (WORK / "research-story" / path).read_text()
+    return (ROOT / path).read_text()
 
 
-bf, r9, r3, r4, r6 = rd("build_figures.py") + rd("slide_copy.py") + rd("live_charts.py"), rd("storyboard/09_wider_context/README.md"), rd("storyboard/03_prices_and_rain/README.md"), rd("storyboard/04_forecast_experiment/README.md"), rd("storyboard/06_main_result/README.md")
+bf, r9, r3, r4, r6 = (rd("scripts/build_figures.py") + rd("story/slide_copy.py") + rd("story/live_charts.py"), rd("story_pages/09_wider_context.md"), rd("story_pages/03_prices_and_rain.md"), rd("story_pages/04_forecast_experiment.md"), rd("story_pages/06_main_result.md"))
 
 
 def fix(prefix, cond, ev_add, note=None):
@@ -208,7 +209,7 @@ fix("Exchange-rate panel is descriptive", "Descriptive co-movement only" in bf a
 fix("FX excluded because it worsened pilot forecasts", "pilot RMSE for all seven vegetables" in bf and "pilot RMSE for all seven vegetables" in r4, "slide 4 bullet and README 04", "Fixed: wording corrected.")
 
 out = pd.DataFrame(rows); out.insert(0, "id", range(1, len(out) + 1))
-out.to_csv(WORK / "research-story/CLAIM_SOURCE_REGISTER.csv", index=False)
+out.to_csv(ROOT / "docs/CLAIM_SOURCE_REGISTER.csv", index=False)
 print(out.status.value_counts().to_string()); print("total", len(out))
 for _, r in out[out.status != "verified"].iterrows():
     print(f"[{r.id}] p{r.page} {r.status}: {r.claim}")

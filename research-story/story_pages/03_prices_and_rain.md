@@ -1,6 +1,6 @@
 # 03 - Prices have their own dynamics, and some follow last month's rain
 
-![storyboard](storyboard.png)
+![slide](../storyboard/03_prices_and_rain/storyboard.png)
 
 **Demonstrates:** Data processing and exploratory analysis
 

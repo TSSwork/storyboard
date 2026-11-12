@@ -1,6 +1,6 @@
 # 02 - One market, seven vegetables, two data sources
 
-![storyboard](storyboard.png)
+![slide](../storyboard/02_scope_and_data/storyboard.png)
 
 **Demonstrates:** Research scope and data-source understanding
 

@@ -9,7 +9,7 @@ import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
 
-import build_figures as bf
+from story import common as bf
 
 NAVY, SOFT, CORAL, MID, GRID, PAPER, MUTED = bf.NAVY, bf.SOFT, bf.CORAL, bf.MID, bf.GRID, bf.PAPER, bf.MUTED
 FONT = "Noto Sans, DejaVu Sans, sans-serif"
@@ -28,16 +28,15 @@ def style(fig, height=520, legend=True):
 
 @st.cache_data
 def load():
-    ra = bf.RA
-    comp = pd.read_csv(ra / "forecast_model_comparison_v2.csv")
-    res = pd.read_csv(ra / "forecast_results_v2.csv", parse_dates=["origin", "target_month"])
-    rw = pd.read_csv(bf.V2 / "rain_window_comparison.csv")
-    ic = pd.read_csv(bf.V2 / "interval_coverage.csv")
+    comp = pd.read_csv(bf.DATA / "forecast_model_comparison_v2.csv")
+    res = pd.read_csv(bf.DATA / "forecast_results_v2.csv", parse_dates=["origin", "target_month"])
+    rw = pd.read_csv(bf.DATA / "rain_window_comparison.csv")
+    ic = pd.read_csv(bf.DATA / "interval_coverage.csv")
     return comp, res, rw, ic, bf.prices(), bf.national_rain()
 
 
 # ---------------- page 3: prices and rain ----------------
-LAG = pd.read_csv(bf.OUT / "03_prices_and_rain/assets/lag_correlations.csv", index_col=0)
+LAG = pd.read_csv(bf.DATA / "lag_correlations.csv", index_col=0)
 
 
 def page3():
