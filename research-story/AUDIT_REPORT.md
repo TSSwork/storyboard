@@ -28,7 +28,7 @@ No claim contradicts its source. Every issue below is a missing qualifier or loo
 | # | Where | Issue | Proposed correction |
 |---|---|---|---|
 | L1 | Page 4 slide bullet: "FX excluded: it worsened every pilot forecast" | Verified for all seven vegetables' pilot RMSE (-1.8% to -16.7%). It is not true of every individual forecast. | "FX excluded: it worsened pilot RMSE for all seven vegetables." |
-| L2 | Page 7 README: tomato Dambulla-box "bootstrap p about 0.10" | The validation report says "about 0.10". The stored values are in `rain_window_comparison.csv` (see register 24 for the three block-length values). | Quote the stored maximum rather than "about". |
+| L2 | Page 7 README: tomato Dambulla-box "bootstrap p about 0.10" | The validation report says "about 0.10". The stored values are in `rain_window_comparison.csv` (register 20: block-length values 0.097, 0.098, 0.074, so "about 0.10" is the upper end). | Quote the stored maximum rather than "about". |
 | L3 | Page 7 subtitle: "stay clear of zero" | True for every point estimate (top three > 0, beans <= 0 in all eight variants). Only the national primary has formal tests behind it. | Say "point estimates" or footnote that only the primary is tested. |
 | L4 | `references/research_references.md` | Diacritics are missing (Künsch, Muñoz-Sabater). The "should be verified" caveat is now out of date. | Restore diacritics, add DOIs, remove the caveat. |
 | L5 | Page 5 and others: "exploratory because the window was seen in the pilot" | Verified by replaying the pilot logic: pilot origins run Jul 2021 to Sep 2026 (63 tests) against v2's Aug 2021 to Sep 2026 (62). The window is almost identical. | None. |
@@ -53,7 +53,7 @@ Bibliographic details come from search-result records for each paper, not from r
 - Page 8: MAPE 23.1 to 39.7. Coverage 0.73 to 0.84.
 - Page 3: the heat-map values equal the `prices_out.txt` section D table. "10 of 28" is present in the source.
 - Page 2: only 2009-12 and 2026-11 are incomplete. Box cells are 36 and national 541. The ERA5 bug (monthly totals 12.4 to 21.4 times too large) and its correction are documented in `07_data_quality_report.md`.
-- Page 9: Yala r = +0.68 (n = 16) reproduces. Comtrade has no 2018 row and 2025 is partial. USD/LKR rose from about 202 in Dec 2021 to about 360 in Dec 2022.
+- Page 9: Yala r = +0.68 (n = 16) reproduces. Comtrade has no 2018 row and 2025 is partial. USD/LKR rose by about 80% from Dec 2021 to Dec 2022 (about 363 in Dec 2022).
 
 ## Limits of this audit
 - `feasibility_prices.py`, `feasibility_tests.py`, `era5_validate.py` and the v2/validation scripts were not re-run. The pilot was re-run. Their saved outputs were read.
