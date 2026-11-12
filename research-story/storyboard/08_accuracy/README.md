@@ -4,26 +4,52 @@
 
 **Demonstrates:** Understanding of uncertainty and model limitations
 
-## Purpose
-Stop the audience reading a relative gain as a usable forecast.
+## What to say
+I want to end the results section with a reality check, because a percentage improvement can sound more impressive than it is.
 
-## Story
-Rain improves forecasts relative to the baseline, but errors remain large and the empirical 80% bands cover less than 80%.
+The chart shows cabbage. The dark line is the actual price, the grey line is the price-only forecast, and the dotted line is the rainfall forecast. The shaded band is an empirical 80 percent range, built from the model's own past errors.
 
-## Visual
-Actual, price-only and AR+rain forecasts for cabbage with an empirical 80% band, next to a table of MAPE and actual coverage per vegetable. The line chart shows spikes missed; the table puts every vegetable on one scale.
+You can see two things. The rainfall model does follow the movements, and it is better than the baseline. But it misses the size and the timing of sharp moves. The typical percentage error is between 23 and 40 percent depending on the vegetable.
 
-## Evidence
-`forecast_results_v2.csv`; `forecast_validation_v2/interval_coverage.csv`. MAPE 23-40 percent; coverage 0.73-0.84 for AR+rain.
+Second, the bands are supposed to contain the actual price 80 percent of the time. Across the vegetables they contain it between 73 and 84 percent of the time. So they under-cover, and I will not call them calibrated intervals. With 62 points the uncertainty on those coverage numbers is itself about five percentage points.
 
-## Explanation
-The model tracks direction but misses spikes. Bands come from past out-of-sample errors and under-cover, so I print actual coverage rather than calling them calibrated.
+So the right reading is this: rainfall adds information, and that is a research finding. It does not make these forecasts accurate enough to run a business on, and I am not claiming it does.
 
-## Interpretation
-Useful as research evidence about information content; not as an operational price forecast.
+## Key points to land
+- Typical forecast errors remain large: MAPE between 23 and 40 percent.
+- The 80 percent bands cover 73 to 84 percent of outcomes, so they under-cover.
+- A better forecast is not an accurate forecast; this is a research result, not a product.
 
-## Limitations
-Coverage estimates have a standard error of about 0.05 with 62 points; fixed-climatology interval history uses some warm-up errors that rely on later climatology.
+## In plain words
+Rain makes the forecast better than guessing from past prices alone, but it is still often wrong by a quarter or more. Both things are true.
 
-## Transition
-Page 9 widens to the food system around these prices.
+## For the technical evaluator
+Intervals are the forecast plus the 10th and 90th percentiles of the model's earlier out-of-sample errors (at least 12 needed), built in log space so they are asymmetric in rupees. A caveat from the validation: the fixed-climatology sensitivity uses warm-up errors computed with climatology that includes later years, so I do not treat those intervals as validly calibrated.
+
+## If someone asks
+**"So is the model useless?"**  
+No, it shows rainfall carries real information for some vegetables. But the forecasts are not accurate enough to act on by themselves, and I never claimed otherwise.
+
+**"Why do the bands under-cover?"**  
+They are estimated from past errors and the price series has shocks bigger than earlier ones. With a short test, coverage estimates are also noisy.
+
+**"What is MAPE?"**  
+Mean absolute percentage error: the average size of the miss as a percentage of the actual price.
+
+**"Could a better model fix this?"**  
+Possibly, but that is a different study. This one deliberately uses a simple model to isolate the rainfall question.
+
+## Evidence behind the slide
+`forecast_results_v2.csv` and `forecast_validation_v2/interval_coverage.csv`. MAPE for AR plus rain ranges from 23.1 to 39.7 percent across the seven vegetables. Coverage of the nominal 80 percent band for AR plus rain (national, primary window) ranges from 0.73 to 0.84. Standard error of a coverage estimate with 62 points is about 0.05 (square root of 0.8 x 0.2 / 62).
+
+## What not to claim
+- Do not call the bands calibrated or the forecasts accurate.
+- Do not present relative RMSE gains as practical accuracy.
+- Do not use these forecasts to suggest prices for any real decision.
+
+## On the slide
+- Select Tomato to show its MAPE of about 40 percent.
+- Drag the range slider below the chart to zoom into the 2023 spike.
+
+## Hand-over to the next page
+So far everything has been about vegetables. The last content slide steps back to the wider food system around them.
