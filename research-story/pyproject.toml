@@ -16,3 +16,8 @@ export = ["matplotlib>=3.8"]          # only for scripts/build_figures.py (PNG e
 
 [tool.uv]
 package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+]
