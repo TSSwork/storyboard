@@ -1,6 +1,6 @@
 # Weather, vegetable prices and food-system vulnerability in Sri Lanka
 
-An interactive research storyboard in ten pages. It asks one question: **can observed rainfall improve one-month-ahead forecasts of wholesale vegetable prices in Sri Lanka, and does the answer differ by vegetable?** A final context page looks at paddy, rice imports and exchange rates, kept separate from the forecasting work.
+An interactive research dashboard in four pages. It asks one question: **can observed rainfall improve one-month-ahead forecasts of wholesale vegetable prices in Sri Lanka, and does the answer differ by vegetable?** Visitors answer it themselves: pick a vegetable, choose where rain is measured, and watch the KPI cards change. A context page looks at paddy, rice imports and exchange rates, kept separate from the forecasting work.
 
 This folder is self-contained: copy it anywhere, install one tool, run one command.
 
@@ -21,21 +21,20 @@ If the page does not open, go to the address above. If port 8501 is busy, run `u
 
 ## 2. Using the app
 
-- **Sidebar:** the ten pages, grouped into three acts. Click any row to jump to it. "Start from page 1" appears on every page except the first.
-- **Bottom bar:** the current act on the left, `page / 10` in the middle, **Previous** and **Next** on the right.
+- **Sidebar:** the four pages, grouped into three parts. Click any row to jump to it.
+- **Bottom bar:** the current part on the left, `page / 4` in the middle, **Previous** and **Next** on the right.
 - **Keyboard:** right arrow or Page Down = next, left arrow or Page Up = previous.
 - **Presenting:** collapse the sidebar with the arrow at its top, then use the browser's full-screen mode (F11).
-- **Hover** any chart for exact values. Some pages have controls:
+- **Hover** any chart for exact values.
 
 | Page | What you can do |
 |---|---|
-| 3 Prices and rain | Pick a vegetable; the outlined row in the correlation table follows it |
-| 5 Evaluation | Pick a vegetable and drag the forecast-origin slider to watch the training window grow |
-| 6 Main result | Switch the rainfall definition (primary, non-overlapping window, two regional boxes) |
-| 7 Robustness | Tick specifications on and off |
-| 8 Accuracy | Pick a vegetable, zoom with the range slider under the chart |
+| 1 Prices swing wildly | Pick a vegetable; the four KPI cards and the chart update. Toggle rainfall under the chart |
+| 2 Does rain help? Try it | Pick a vegetable, where rain is measured and the market. The cards show the typical miss with and without rain, a plain verdict ("Clear help", "A hint, not proven", "No clear effect", "No help") and how often the price fell inside the forecast range. A strip shows the verdict for all seven vegetables |
+| 3 Rain is only one piece | Three context cards and charts: weather and paddy, rice imports, exchange rate |
+| 4 What did we learn? | Click **Wanna see the conclusion?** to reveal the three findings |
 
-The default view on every page is the primary analysis. Other views are labelled exploratory on the page.
+The default settings on page 2 (Whole island, Dambulla) are the main analysis. The other regions and Pettah are checks.
 
 ## 3. What the study found
 
@@ -49,28 +48,29 @@ The default view on every page is the primary analysis. Other views are labelled
 ```
 research-story/
 ├── README.md              this file
-├── app.py                 the app: sidebar, bottom bar, keyboard
+├── app.py                 the app shell: sidebar, bottom bar, keyboard, page transitions
 ├── pyproject.toml         the libraries needed (uv reads this)
 ├── uv.lock                exact versions, so it runs the same everywhere
 ├── .python-version        Python version for uv
 ├── .streamlit/            colour theme and settings for the app
-├── story/                 the code behind the slides
-│   ├── slide_copy.py        every headline, subtitle and text block on the slides
-│   ├── slides.py            the ten slides, built from native charts and HTML
-│   ├── live_charts.py       the interactive charts with selectors and sliders
+├── story/                 the code behind the pages
+│   ├── pages.py             the four pages: controls, KPI cards, charts, conclusion reveal
+│   ├── metrics.py           every number on the cards, read from data/ (no Streamlit, unit-tested)
+│   ├── ui.py                KPI card, icon, verdict strip and confetti drawing (HTML/SVG/CSS)
 │   └── common.py            colours, vegetable list and data loading
 ├── data/                  every dataset the app reads (one common folder)
-├── story_pages/           one speaking guide per page (10 Markdown files)
-├── storyboard/            optional PNG exports of the slides (one folder per page)
+├── story_pages/           one speaking guide per page (4 Markdown files)
+├── tests/                 automated checks (numbers match stored results; every page runs)
 ├── docs/                  background documents
-│   ├── STORY_MAP.md         how the ten pages build one argument
-│   ├── AUDIT_REPORT.md      check of every claim against its source
+│   ├── STORY_MAP.md         how the four pages build one argument
+│   ├── AUDIT_REPORT.md      check of every claim against its source (done on the 10-slide deck)
 │   ├── CLAIM_SOURCE_REGISTER.csv   55 claims, each with its source and status
+│   ├── superpowers/         design note and build plan for the dashboard
 │   └── references/
 │       ├── data_sources.md      where each data file comes from
 │       └── research_references.md   statistical-method references
+├── archive/ten_slide_deck/   the earlier 10-slide version: PNG slides, speaking guides, slide code
 ├── scripts/               optional tools (not needed to run the app)
-│   ├── build_figures.py     export the slides as PNG images
 │   ├── sync_data.py         refresh data/ from the full research project
 │   └── audit_claims.py      re-run the claim audit (needs the full project)
 └── static/fonts/          Noto Sans, bundled so text looks the same on every computer
@@ -78,11 +78,11 @@ research-story/
 
 ## 5. For evaluators: where to look
 
-1. **Run the app** and read the ten pages in order. They stand on their own.
-2. **`story_pages/`** holds what the presenter says on each page: a spoken script, key points, a plain-words and a technical explanation, likely questions with answers, the evidence behind the slide and what must not be claimed. Open `06_main_result.md` first for the central result.
-3. **`docs/AUDIT_REPORT.md`** shows that the numbers were checked against the analysis outputs (55 claims, all verified) and lists what was corrected. The register is in `docs/CLAIM_SOURCE_REGISTER.csv`.
-4. **`data/`** has every dataset; `docs/references/data_sources.md` explains each file.
-5. **`story/`** is the code. `slide_copy.py` is the easiest file to read: it contains all of the slide text.
+1. **Run the app** and play with page 2. Every page stands on its own.
+2. **`story_pages/`** holds what the presenter does and says on each page, what each card means, the method under "If an evaluator asks", and what must not be claimed. Open `02_does_rain_help.md` first: it has the central result and the full method.
+3. **`tests/`** checks that the dashboard shows the stored results (for example, cabbage: 19.7% smaller error, "Clear help"; beans: "No help") and that every page runs. Run `uv run pytest`.
+4. **`docs/AUDIT_REPORT.md`** shows the numbers were checked against the analysis outputs (55 claims, all verified).
+5. **`data/`** has every dataset; `docs/references/data_sources.md` explains each file.
 
 ## 6. Method in brief
 
@@ -98,7 +98,7 @@ research-story/
 Run these from inside `research-story/`.
 
 ```
-uv run --extra export python scripts/build_figures.py     # PNG copies of the slides into storyboard/
+uv run pytest                                              # automated checks
 uv run python scripts/sync_data.py                         # refresh data/ (only when this folder sits inside the full project)
 uv run python scripts/audit_claims.py                      # re-run the claim audit (needs the full project one level up)
 ```
@@ -110,7 +110,7 @@ uv run python scripts/audit_claims.py                      # re-run the claim au
 | `uv: command not found` | Install uv first (link in section 1), then open a new terminal |
 | Browser shows nothing | Open <http://localhost:8501> by hand, or use another port as shown above |
 | The sidebar disappeared | Click the small arrow at the top left of the page |
-| Text looks different from the screenshots | The bundled font loads only when the app is started from this folder (`cd research-story` first) |
+| Text looks different from expected | The bundled font loads only when the app is started from this folder (`cd research-story` first) |
 
 ## 9. Credits
 

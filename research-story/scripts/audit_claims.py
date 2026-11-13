@@ -1,4 +1,4 @@
-"""Recompute every numeric claim shown in the storyboard from the source outputs and write CLAIM_SOURCE_REGISTER.csv.
+"""Recompute every numeric claim shown in the earlier 10-slide storyboard (archive/ten_slide_deck/) from the source outputs and write CLAIM_SOURCE_REGISTER.csv.
 
 Read-only on research_audit/ and raw/. Needs the full research project one level up (research_audit/, raw/). Run: uv run python scripts/audit_claims.py
 Status values: verified | partially verified | unsupported | needs clarification
@@ -182,11 +182,14 @@ for c, s, e in ref_rows:
     reg("refs", c, "docs/references/research_references.md", "web check of publisher / repository record: " + e, s)
 
 # ---- wording / construction checks on the storyboard text itself (after corrections) ----
+OLD = "archive/ten_slide_deck"   # the claim audit was run on the earlier 10-slide deck, kept there
+
+
 def rd(path):
     return (ROOT / path).read_text()
 
 
-bf, r9, r3, r4, r6 = (rd("scripts/build_figures.py") + rd("story/slide_copy.py") + rd("story/live_charts.py"), rd("story_pages/09_wider_context.md"), rd("story_pages/03_prices_and_rain.md"), rd("story_pages/04_forecast_experiment.md"), rd("story_pages/06_main_result.md"))
+bf, r9, r3, r4, r6 = (rd(f"{OLD}/code/build_figures.py") + rd(f"{OLD}/code/slide_copy.py") + rd(f"{OLD}/code/live_charts.py"), rd(f"{OLD}/guides/09_wider_context.md"), rd(f"{OLD}/guides/03_prices_and_rain.md"), rd(f"{OLD}/guides/04_forecast_experiment.md"), rd(f"{OLD}/guides/06_main_result.md"))
 
 
 def fix(prefix, cond, ev_add, note=None):
