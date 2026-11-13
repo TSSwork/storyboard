@@ -1,6 +1,6 @@
 # Weather, vegetable prices and food-system vulnerability in Sri Lanka
 
-An interactive research dashboard in four pages. It asks one question: **can observed rainfall improve one-month-ahead forecasts of wholesale vegetable prices in Sri Lanka, and does the answer differ by vegetable?** Visitors answer it themselves: pick a vegetable, choose where rain is measured, and watch the KPI cards change. A context page looks at paddy, rice imports and exchange rates, kept separate from the forecasting work.
+An interactive research dashboard in five pages. It asks one question: **can observed rainfall improve one-month-ahead forecasts of wholesale vegetable prices in Sri Lanka, and does the answer differ by vegetable?** Visitors answer it themselves: pick a vegetable, choose where rain is measured, and watch the KPI cards change. A context page looks at paddy, rice imports and exchange rates, kept separate from the forecasting work.
 
 This folder is self-contained: copy it anywhere, install one tool, run one command.
 
@@ -21,8 +21,8 @@ If the page does not open, go to the address above. If port 8501 is busy, run `u
 
 ## 2. Using the app
 
-- **Sidebar:** the four pages, grouped into three parts. Click any row to jump to it.
-- **Bottom bar:** the current part on the left, `page / 4` in the middle, **Previous** and **Next** on the right.
+- **Sidebar:** the five pages, grouped into three parts. Click any row to jump to it.
+- **Bottom bar:** the current part on the left, `page / 5` in the middle, **Previous** and **Next** on the right.
 - **Keyboard:** right arrow or Page Down = next, left arrow or Page Up = previous.
 - **Presenting:** collapse the sidebar with the arrow at its top, then use the browser's full-screen mode (F11).
 - **Hover** any chart for exact values.
@@ -30,11 +30,12 @@ If the page does not open, go to the address above. If port 8501 is busy, run `u
 | Page | What you can do |
 |---|---|
 | 1 Prices swing wildly | Pick a vegetable; the four KPI cards and the chart update. Toggle rainfall under the chart. On the rain map, slide through any month since 2010 or switch to a typical month |
-| 2 Does rain help? Try it | Pick a vegetable, where rain is measured and the market. The cards show the typical miss with and without rain, a plain verdict ("Clear help", "A hint, not proven", "No clear effect", "No help") and how often the price fell inside the forecast range. A strip shows the verdict for all seven vegetables |
-| 3 Rain is only one piece | Three context cards and charts: weather and paddy, rice imports, exchange rate |
-| 4 What did we learn? | Click **Wanna see the conclusion?** to reveal the three findings |
+| 2 Spot the pattern yourself | Pick a vegetable and how many months earlier the rain fell. Each dot is a month; the cards say how strong the link is in words, and a bar chart compares all seven vegetables |
+| 3 Does rain help? Try it | Pick a vegetable, where rain is measured and the market. The cards show the typical miss with and without rain, a plain verdict ("Clear help", "A hint, not proven", "No clear effect", "No help") and how often the price fell inside the forecast range. A strip shows the verdict for all seven vegetables |
+| 4 Rain is only one piece | Three context cards and charts: weather and paddy, rice imports, exchange rate |
+| 5 What did we learn? | Guess which vegetable rain helps most, then click **Wanna see the conclusion?** to reveal the findings and whether the guess was right |
 
-The default settings on page 2 (Whole island, Dambulla) are the main analysis. The other regions and Pettah are checks.
+The default settings on page 3 (Whole island, Dambulla) are the main analysis. The other regions and Pettah are checks.
 
 ## 3. What the study found
 
@@ -54,16 +55,16 @@ research-story/
 ├── .python-version        Python version for uv
 ├── .streamlit/            colour theme and settings for the app
 ├── story/                 the code behind the pages
-│   ├── pages.py             the four pages: controls, KPI cards, charts, conclusion reveal
+│   ├── pages.py             the five pages: controls, KPI cards, charts, conclusion reveal
 │   ├── metrics.py           every number on the cards, read from data/ (no Streamlit, unit-tested)
 │   ├── rainmap.py           rainfall per map cell for the Sri Lanka rain map (unit-tested)
 │   ├── ui.py                KPI card, icon, verdict strip and confetti drawing (HTML/SVG/CSS)
 │   └── common.py            colours, vegetable list and data loading
 ├── data/                  every dataset the app reads (one common folder)
-├── story_pages/           one speaking guide per page (4 Markdown files)
+├── story_pages/           one speaking guide per page (5 Markdown files)
 ├── tests/                 automated checks (numbers match stored results; every page runs)
 ├── docs/                  background documents
-│   ├── STORY_MAP.md         how the four pages build one argument
+│   ├── STORY_MAP.md         how the five pages build one argument
 │   ├── AUDIT_REPORT.md      check of every claim against its source (done on the 10-slide deck)
 │   ├── CLAIM_SOURCE_REGISTER.csv   55 claims, each with its source and status
 │   ├── superpowers/         design note and build plan for the dashboard
@@ -80,8 +81,8 @@ research-story/
 
 ## 5. For evaluators: where to look
 
-1. **Run the app** and play with page 2. Every page stands on its own.
-2. **`story_pages/`** holds what the presenter does and says on each page, what each card means, the method under "If an evaluator asks", and what must not be claimed. Open `02_does_rain_help.md` first: it has the central result and the full method.
+1. **Run the app** and play with pages 2 and 3. Every page stands on its own.
+2. **`story_pages/`** holds what the presenter does and says on each page, what each card means, the method under "If an evaluator asks", and what must not be claimed. Open `03_does_rain_help.md` first: it has the central result and the full method.
 3. **`tests/`** checks that the dashboard shows the stored results (for example, cabbage: 19.7% smaller error, "Clear help"; beans: "No help") and that every page runs. Run `uv run pytest`.
 4. **`docs/AUDIT_REPORT.md`** shows the numbers were checked against the analysis outputs (55 claims, all verified).
 5. **`data/`** has every dataset; `docs/references/data_sources.md` explains each file.

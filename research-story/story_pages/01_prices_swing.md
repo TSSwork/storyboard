@@ -12,7 +12,7 @@
 ## What to say
 "This is the wholesale price of cabbage at Dambulla, a major vegetable wholesale market, every month since 2016. Look at the cards. In its cheapest month cabbage sold for about 16 rupees a kilo, and in its dearest month about 452 rupees. That is roughly a 28-times gap. In six months out of ten the price moves by more than a fifth from one month to the next.
 
-Farmers, traders and households all live with this. On the right is where the rain falls. Darker blue means more rain. It is not spread evenly: the south-west is soaked in the May monsoon, and the dry zone around Dambulla gets much less. The two dotted squares are the areas whose rain we also tested. So we asked a simple question. Underneath the price I've put the rain that fell across the island. Can last month's rain warn us about next month's price?"
+Farmers, traders and households all live with this. On the right is where the rain falls. Darker blue means more rain. It is not spread evenly: the south-west is soaked in the May monsoon, and the dry zone around Dambulla gets much less. The two dotted squares are the areas whose rain we also tested. So we asked a simple question. Underneath the price I've put the rain that fell across the island. Can last month's rain warn us about next month's price? Let's look for a pattern."
 
 ## Key points
 - The swings are large, frequent and different for each vegetable. That makes forecasting worthwhile and hard.

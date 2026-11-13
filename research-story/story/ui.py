@@ -39,19 +39,16 @@ CSS = """
 .kpi-row.three { grid-template-columns:repeat(3,minmax(0,1fr)); }
 @media (max-width: 900px) { .kpi-row, .kpi-row.three { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width: 560px) { .kpi-row, .kpi-row.three { grid-template-columns:1fr; } }
-.kpi { background:#fff; border:1px solid var(--rule); border-radius:14px; padding:1rem 1.15rem 1.05rem; box-shadow:var(--card-shadow); min-width:0; }
-.kpi-top { display:flex; align-items:center; min-height:2.6em; line-height:1.3; gap:.6rem; color:var(--muted); font-size:.86rem; font-weight:500; }
-.kpi-ico { width:34px; height:34px; border-radius:50%; background:var(--tint); color:var(--ink); display:grid; place-items:center; flex:none; }
-.kpi-val { font-size:2rem; font-weight:600; letter-spacing:-.02em; color:var(--ink); margin:.55rem 0 .15rem; font-variant-numeric:tabular-nums; line-height:1.1; overflow-wrap:anywhere; }
-.kpi-val small { font-size:.95rem; font-weight:500; color:var(--muted); margin-left:.25rem; letter-spacing:0; }
-.kpi-chip { display:inline-block; font-size:.8rem; font-weight:500; padding:.18rem .6rem; border-radius:999px; margin-top:.35rem; }
-.kpi-chip.good { background:#e5f2ec; color:#2f6b52; }
-.kpi-chip.soft { background:var(--tint); color:#1d5574; }
-.kpi-chip.flat { background:#edf2f5; color:#4c6472; }
-.kpi-chip.bad  { background:#fde9e9; color:#a23b3b; }
-.kpi.tone-good { border-top:3px solid var(--sage); } .kpi.tone-bad { border-top:3px solid var(--coral); }
-.kpi.tone-soft { border-top:3px solid var(--soft); } .kpi.tone-flat { border-top:3px solid var(--slate); }
-
+.kpi { border-radius:16px; padding:1rem 1.15rem 1.05rem; box-shadow:0 6px 18px -8px rgba(24,43,73,.28); min-width:0; color:#fff; }
+.kpi.c-blue { background:#3977F6; } .kpi.c-purple { background:#8865E8; } .kpi.c-green { background:#23936F; }
+.kpi.c-slate { background:#6B7C93; } .kpi.c-navy { background:#182B49; }
+.kpi.c-cyan { background:#25B8C8; color:#182B49; } .kpi.c-orange { background:#F5A33B; color:#182B49; } .kpi.c-pink { background:#F06B9A; color:#182B49; }
+.kpi-top { display:flex; align-items:center; min-height:2.6em; line-height:1.3; gap:.6rem; font-size:.86rem; font-weight:600; opacity:.95; }
+.kpi-ico { width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.22); display:grid; place-items:center; flex:none; }
+.kpi-val { font-size:2rem; font-weight:700; letter-spacing:-.02em; margin:.55rem 0 .15rem; font-variant-numeric:tabular-nums; line-height:1.1; overflow-wrap:anywhere; }
+.kpi-val small { font-size:.95rem; font-weight:500; margin-left:.25rem; letter-spacing:0; opacity:.85; }
+.kpi-chip { display:inline-block; font-size:.8rem; font-weight:600; padding:.18rem .6rem; border-radius:999px; margin-top:.35rem; background:rgba(255,255,255,.24); }
+.kpi.c-cyan .kpi-chip, .kpi.c-orange .kpi-chip, .kpi.c-pink .kpi-chip { background:rgba(255,255,255,.45); }
 .verdicts { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 .2rem; }
 .vd { display:flex; align-items:center; gap:.45rem; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:.35rem .8rem .35rem .45rem; font-size:.88rem; }
 .vd .dot { width:24px; height:24px; border-radius:50%; display:grid; place-items:center; }
@@ -75,11 +72,18 @@ CSS = """
 .st-key-hide_btn button { border:none !important; color:var(--muted) !important; background:transparent !important; text-decoration:underline; text-underline-offset:3px; min-height:2rem !important; }
 .take { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin-top:.4rem; }
 @media (max-width: 900px) { .take { grid-template-columns:1fr; } }
-.take .card { background:#fff; border:1px solid var(--rule); border-radius:16px; padding:1.3rem 1.4rem; box-shadow:var(--card-shadow); }
+.take .card { border-radius:16px; padding:1.3rem 1.4rem; box-shadow:0 6px 18px -8px rgba(24,43,73,.28); color:#fff; }
+.take .card.c-green { background:#23936F; } .take .card.c-pink { background:#F06B9A; color:#182B49; } .take .card.c-blue { background:#3977F6; }
+.take .card .kpi-ico { background:rgba(255,255,255,.22); }
+.take .card h3 { color:inherit; }
+.guess-q { text-align:center; font-weight:600; color:var(--ink); margin:.4rem 0 .5rem; }
+[class*="st-key-guess"] [data-testid="stButtonGroup"] { justify-content:center; display:flex; flex-wrap:wrap; }
+.guess-result { display:flex; align-items:center; gap:.7rem; background:#fff; border:1px solid var(--rule); border-left:5px solid #F5A33B; border-radius:12px; padding:.8rem 1rem; margin:.2rem 0 1rem; font-weight:500; }
+.guess-result svg { color:#F5A33B; flex:none; }
 .take .card h3 { font-size:1.15rem; margin:.7rem 0 .45rem; padding:0; }
 .take .card p { margin:0; line-height:1.55; }
-.take .big { font-size:2.4rem; font-weight:600; letter-spacing:-.02em; color:var(--ink); line-height:1; margin-top:.9rem; font-variant-numeric:tabular-nums; }
-.take .big small { font-size:.9rem; color:var(--muted); font-weight:500; margin-left:.3rem; letter-spacing:0; }
+.take .big { font-size:2.4rem; font-weight:700; letter-spacing:-.02em; color:inherit; line-height:1; margin-top:.9rem; font-variant-numeric:tabular-nums; }
+.take .big small { font-size:.9rem; opacity:.85; font-weight:500; margin-left:.3rem; letter-spacing:0; }
 
 @media (prefers-reduced-motion: no-preference) {
   @keyframes rise { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
@@ -96,10 +100,16 @@ CSS = """
 """
 
 
-def kpi(icon: str, label: str, value: str, note: str = "", tone: str = "flat", unit: str = "") -> str:
-    chip = f'<div class="kpi-chip {tone}">{esc(note)}</div>' if note else ""
+COLORS = {"blue", "cyan", "purple", "pink", "orange", "green", "slate", "navy"}
+TONE_COLOR = {"good": "green", "soft": "cyan", "flat": "slate", "bad": "pink"}
+
+
+def kpi(icon: str, label: str, value: str, note: str = "", tone: str = "flat", unit: str = "", color: str | None = None) -> str:
+    """One solid-colour KPI card. `color` picks the fill; without it the tone decides (good/soft/flat/bad)."""
+    c = color if color in COLORS else TONE_COLOR.get(tone, "slate")
+    chip = f'<div class="kpi-chip">{esc(note)}</div>' if note else ""
     u = f"<small>{esc(unit)}</small>" if unit else ""
-    return (f'<div class="kpi tone-{tone}"><div class="kpi-top"><span class="kpi-ico">{ICON[icon]}</span>{esc(label)}</div>'
+    return (f'<div class="kpi c-{c}"><div class="kpi-top"><span class="kpi-ico">{ICON[icon]}</span>{esc(label)}</div>'
             f'<div class="kpi-val">{esc(value)}{u}</div>{chip}</div>')
 
 

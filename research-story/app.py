@@ -35,6 +35,7 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
 .stButton > button:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .stButton > button[kind="primary"] { background: var(--ink); color: #fff; }
 .stButton > button[kind="primary"]:hover:not(:disabled) { background: #0b3c5a; color: #fff; }
+.stButton > button:disabled, .stButton > button[kind="primary"]:disabled { opacity: .35; cursor: not-allowed; }
 .progress { height: 3px; background: var(--tint); border-radius: 2px; margin: 12px 0 8px; }
 .progress > div { height: 3px; background: var(--ink); border-radius: 2px; transition: width .25s ease; }
 .pager { text-align: center; color: var(--muted); font-size: 1rem; font-variant-numeric: tabular-nums; }

@@ -53,3 +53,17 @@ def test_forecast_path_lengths():
 
 def test_rain_kpis_reports_percentage_miss():
     assert round(m.rain_kpis("Cabbage", "nat", "dambulla")["mape_with"], 1) == 24.0
+
+
+def test_pattern_reproduces_audited_lag_correlations():
+    table = pd.read_csv(common.DATA / "lag_correlations.csv", index_col=0)
+    for veg in common.VEGS:
+        for lag in range(4):
+            assert abs(m.pattern_r(veg, lag) - table.loc[veg, str(lag)]) < 0.011, (veg, lag)
+
+
+def test_pattern_points_and_words():
+    p = m.pattern("Cabbage", 1)
+    assert list(p.columns) == ["month", "rain_z", "price_chg"] and len(p) > 100
+    assert m.strength_word(0.60) == "Strong" and m.strength_word(-0.45) == "Moderate"
+    assert m.strength_word(0.25) == "Weak" and m.strength_word(0.05) == "Barely any"

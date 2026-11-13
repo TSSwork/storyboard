@@ -56,10 +56,10 @@ def p1():
     k = M.price_kpis(veg)
     jump_word = "rise" if k["jump_pct"] > 0 else "fall"
     ui.kpi_row([
-        ui.kpi("tag", "Cheapest month", rs(k["low"]), k["low_month"].strftime("%b %Y"), "flat", "/kg"),
-        ui.kpi("trend_up", "Most expensive month", rs(k["high"]), k["high_month"].strftime("%b %Y"), "bad", "/kg"),
-        ui.kpi("bolt", "Biggest one-month move", f"{abs(k['jump_pct']):.0f}%", f"{jump_word}, {k['jump_month'].strftime('%b %Y')}", "soft"),
-        ui.kpi("wave", "Months with a swing over 20%", f"{k['big_move_share'] * 10:.0f} in 10", f"{k['high'] / k['low']:.0f}× gap, cheapest to dearest", "soft"),
+        ui.kpi("tag", "Cheapest month", rs(k["low"]), k["low_month"].strftime("%b %Y"), "flat", "/kg", color="blue"),
+        ui.kpi("trend_up", "Most expensive month", rs(k["high"]), k["high_month"].strftime("%b %Y"), "bad", "/kg", color="pink"),
+        ui.kpi("bolt", "Biggest one-month move", f"{abs(k['jump_pct']):.0f}%", f"{jump_word}, {k['jump_month'].strftime('%b %Y')}", "soft", color="orange"),
+        ui.kpi("wave", "Months with a swing over 20%", f"{k['big_move_share'] * 10:.0f} in 10", f"{k['high'] / k['low']:.0f}× gap, cheapest to dearest", "soft", color="purple"),
     ])
     left, right = st.columns([3, 2], gap="large")
     with left:
@@ -130,12 +130,61 @@ def rain_map():
     style(fig, 470, legend=False); fig.update_layout(hovermode="closest")
     st.plotly_chart(fig, width="stretch", config=CFG)
     st.markdown(f'<p class="fine">Rain in {esc(label)}. Darker blue = more rain. '
-                'Dotted squares: the two areas whose rain we also tested on the next page.</p>', unsafe_allow_html=True)
+                'Dotted squares: the two areas whose rain we also tested on page 3.</p>', unsafe_allow_html=True)
+
+
+# ---------------- pattern ----------------
+LAGS = {0: "Same month", 1: "1 month earlier", 2: "2 months earlier", 3: "3 months earlier"}
+
+
+def p_pattern():
+    header(2, ACT[0], "Spot the pattern yourself",
+           "Does a wetter-than-usual month come before a price jump? Every dot is one month. "
+           "Pick a vegetable and how long the rain takes to show up in the price.")
+    veg = pick_veg("pp_veg")
+    lag = st.select_slider("Rain from", options=list(LAGS), value=1, format_func=LAGS.get, key="pp_lag")
+    d = M.pattern(veg, lag)
+    r = M.pattern_r(veg, lag)
+    word = M.strength_word(r)
+    rs_all = {L: M.pattern_r(veg, L) for L in LAGS}
+    best = max(rs_all, key=lambda L: abs(rs_all[L]))
+    ui.kpi_row([
+        ui.kpi("wave", "Link between rain and price", word, f"r = {r:+.2f} on a −1 to +1 scale",
+               color={"Strong": "blue", "Moderate": "cyan"}.get(word, "slate")),
+        ui.kpi("trend_up" if r >= 0 else "trend_down", "Direction", "Wetter → dearer" if r >= 0 else "Wetter → cheaper",
+               "in the months compared", color="orange"),
+        ui.kpi("calendar", f"Strongest delay for {veg.lower()}", LAGS[best], f"r = {rs_all[best]:+.2f}", color="purple"),
+        ui.kpi("tag", "Months compared", f"{len(d)}", f"{d.month.min():%b %Y} – {d.month.max():%b %Y}", color="green"),
+    ])
+    left, right = st.columns([3, 2], gap="large")
+    with left:
+        fig = go.Figure(go.Scatter(x=d.rain_z, y=d.price_chg, mode="markers", customdata=d.month.dt.strftime("%b %Y"),
+                                   marker=dict(color="#3977F6", size=9, opacity=.6, line=dict(color="white", width=.5)),
+                                   hovertemplate="%{customdata}<br>rain %{x:+.1f} vs usual<br>price %{y:+.0f}%<extra></extra>"))
+        b = np.polyfit(d.rain_z, d.price_chg, 1); xs = np.linspace(d.rain_z.min(), d.rain_z.max(), 5)
+        fig.add_trace(go.Scatter(x=xs, y=np.polyval(b, xs), mode="lines", line=dict(color="#F5A33B", width=3), hoverinfo="skip"))
+        fig.add_hline(y=0, line=dict(color=GRID, width=1)); fig.add_vline(x=0, line=dict(color=GRID, width=1))
+        fig.update_xaxes(title_text="← drier than usual      rain      wetter than usual →", zeroline=False)
+        fig.update_yaxes(title_text="price change vs a normal month, %")
+        style(fig, 430, legend=False); fig.update_layout(hovermode="closest")
+        st.plotly_chart(fig, width="stretch", config=CFG)
+    with right:
+        allr = pd.Series({v: M.pattern_r(v, lag) for v in C.VEGS}).sort_values()
+        fig2 = go.Figure(go.Bar(x=allr.values, y=allr.index, orientation="h",
+                                marker_color=["#F06B9A" if v == veg else "#c9d8f8" for v in allr.index],
+                                text=[f"{x:+.2f}" for x in allr.values], textposition="outside", cliponaxis=False,
+                                hovertemplate="%{y}: r = %{x:+.2f}<extra></extra>"))
+        fig2.update_xaxes(range=[-0.7, 0.8], title_text="strength of the link (r)", zeroline=True, zerolinecolor=MUTED)
+        style(fig2, 430, legend=False); fig2.update_layout(hovermode="closest", title=dict(text=f"All seven · rain {LAGS[lag].lower()}", font=dict(size=14), x=0))
+        st.plotly_chart(fig2, width="stretch", config=CFG)
+    st.markdown('<p class="hook">A pattern is a clue, not proof. The next page puts it to a real test.</p>', unsafe_allow_html=True)
+    st.markdown('<p class="fine">With 7 vegetables × 4 delays = 28 links, a few can look strong just by chance.</p>', unsafe_allow_html=True)
+    footer("CBSL Dambulla wholesale prices; ERA5-Land national rain. Exploratory patterns (lag_correlations.csv reproduced)")
 
 
 # ---------------- 2 ----------------
 def p2():
-    header(2, ACT[1], "Does rain help? Try it",
+    header(3, ACT[1], "Does rain help? Try it",
            "Each month we made two forecasts of next month's price: one from past prices only, one that also knew the rain. "
            "Change the settings and see which one missed by less.")
     veg = pick_veg("p2_veg")
@@ -146,11 +195,11 @@ def p2():
     g = k["gain_pct"]
     change = f"{abs(g):.0f}% {'smaller' if g >= 0 else 'larger'} overall error" if abs(g) >= 0.5 else "about the same error"
     ui.kpi_row([
-        ui.kpi("tag", "Typical miss, prices only", rs(k["miss_without"]), "past prices alone", "flat", "/kg"),
+        ui.kpi("tag", "Typical miss, prices only", rs(k["miss_without"]), "past prices alone", "flat", "/kg", color="blue"),
         ui.kpi("rain", "Typical miss, adding rain", rs(k["miss_with"]), change, k["tone"], "/kg"),
         ui.kpi("check", "Verdict", k["label"], {"good": "survives strict checks", "soft": "looks better, not proven",
                                                 "flat": "too small to trust", "bad": "rain adds nothing"}[k["tone"]], k["tone"]),
-        ui.kpi("target", "Price landed inside our range", f"{k['inside_with']:.0f} in 10", f"prices only: {k['inside_without']:.0f} in 10 · aim: 8", "soft"),
+        ui.kpi("target", "Price landed inside our range", f"{k['inside_with']:.0f} in 10", f"prices only: {k['inside_without']:.0f} in 10 · aim: 8", "soft", color="purple"),
     ])
     f = M.forecast_path(veg, region, market)
     fig = go.Figure()
@@ -187,14 +236,14 @@ def p3_data():
 
 
 def p3():
-    header(3, ACT[2], "Rain is only one piece",
+    header(4, ACT[2], "Rain is only one piece",
            "Food prices in Sri Lanka also depend on the rice harvest, on imports and on the rupee. Each is shown on its own; they are not combined into one score.")
     x, y, r, n, share, fx = p3_data()
     fx0 = fx.loc["2021-01"].iloc[0]
     ui.kpi_row([
-        ui.kpi("leaf", "Wetter growing seasons, better paddy harvests", f"r = {r:+.2f}", f"{n} seasons · a link, not proof", "soft"),
-        ui.kpi("globe", "Rice bought from abroad, peak year", f"{share.max():.0f}%", f"of supply in {share.idxmax()} · {share.iloc[-1]:.0f}% in {share.index[-1]}", "flat"),
-        ui.kpi("coins", "Rupee price of one US dollar", rs(fx.iloc[-1]), f"+{(fx.iloc[-1] / fx0 - 1) * 100:.0f}% since Jan 2021", "bad"),
+        ui.kpi("leaf", "Wetter growing seasons, better paddy harvests", f"r = {r:+.2f}", f"{n} seasons · a link, not proof", "soft", color="green"),
+        ui.kpi("globe", "Rice bought from abroad, peak year", f"{share.max():.0f}%", f"of supply in {share.idxmax()} · {share.iloc[-1]:.0f}% in {share.index[-1]}", "flat", color="orange"),
+        ui.kpi("coins", "Rupee price of one US dollar", rs(fx.iloc[-1]), f"+{(fx.iloc[-1] / fx0 - 1) * 100:.0f}% since Jan 2021", "bad", color="purple"),
     ])
     cols = st.columns(3, gap="medium")
     f1 = go.Figure(go.Scatter(x=x, y=y, mode="markers", marker=dict(color=NAVY, size=9, opacity=.85), hovertemplate="rain %{x:+.0f} mm vs usual<extra></extra>"))
@@ -220,13 +269,17 @@ def p3():
 
 # ---------------- 4 ----------------
 def p4():
-    header(4, ACT[2], "What did we learn?", "Three pages of playing with the data. Here is the short version.")
+    header(5, ACT[2], "What did we learn?", "Four pages of playing with the data. Here is the short version.")
     if not st.session_state.get("revealed"):
         st.markdown(f'<div class="reveal-wrap"><div><div class="reveal-ico">{ui.ICON["sparkle"]}</div>'
                     '<p class="reveal-q">Ready for the answer?</p><p class="reveal-sub">One click, three findings.</p></div></div>',
                     unsafe_allow_html=True)
+        st.markdown('<p class="guess-q">First, your guess: which vegetable does rain help most?</p>', unsafe_allow_html=True)
+        _, gmid, _ = st.columns([1, 4, 1])
+        gmid.pills("Your guess", C.VEGS, key="guess", label_visibility="collapsed")
         _, mid, _ = st.columns([1, 1, 1])
         if mid.button("Wanna see the conclusion?", type="primary", key="reveal_btn", icon=":material/celebration:", width="stretch"):
+            st.session_state.my_guess = st.session_state.get("guess")
             st.session_state.revealed = True
             st.session_state.confetti = True
             st.rerun()
@@ -238,6 +291,16 @@ def p4():
     gains = [nat[v]["gain_pct"] for v in helped]
     rest = [v for v in C.VEGS if v not in helped]
     miss = np.median([nat[v]["mape_with"] for v in C.VEGS])
+    best = max(helped, key=lambda v: nat[v]["gain_pct"])
+    g = st.session_state.get("my_guess")
+    if g:
+        if g == best:
+            msg = f"You guessed {g.lower()}. Spot on: rain helped {best.lower()} most, {nat[best]['gain_pct']:.0f}% smaller errors."
+        elif g in helped:
+            msg = f"You guessed {g.lower()}. Close: rain does help it ({nat[g]['gain_pct']:.0f}%), but {best.lower()} gained most ({nat[best]['gain_pct']:.0f}%)."
+        else:
+            msg = f"You guessed {g.lower()}. A fair guess, but rain gave it no gain we can trust. It helped {best.lower()} most ({nat[best]['gain_pct']:.0f}%)."
+        st.markdown(f'<div class="guess-result">{ui.ICON["target"]}<span>{esc(msg)}</span></div>', unsafe_allow_html=True)
     cards = [
         ("check", "good", f"{min(gains):.0f}–{max(gains):.0f}%", "smaller errors", "Rain helps some vegetables",
          f"For {', '.join(v.lower() for v in helped)}, knowing last month's rain made next month's forecast clearly better."),
@@ -246,7 +309,7 @@ def p4():
         ("sparkle", "soft", "Next", "test on new months", "What it means",
          "This is a research finding about where rain carries information, not a price app. Next: check it on months not yet published, and use rain from the farms themselves."),
     ]
-    html_cards = "".join(f'<div class="card"><span class="kpi-ico" style="background:var(--tint)">{ui.ICON[i]}</span>'
+    html_cards = "".join(f'<div class="card c-{ui.TONE_COLOR[tone] if tone != "soft" else "blue"}"><span class="kpi-ico">{ui.ICON[i]}</span>'
                          f'<div class="big">{esc(big)}<small>{esc(sm)}</small></div><h3>{esc(h)}</h3><p>{esc(t)}</p></div>'
                          for i, tone, big, sm, h, t in cards)
     st.markdown(f'<div class="take">{html_cards}</div>', unsafe_allow_html=True)
@@ -258,6 +321,7 @@ ACT = ["The problem", "The test", "The bigger picture"]
 # (sidebar title, material icon, act, render)
 PAGES = [
     ("Prices swing wildly", ":material/show_chart:", ACT[0], p1),
+    ("Spot the pattern yourself", ":material/scatter_plot:", ACT[0], p_pattern),
     ("Does rain help? Try it", ":material/science:", ACT[1], p2),
     ("Rain is only one piece", ":material/public:", ACT[2], p3),
     ("What did we learn?", ":material/celebration:", ACT[2], p4),

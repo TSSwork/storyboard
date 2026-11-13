@@ -1,4 +1,4 @@
-# 02 - Does rain help? Try it
+# 03 - Does rain help? Try it
 
 **Act:** The test · **Time:** 3 to 4 minutes. This is the main page. Let the audience drive it if they want to.
 

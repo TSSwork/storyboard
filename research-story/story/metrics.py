@@ -4,6 +4,7 @@ No Streamlit here, so these functions are unit-tested in tests/test_metrics.py.
 """
 from functools import cache
 
+import numpy as np
 import pandas as pd
 
 from story.common import DATA, VEGS, prices
@@ -83,3 +84,36 @@ def price_kpis(veg: str) -> dict:
     j = ch.abs().idxmax()
     return dict(low=float(s.min()), low_month=s.idxmin(), high=float(s.max()), high_month=s.idxmax(),
                 jump_pct=float(ch[j]), jump_month=j, big_move_share=float((ch.abs() > 20).mean()), n_months=len(s))
+
+
+# ---- "Spot the pattern": exploratory link between rain and next price change ----
+# Same construction as the audited table (lag_correlations.csv, research_audit/feasibility_prices.py section D):
+# monthly change in log price, minus that calendar month's average change; national rain as a z-score anomaly.
+@cache
+def _pattern_inputs():
+    cb = pd.read_csv(DATA / "cbsl_daily_prices.csv", comment="#", parse_dates=["period"]).set_index("period")
+    cols = {v: [c for c in cb.columns if c.startswith(v + " (wholesale, dambulla)")][0] for v in VEGS}
+    logp = np.log(cb[list(cols.values())].resample("MS").mean())
+    logp.columns = list(cols)
+    mon = pd.read_csv(DATA / "era5_monthly.csv", parse_dates=["month"]).set_index("month")
+    mon = mon[mon.days_in_month >= 28]
+    g = mon.groupby(mon.index.month).rain_mm
+    return logp, (mon.rain_mm - g.transform("mean")) / g.transform("std")
+
+
+def pattern(veg: str, lag: int) -> pd.DataFrame:
+    logp, z = _pattern_inputs()
+    dp = logp[veg].diff()
+    dp = dp - dp.groupby(dp.index.month).transform("mean")
+    j = pd.concat([z.shift(lag).rename("rain_z"), (dp * 100).rename("price_chg")], axis=1).dropna()
+    return j.rename_axis("month").reset_index()
+
+
+def pattern_r(veg: str, lag: int) -> float:
+    p = pattern(veg, lag)
+    return float(np.corrcoef(p.rain_z, p.price_chg)[0, 1])
+
+
+def strength_word(r: float) -> str:
+    a = abs(r)
+    return "Strong" if a >= 0.55 else "Moderate" if a >= 0.35 else "Weak" if a >= 0.15 else "Barely any"

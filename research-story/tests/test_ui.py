@@ -3,7 +3,14 @@ from story import ui
 
 def test_kpi_card_contains_value_tone_and_icon():
     h = ui.kpi("tag", "Typical miss", "Rs 42", "↓ 19%", "good")
-    assert "Rs 42" in h and "kpi-chip good" in h and "<svg" in h
+    assert "Rs 42" in h and "kpi-chip" in h and "<svg" in h and "c-green" in h
+
+
+def test_kpi_solid_colour_choice_and_tone_mapping():
+    assert "c-purple" in ui.kpi("tag", "L", "1", color="purple")
+    assert "c-pink" in ui.kpi("tag", "L", "1", "n", "bad")
+    assert "c-slate" in ui.kpi("tag", "L", "1", "n", "flat")
+    assert "gradient" not in ui.CSS
 
 
 def test_kpi_escapes_text():
