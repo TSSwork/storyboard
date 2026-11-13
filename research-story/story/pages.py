@@ -12,6 +12,7 @@ from plotly.subplots import make_subplots
 
 from story import common as C
 from story import metrics as M
+from story import rainmap as R
 from story import ui
 
 esc = html.escape
@@ -60,22 +61,76 @@ def p1():
         ui.kpi("bolt", "Biggest one-month move", f"{abs(k['jump_pct']):.0f}%", f"{jump_word}, {k['jump_month'].strftime('%b %Y')}", "soft"),
         ui.kpi("wave", "Months with a swing over 20%", f"{k['big_move_share'] * 10:.0f} in 10", f"{k['high'] / k['low']:.0f}× gap, cheapest to dearest", "soft"),
     ])
-    show_rain = st.toggle("Show rainfall underneath", value=True, key="p1_rain")
-    p = M._prices()[veg].dropna()
-    rain, _ = C.national_rain()
-    rain = rain.loc[p.index.min():].dropna()
-    rows = 2 if show_rain else 1
-    fig = make_subplots(rows=rows, cols=1, shared_xaxes=True, row_heights=[0.65, 0.35] if show_rain else [1], vertical_spacing=0.06)
-    fig.add_trace(go.Scatter(x=p.index, y=p.values, mode="lines", line=dict(color=NAVY, width=2.2), name=f"{veg} price",
-                             fill="tozeroy", fillcolor="rgba(182,223,237,.25)", hovertemplate="Rs %{y:,.0f}/kg<extra></extra>"), 1, 1)
-    fig.update_yaxes(title_text="Rs per kg", row=1, col=1)
-    if show_rain:
-        fig.add_trace(go.Bar(x=rain.index, y=rain.values, marker_color=RAIN, name="Rain across the island", hovertemplate="%{y:.0f} mm<extra></extra>"), 2, 1)
-        fig.update_yaxes(title_text="Rain, mm", row=2, col=1)
-    style(fig, 470)
-    st.plotly_chart(fig, width="stretch", config=CFG)
+    left, right = st.columns([3, 2], gap="large")
+    with left:
+        show_rain = st.toggle("Show rainfall underneath", value=True, key="p1_rain")
+        p = M._prices()[veg].dropna()
+        rain, _ = C.national_rain()
+        rain = rain.loc[p.index.min():].dropna()
+        rows = 2 if show_rain else 1
+        fig = make_subplots(rows=rows, cols=1, shared_xaxes=True, row_heights=[0.65, 0.35] if show_rain else [1], vertical_spacing=0.06)
+        fig.add_trace(go.Scatter(x=p.index, y=p.values, mode="lines", line=dict(color=NAVY, width=2.2), name=f"{veg} price",
+                                 fill="tozeroy", fillcolor="rgba(182,223,237,.25)", hovertemplate="Rs %{y:,.0f}/kg<extra></extra>"), 1, 1)
+        fig.update_yaxes(title_text="Rs per kg", row=1, col=1)
+        if show_rain:
+            fig.add_trace(go.Bar(x=rain.index, y=rain.values, marker_color=RAIN, name="Rain across the island", hovertemplate="%{y:.0f} mm<extra></extra>"), 2, 1)
+            fig.update_yaxes(title_text="Rain, mm", row=2, col=1)
+        style(fig, 560)
+        st.plotly_chart(fig, width="stretch", config=CFG)
+    with right:
+        rain_map()
     st.markdown('<p class="hook">So, can last month\'s rain warn us about next month\'s price?</p>', unsafe_allow_html=True)
     footer("Central Bank of Sri Lanka daily wholesale prices (monthly average); ERA5-Land rainfall")
+
+
+MAP_SCALE = [[0, "#f6fafc"], [0.15, "#dcefF6"], [0.4, "#8cc0d6"], [0.7, "#2f7292"], [1, "#002941"]]
+MAP_MAX = 600   # mm; fixed so months can be compared (about the 98th percentile of all cell-months)
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+
+@st.cache_data
+def island_outline():
+    import json
+    g = json.load(open(C.DATA / "sri_lanka_boundary.geojson"))
+    f = [x for x in g["features"] if x["properties"].get("ISO3166-1-Alpha-3") == "LKA"][0]
+    xs, ys = [], []
+    for poly in f["geometry"]["coordinates"]:
+        for ring in poly:
+            xs += [p[0] for p in ring] + [None]; ys += [p[1] for p in ring] + [None]
+    return xs, ys
+
+
+def rain_map():
+    view = st.radio("Map", ["A real month", "Typical month"], horizontal=True, key="p1_mapview", label_visibility="collapsed")
+    if view == "A real month":
+        ms = R.months()
+        m = st.select_slider("Month", options=ms, value=ms[-1], format_func=lambda d: pd.Timestamp(d).strftime("%b %Y"),
+                             key="p1_month", label_visibility="collapsed")
+        df, label = R.month_map(m), pd.Timestamp(m).strftime("%B %Y")
+    else:
+        k = st.select_slider("Month", options=list(range(1, 13)), value=5, format_func=lambda i: MONTHS[i - 1],
+                             key="p1_cal", label_visibility="collapsed")
+        df, label = R.typical_map(k), f"a typical {MONTHS[k - 1]} (average {R.months()[0].year}–{R.months()[-1].year})"
+    z = df.pivot(index="lat", columns="lon", values="rain_mm")
+    fig = go.Figure(go.Heatmap(x=z.columns, y=z.index, z=z.values, zmin=0, zmax=MAP_MAX, colorscale=MAP_SCALE, hoverongaps=False,
+                               colorbar=dict(title=dict(text="mm", side="top"), thickness=10, len=0.6, outlinewidth=0, tickfont=dict(color=MUTED)),
+                               hovertemplate="%{z:.0f} mm<extra></extra>"))
+    xs, ys = island_outline()
+    fig.add_trace(go.Scatter(x=xs, y=ys, mode="lines", line=dict(color=NAVY, width=1), hoverinfo="skip", showlegend=False))
+    for name, (la, lo) in R.BOXES.items():
+        fig.add_shape(type="rect", x0=lo - R.HALF, x1=lo + R.HALF, y0=la - R.HALF, y1=la + R.HALF, line=dict(color=CORAL, width=1.6, dash="dot"))
+        fig.add_annotation(x=lo + R.HALF, y=la + R.HALF, text=name, showarrow=False, xanchor="left", yanchor="bottom", font=dict(color=NAVY, size=11))
+    fig.add_trace(go.Scatter(x=[79.85], y=[6.94], mode="markers", marker=dict(color="white", size=8, symbol="square", line=dict(color=NAVY, width=1.5)),
+                             hoverinfo="skip", showlegend=False))
+    fig.add_annotation(x=79.85, y=6.94, text="Colombo (Pettah)", showarrow=False, xanchor="left", yanchor="top", yshift=-7, font=dict(color=NAVY, size=11),
+                       bgcolor="rgba(255,255,255,.85)", borderpad=2)
+    for a in fig.layout.annotations[:-1]:
+        a.update(bgcolor="rgba(255,255,255,.85)", borderpad=2)
+    fig.update_xaxes(visible=False, range=[79.4, 82.1]); fig.update_yaxes(visible=False, scaleanchor="x", scaleratio=1, range=[5.8, 9.95])
+    style(fig, 470, legend=False); fig.update_layout(hovermode="closest")
+    st.plotly_chart(fig, width="stretch", config=CFG)
+    st.markdown(f'<p class="fine">Rain in {esc(label)}. Darker blue = more rain. '
+                'Dotted squares: the two areas whose rain we also tested on the next page.</p>', unsafe_allow_html=True)
 
 
 # ---------------- 2 ----------------

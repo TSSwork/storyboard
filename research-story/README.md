@@ -29,7 +29,7 @@ If the page does not open, go to the address above. If port 8501 is busy, run `u
 
 | Page | What you can do |
 |---|---|
-| 1 Prices swing wildly | Pick a vegetable; the four KPI cards and the chart update. Toggle rainfall under the chart |
+| 1 Prices swing wildly | Pick a vegetable; the four KPI cards and the chart update. Toggle rainfall under the chart. On the rain map, slide through any month since 2010 or switch to a typical month |
 | 2 Does rain help? Try it | Pick a vegetable, where rain is measured and the market. The cards show the typical miss with and without rain, a plain verdict ("Clear help", "A hint, not proven", "No clear effect", "No help") and how often the price fell inside the forecast range. A strip shows the verdict for all seven vegetables |
 | 3 Rain is only one piece | Three context cards and charts: weather and paddy, rice imports, exchange rate |
 | 4 What did we learn? | Click **Wanna see the conclusion?** to reveal the three findings |
@@ -56,6 +56,7 @@ research-story/
 ├── story/                 the code behind the pages
 │   ├── pages.py             the four pages: controls, KPI cards, charts, conclusion reveal
 │   ├── metrics.py           every number on the cards, read from data/ (no Streamlit, unit-tested)
+│   ├── rainmap.py           rainfall per map cell for the Sri Lanka rain map (unit-tested)
 │   ├── ui.py                KPI card, icon, verdict strip and confetti drawing (HTML/SVG/CSS)
 │   └── common.py            colours, vegetable list and data loading
 ├── data/                  every dataset the app reads (one common folder)
@@ -72,6 +73,7 @@ research-story/
 ├── archive/ten_slide_deck/   the earlier 10-slide version: PNG slides, speaking guides, slide code
 ├── scripts/               optional tools (not needed to run the app)
 │   ├── sync_data.py         refresh data/ from the full research project
+│   ├── build_rain_grid.py   rebuild data/era5_rain_grid.csv from the raw ERA5-Land files (needs the full project)
 │   └── audit_claims.py      re-run the claim audit (needs the full project)
 └── static/fonts/          Noto Sans, bundled so text looks the same on every computer
 ```

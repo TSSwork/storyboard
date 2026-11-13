@@ -51,3 +51,11 @@ def test_conclusion_reveal_and_back():
     at.session_state.page = 3
     at.run()
     assert not at.exception
+
+
+def test_rain_map_real_and_typical_month():
+    at = run(0)
+    assert "Darker blue = more rain" in text(at)
+    at.radio(key="p1_mapview").set_value("Typical month").run()
+    assert not at.exception
+    assert "Darker blue = more rain" in text(at)
