@@ -9,24 +9,15 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
-PAGES_DIR = ROOT / "story_pages"
-EXPORT = ROOT / "storyboard"          # PNG export of the slides (optional; the app does not use it)
 
 # ---- design tokens ----
 # Palette: midnight navy (ink + primary), soft blue (tint), coral (the one accent: marks and caution only, never text)
 NAVY, SOFT, CORAL = "#002941", "#b6dfed", "#fd6e6e"
 PAPER, INK, MUTED, GRID = "#f6fafc", NAVY, "#52707f", "#d8e6ee"
 TINT, RAIN, MID, BASE = "#e3f1f7", "#8cc0d6", "#2f7292", "#8aa3b2"
-ACC, EXPL, BAD = NAVY, MID, CORAL
-EVID_COL = {"supported": NAVY, "exploratory": SOFT, "no evidence": "#a9bcc7", "worse": CORAL}
 
 VEGS = ["Cabbage", "Brinjal", "Carrot", "Tomato", "Snake gourd", "Pumpkin", "Beans"]
-SLUGS = {1: "opening", 2: "scope_and_data", 3: "prices_and_rain", 4: "forecast_experiment", 5: "evaluation",
-         6: "main_result", 7: "robustness", 8: "accuracy", 9: "wider_context", 10: "conclusions"}
 
-# Stored v2 evidence label -> slide label (read from forecast_model_comparison_v2.csv, never re-derived)
-EVID_LABEL = {"supported (corrected)": "supported", "suggestive (uncorrected only)": "exploratory",
-              "no reliable evidence": "no evidence", "worse or no gain": "worse"}
 
 
 # ---- data ----

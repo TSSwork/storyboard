@@ -52,7 +52,7 @@ def rain_kpis(veg: str, region: str, market: str) -> dict:
     label = PLAIN[rain.evidence]
     return dict(miss_without=float(base.mae_lkr), miss_with=float(rain.mae_lkr), gain_pct=float(rain.rmse_gain_vs_AR_pct),
                 label=label, tone=TONE[label], inside_without=_inside(veg, "AR", market),
-                inside_with=_inside(veg, model, market), n=int(rain.n))
+                inside_with=_inside(veg, model, market), n=int(rain.n), mape_with=float(rain.mape_pct))
 
 
 def verdicts(region: str, market: str) -> list[tuple[str, str, str]]:

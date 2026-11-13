@@ -40,7 +40,7 @@ CSS = """
 @media (max-width: 900px) { .kpi-row, .kpi-row.three { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media (max-width: 560px) { .kpi-row, .kpi-row.three { grid-template-columns:1fr; } }
 .kpi { background:#fff; border:1px solid var(--rule); border-radius:14px; padding:1rem 1.15rem 1.05rem; box-shadow:var(--card-shadow); min-width:0; }
-.kpi-top { display:flex; align-items:center; gap:.6rem; color:var(--muted); font-size:.86rem; font-weight:500; }
+.kpi-top { display:flex; align-items:center; min-height:2.6em; line-height:1.3; gap:.6rem; color:var(--muted); font-size:.86rem; font-weight:500; }
 .kpi-ico { width:34px; height:34px; border-radius:50%; background:var(--tint); color:var(--ink); display:grid; place-items:center; flex:none; }
 .kpi-val { font-size:2rem; font-weight:600; letter-spacing:-.02em; color:var(--ink); margin:.55rem 0 .15rem; font-variant-numeric:tabular-nums; line-height:1.1; overflow-wrap:anywhere; }
 .kpi-val small { font-size:.95rem; font-weight:500; color:var(--muted); margin-left:.25rem; letter-spacing:0; }
@@ -64,7 +64,7 @@ CSS = """
 .lede { font-size:1.08rem; color:var(--muted); margin:.1rem 0 .9rem; max-width:62rem; }
 .hook { font-size:1.2rem; font-weight:500; color:var(--ink); margin:.6rem 0 0; }
 .hook::before { content:""; display:inline-block; width:8px; height:8px; background:var(--coral); border-radius:50%; margin-right:.6rem; vertical-align:middle; }
-.fine { color:var(--muted); font-size:.82rem; margin-top:.3rem; }
+[data-testid="stMarkdownContainer"] p.fine { color:var(--muted); font-size:.84rem; margin:.3rem 0 0; line-height:1.5; }
 
 .reveal-wrap { display:grid; place-items:center; text-align:center; padding:3.5rem 1rem 1rem; }
 .reveal-ico { width:64px; height:64px; border-radius:50%; background:var(--tint); color:var(--ink); display:grid; place-items:center; margin:0 auto 1rem; }
@@ -73,6 +73,7 @@ CSS = """
 .reveal-sub { color:var(--muted); margin:0 0 1.2rem; }
 .st-key-reveal_btn { display:flex; justify-content:center; }
 .st-key-reveal_btn button { min-width:16rem; min-height:3rem !important; border-radius:999px !important; font-size:1.05rem; }
+.st-key-hide_btn button { border:none !important; color:var(--muted) !important; background:transparent !important; text-decoration:underline; text-underline-offset:3px; min-height:2rem !important; }
 .take { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin-top:.4rem; }
 @media (max-width: 900px) { .take { grid-template-columns:1fr; } }
 .take .card { background:#fff; border:1px solid var(--rule); border-radius:16px; padding:1.3rem 1.4rem; box-shadow:var(--card-shadow); }

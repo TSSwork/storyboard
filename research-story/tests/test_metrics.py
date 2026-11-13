@@ -49,3 +49,7 @@ def test_forecast_path_lengths():
     f = m.forecast_path("Cabbage", "nat", "dambulla")
     assert len(f) == 62 and (f.lo <= f.hi).all()
     assert list(f.columns) == ["target_month", "actual", "without", "with", "lo", "hi"]
+
+
+def test_rain_kpis_reports_percentage_miss():
+    assert round(m.rain_kpis("Cabbage", "nat", "dambulla")["mape_with"], 1) == 24.0
