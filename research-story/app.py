@@ -1,7 +1,7 @@
 """Research dashboard: four interactive pages in the sidebar, the page itself in the main area.
 
 Pages: story/pages.py. Numbers: story/metrics.py (from data/). Cards and icons: story/ui.py.
-Speaking guides for the presenter are in story_pages/ and are not shown here.
+Speaking guides, docs and tests are in ../research-story-materials/ (not needed to run the app).
 Run from this folder:  uv run streamlit run app.py
 """
 import streamlit as st

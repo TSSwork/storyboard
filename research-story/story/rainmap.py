@@ -1,6 +1,6 @@
-"""Rainfall across Sri Lanka, cell by cell, for the rain map (data/era5_rain_grid.csv, built by scripts/build_rain_grid.py).
+"""Rainfall across Sri Lanka, cell by cell, for the rain map (data/era5_rain_grid.csv, built by ../research-story-materials/scripts/build_rain_grid.py).
 
-No Streamlit here; tested in tests/test_rain_grid.py against the corrected national and Dambulla-box series.
+No Streamlit here; tested in ../research-story-materials/tests/test_rain_grid.py against the corrected national and Dambulla-box series.
 """
 from functools import cache
 

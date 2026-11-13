@@ -2,7 +2,7 @@ from pathlib import Path
 
 from streamlit.testing.v1 import AppTest
 
-APP = str(Path(__file__).resolve().parent.parent / "app.py")
+APP = str(Path(__file__).resolve().parents[2] / "research-story" / "app.py")
 
 
 def run(page):

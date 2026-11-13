@@ -46,46 +46,36 @@ The default settings on page 3 (Whole island, Dambulla) are the main analysis. T
 
 ## 4. What is in this folder
 
+Only what the app needs to run:
+
 ```
 research-story/
-├── README.md              this file
-├── app.py                 the app shell: sidebar, bottom bar, keyboard, page transitions
-├── pyproject.toml         the libraries needed (uv reads this)
-├── uv.lock                exact versions, so it runs the same everywhere
-├── .python-version        Python version for uv
-├── .streamlit/            colour theme and settings for the app
-├── story/                 the code behind the pages
-│   ├── pages.py             the five pages: controls, KPI cards, charts, conclusion reveal
-│   ├── metrics.py           every number on the cards, read from data/ (no Streamlit, unit-tested)
-│   ├── rainmap.py           rainfall per map cell for the Sri Lanka rain map (unit-tested)
-│   ├── ui.py                KPI card, icon, verdict strip and confetti drawing (HTML/SVG/CSS)
-│   └── common.py            colours, vegetable list and data loading
-├── data/                  every dataset the app reads (one common folder)
-├── story_pages/           one speaking guide per page (5 Markdown files)
-├── tests/                 automated checks (numbers match stored results; every page runs)
-├── docs/                  background documents
-│   ├── STORY_MAP.md         how the five pages build one argument
-│   ├── AUDIT_REPORT.md      check of every claim against its source (done on the 10-slide deck)
-│   ├── CLAIM_SOURCE_REGISTER.csv   55 claims, each with its source and status
-│   ├── superpowers/         design note and build plan for the dashboard
-│   └── references/
-│       ├── data_sources.md      where each data file comes from
-│       └── research_references.md   statistical-method references
-├── archive/ten_slide_deck/   the earlier 10-slide version: PNG slides, speaking guides, slide code
-├── scripts/               optional tools (not needed to run the app)
-│   ├── sync_data.py         refresh data/ from the full research project
-│   ├── build_rain_grid.py   rebuild data/era5_rain_grid.csv from the raw ERA5-Land files (needs the full project)
-│   └── audit_claims.py      re-run the claim audit (needs the full project)
-└── static/fonts/          Noto Sans, bundled so text looks the same on every computer
+├── README.md          this file
+├── app.py             the app shell: sidebar, bottom bar, keyboard, page transitions
+├── story/             the code behind the pages
+│   ├── pages.py         the five pages: controls, KPI cards, charts, conclusion reveal
+│   ├── metrics.py       every number on the cards, read from data/
+│   ├── rainmap.py       rainfall per map cell for the Sri Lanka rain map
+│   ├── ui.py            KPI cards, icons, verdict strip, confetti (HTML/SVG/CSS)
+│   └── common.py        colours, vegetable list, data loading
+├── data/              every dataset the app reads
+├── static/fonts/      Noto Sans, bundled so text looks the same everywhere
+├── .streamlit/        theme and settings
+├── pyproject.toml     libraries needed (uv reads this)
+├── uv.lock            exact versions
+└── .python-version    Python version for uv
 ```
 
-## 5. For evaluators: where to look
+## 5. Speaking guides, docs and tests
 
-1. **Run the app** and play with pages 2 and 3. Every page stands on its own.
-2. **`story_pages/`** holds what the presenter does and says on each page, what each card means, the method under "If an evaluator asks", and what must not be claimed. Open `03_does_rain_help.md` first: it has the central result and the full method.
-3. **`tests/`** checks that the dashboard shows the stored results (for example, cabbage: 19.7% smaller error, "Clear help"; beans: "No help") and that every page runs. Run `uv run pytest`.
-4. **`docs/AUDIT_REPORT.md`** shows the numbers were checked against the analysis outputs (55 claims, all verified).
-5. **`data/`** has every dataset; `docs/references/data_sources.md` explains each file.
+These live in the sibling folder **`../research-story-materials/`** and are not needed to run the app:
+- `story_pages/`: what the presenter does and says on each page, what each card means, and the method under "If an evaluator asks". Start with `03_does_rain_help.md`.
+- `docs/`: the story map, the claim audit (55 claims, all verified), data sources and method references.
+- `tests/`: automated checks that the cards show the stored results and every page runs.
+- `scripts/`: rebuild the rain map grid, refresh the data, re-run the claim audit.
+- `archive/`: the earlier 10-slide version.
+
+See `../research-story-materials/README.md` for how to run the tests and scripts.
 
 ## 6. Method in brief
 
@@ -96,17 +86,7 @@ research-story/
 
 **Main limitations:** the test window was seen in the pilot; rainfall is measured nationally or in rough regional boxes, not where crops grow; the 62 forecast errors are not independent; prices are nominal; the context analyses (paddy, imports, exchange rate) are short series and the exchange-rate panel is descriptive only.
 
-## 7. Optional tools
-
-Run these from inside `research-story/`.
-
-```
-uv run pytest                                              # automated checks
-uv run python scripts/sync_data.py                         # refresh data/ (only when this folder sits inside the full project)
-uv run python scripts/audit_claims.py                      # re-run the claim audit (needs the full project one level up)
-```
-
-## 8. Troubleshooting
+## 7. Troubleshooting
 
 | Problem | What to do |
 |---|---|
@@ -115,6 +95,6 @@ uv run python scripts/audit_claims.py                      # re-run the claim au
 | The sidebar disappeared | Click the small arrow at the top left of the page |
 | Text looks different from expected | The bundled font loads only when the app is started from this folder (`cd research-story` first) |
 
-## 9. Credits
+## 8. Credits
 
-Data: Central Bank of Sri Lanka, Copernicus ERA5-Land, Department of Census and Statistics (Sri Lanka), FAOSTAT and UN Comtrade (see `docs/references/data_sources.md`). Font: Noto Sans by Google, under the SIL Open Font License 1.1. Libraries: Streamlit, Plotly, pandas, NumPy.
+Data: Central Bank of Sri Lanka, Copernicus ERA5-Land, Department of Census and Statistics (Sri Lanka), FAOSTAT and UN Comtrade (see `../research-story-materials/docs/references/data_sources.md`). Font: Noto Sans by Google, under the SIL Open Font License 1.1. Libraries: Streamlit, Plotly, pandas, NumPy.

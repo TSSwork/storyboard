@@ -11,9 +11,9 @@ import shutil
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent          # research-story-materials
 PROJECT = ROOT.parent
-DATA = ROOT / "data"
+DATA = PROJECT / "research-story" / "data"
 
 COPY = {  # file in data/  <-  path in the full project
     "forecast_model_comparison_v2.csv": "research_audit/forecast_model_comparison_v2.csv",

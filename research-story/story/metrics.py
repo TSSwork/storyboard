@@ -1,6 +1,6 @@
 """Plain-language numbers for the dashboard. Every value is read from data/; nothing is re-estimated.
 
-No Streamlit here, so these functions are unit-tested in tests/test_metrics.py.
+No Streamlit here, so these functions are unit-tested in ../research-story-materials/tests/test_metrics.py.
 """
 from functools import cache
 

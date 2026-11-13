@@ -10,7 +10,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parent.parent      # research-story/
+ROOT = Path(__file__).resolve().parent.parent      # research-story-materials/
+APP = ROOT.parent / "research-story"
 WORK = ROOT.parent                                    # the full research project (needed: this script reads its outputs)
 RA, D, V = WORK / "research_audit", WORK / "research_audit/derived", WORK / "research_audit/forecast_validation_v2"
 VEGS = ["Cabbage", "Brinjal", "Carrot", "Tomato", "Snake gourd", "Pumpkin", "Beans"]
@@ -111,7 +112,7 @@ parsed = {}
 for v in VEGS:
     m = re.search(rf"^{v}\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)\s+(-?[\d.]+)", blk, flags=re.M)
     parsed[v] = [float(x) for x in m.groups()]
-shown = pd.read_csv(ROOT / "data/lag_correlations.csv", index_col=0)
+shown = pd.read_csv(APP / "data/lag_correlations.csv", index_col=0)
 diff = max(abs(shown.loc[v].values - np.array(parsed[v])).max() for v in VEGS)
 reg(3, "Lag 0-3 correlation heat map values", "research_audit/_profiles/prices_out.txt section D; lag_correlations.csv", f"max abs difference between slide table and source = {diff:.3f}", "verified" if diff < .006 else "unsupported",
     "Values were copied by hand into the CSV; this check parses the source text and compares. The source output was produced by research_audit/feasibility_prices.py (not re-run here).")

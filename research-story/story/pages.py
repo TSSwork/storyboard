@@ -1,4 +1,4 @@
-"""The four dashboard pages. Plain words on screen; the method lives in the speaking guides (story_pages/).
+"""The five dashboard pages. Plain words on screen; the method lives in the speaking guides (../research-story-materials/story_pages/).
 
 Every number comes from story.metrics or data/ at run time.
 """

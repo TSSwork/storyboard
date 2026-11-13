@@ -3,7 +3,8 @@ from pathlib import Path
 
 from story import metrics as m
 
-ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(__file__).resolve().parent.parent          # research-story-materials
+APP = ROOT.parent / "research-story"
 
 
 def test_guide_1_states_the_real_start_year():
@@ -13,5 +14,5 @@ def test_guide_1_states_the_real_start_year():
 
 
 def test_no_unsourced_biggest_market_claim():
-    for f in [ROOT / "story/pages.py", ROOT / "story_pages/01_prices_swing.md"]:
+    for f in [APP / "story/pages.py", ROOT / "story_pages/01_prices_swing.md"]:
         assert "biggest vegetable market" not in f.read_text()
