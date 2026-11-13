@@ -71,8 +71,7 @@ CSS = """
 .reveal-ico svg { width:30px; height:30px; }
 .reveal-q { font-size:1.6rem; font-weight:600; margin:0 0 .4rem; color:var(--ink); }
 .reveal-sub { color:var(--muted); margin:0 0 1.2rem; }
-.st-key-reveal_btn { display:flex; justify-content:center; }
-.st-key-reveal_btn button { min-width:16rem; min-height:3rem !important; border-radius:999px !important; font-size:1.05rem; }
+.st-key-reveal_btn button { max-width:20rem; margin:0 auto; display:flex; min-height:3rem !important; border-radius:999px !important; font-size:1.05rem; }
 .st-key-hide_btn button { border:none !important; color:var(--muted) !important; background:transparent !important; text-decoration:underline; text-underline-offset:3px; min-height:2rem !important; }
 .take { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin-top:.4rem; }
 @media (max-width: 900px) { .take { grid-template-columns:1fr; } }

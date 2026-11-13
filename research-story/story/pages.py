@@ -225,7 +225,8 @@ def p4():
         st.markdown(f'<div class="reveal-wrap"><div><div class="reveal-ico">{ui.ICON["sparkle"]}</div>'
                     '<p class="reveal-q">Ready for the answer?</p><p class="reveal-sub">One click, three findings.</p></div></div>',
                     unsafe_allow_html=True)
-        if st.button("Wanna see the conclusion?", type="primary", key="reveal_btn", icon=":material/celebration:"):
+        _, mid, _ = st.columns([1, 1, 1])
+        if mid.button("Wanna see the conclusion?", type="primary", key="reveal_btn", icon=":material/celebration:", width="stretch"):
             st.session_state.revealed = True
             st.session_state.confetti = True
             st.rerun()
