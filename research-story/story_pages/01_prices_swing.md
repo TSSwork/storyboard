@@ -9,7 +9,7 @@
 4. End on the coral line under the chart: the question for the whole talk.
 
 ## What to say
-"This is the wholesale price of cabbage at Dambulla, the island's biggest vegetable market, every month since 2010. Look at the cards. In its cheapest month cabbage sold for about 16 rupees a kilo, and in its dearest month about 452 rupees. That is roughly a 28-times gap. In six months out of ten the price moves by more than a fifth from one month to the next.
+"This is the wholesale price of cabbage at Dambulla, a major vegetable wholesale market, every month since 2016. Look at the cards. In its cheapest month cabbage sold for about 16 rupees a kilo, and in its dearest month about 452 rupees. That is roughly a 28-times gap. In six months out of ten the price moves by more than a fifth from one month to the next.
 
 Farmers, traders and households all live with this. So we asked a simple question. Underneath the price I've put the rain that fell across the island. Can last month's rain warn us about next month's price?"
 

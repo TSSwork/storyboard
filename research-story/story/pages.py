@@ -50,7 +50,7 @@ def rs(x):
 # ---------------- 1 ----------------
 def p1():
     header(1, ACT[0], "Vegetable prices swing wildly",
-           "Wholesale prices at Dambulla, the island's biggest vegetable market. Pick a vegetable and see how far its price moves.")
+           "Wholesale prices at Dambulla, a major vegetable wholesale market. Pick a vegetable and see how far its price moves.")
     veg = pick_veg("p1_veg")
     k = M.price_kpis(veg)
     jump_word = "rise" if k["jump_pct"] > 0 else "fall"
