@@ -77,7 +77,9 @@ CSS = """
 .take .card .kpi-ico { background:rgba(255,255,255,.22); }
 .take .card h3 { color:inherit; }
 .guess-q { text-align:center; font-weight:600; color:var(--ink); margin:.4rem 0 .5rem; }
-[class*="st-key-guess"] [data-testid="stButtonGroup"] { justify-content:center; display:flex; flex-wrap:wrap; }
+.st-key-guess { width:100% !important; align-self:center; }
+.st-key-guess [data-testid="stButtonGroup"] div:has(> button) { justify-content:center; }
+.st-key-guess button { flex:0 0 auto !important; width:auto !important; padding:0 .9rem !important; }
 .guess-result { display:flex; align-items:center; gap:.7rem; background:#fff; border:1px solid var(--rule); border-left:5px solid #F5A33B; border-radius:12px; padding:.8rem 1rem; margin:.2rem 0 1rem; font-weight:500; }
 .guess-result svg { color:#F5A33B; flex:none; }
 .take .card h3 { font-size:1.15rem; margin:.7rem 0 .45rem; padding:0; }

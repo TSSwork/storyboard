@@ -275,8 +275,7 @@ def p4():
                     '<p class="reveal-q">Ready for the answer?</p><p class="reveal-sub">One click, three findings.</p></div></div>',
                     unsafe_allow_html=True)
         st.markdown('<p class="guess-q">First, your guess: which vegetable does rain help most?</p>', unsafe_allow_html=True)
-        _, gmid, _ = st.columns([1, 4, 1])
-        gmid.pills("Your guess", C.VEGS, key="guess", label_visibility="collapsed")
+        st.pills("Your guess", C.VEGS, key="guess", label_visibility="collapsed", width="stretch")
         _, mid, _ = st.columns([1, 1, 1])
         if mid.button("Wanna see the conclusion?", type="primary", key="reveal_btn", icon=":material/celebration:", width="stretch"):
             st.session_state.my_guess = st.session_state.get("guess")
