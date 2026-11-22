@@ -18,7 +18,7 @@ from story import ui
 esc = html.escape
 NAVY, SOFT, CORAL, PAPER, GRID, MUTED, RAIN = C.NAVY, C.SOFT, C.CORAL, C.PAPER, C.GRID, C.MUTED, C.RAIN
 SAGE, SLATE = "#5e9e83", "#8aa3b2"
-FONT = "Noto Sans, DejaVu Sans, sans-serif"
+FONT = "Manrope, system-ui, sans-serif"
 CFG = {"displayModeBar": False}
 
 

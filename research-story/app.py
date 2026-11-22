@@ -13,11 +13,15 @@ st.set_page_config(page_title="Research storyboard", layout="wide")
 st.markdown(
     """
 <style>
-@font-face { font-family: "Noto Sans"; font-weight: 400; src: url("app/static/fonts/NotoSans-Regular.ttf"); }
-@font-face { font-family: "Noto Sans"; font-weight: 500; src: url("app/static/fonts/NotoSans-Medium.ttf"); }
-@font-face { font-family: "Noto Sans"; font-weight: 600; src: url("app/static/fonts/NotoSans-SemiBold.ttf"); }
+@font-face { font-family: "Manrope"; font-weight: 400; src: url("app/static/fonts/Manrope-Regular.ttf"); }
+@font-face { font-family: "Manrope"; font-weight: 500; src: url("app/static/fonts/Manrope-Medium.ttf"); }
+@font-face { font-family: "Manrope"; font-weight: 600; src: url("app/static/fonts/Manrope-SemiBold.ttf"); }
+@font-face { font-family: "Manrope"; font-weight: 700; src: url("app/static/fonts/Manrope-Bold.ttf"); }
+@font-face { font-family: "Newsreader"; font-weight: 600; src: url("app/static/fonts/Newsreader_36pt-SemiBold.ttf"); }
+@font-face { font-family: "Newsreader"; font-weight: 700; src: url("app/static/fonts/Newsreader_36pt-Bold.ttf"); }
 :root { --ink:#002941; --muted:#52707f; --rule:#d8e6ee; --coral:#fd6e6e; --soft:#b6dfed; --tint:#e3f1f7; --paper:#f6fafc; }
-html, body, .stApp, [data-testid="stMarkdownContainer"] { font-family: "Noto Sans", system-ui, sans-serif; }
+html, body, .stApp, [data-testid="stMarkdownContainer"] { font-family: "Manrope", system-ui, sans-serif; }
+.stApp h1, .stApp h2, .stApp h3, .stApp h4, .s-h1, .s-card-h, .reveal-q, .hook { font-family: "Newsreader", Georgia, serif !important; }
 .stApp { background: var(--paper); color: var(--ink); }
 /* hide Deploy and the app menu, but keep the toolbar: it holds the button that reopens the sidebar */
 [data-testid="stToolbarActions"], [data-testid="stMainMenu"], [data-testid="stAppDeployButton"], [data-testid="stDecoration"] { display: none !important; }

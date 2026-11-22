@@ -59,7 +59,7 @@ research-story/
 │   ├── ui.py            KPI cards, icons, verdict strip, confetti (HTML/SVG/CSS)
 │   └── common.py        colours, vegetable list, data loading
 ├── data/              every dataset the app reads
-├── static/fonts/      Noto Sans, bundled so text looks the same everywhere
+├── static/fonts/      Manrope (text) and Newsreader (headings), bundled so text looks the same everywhere
 ├── .streamlit/        theme and settings
 ├── pyproject.toml     libraries needed (uv reads this)
 ├── uv.lock            exact versions
@@ -97,4 +97,4 @@ See `../research-story-materials/README.md` for how to run the tests and scripts
 
 ## 8. Credits
 
-Data: Central Bank of Sri Lanka, Copernicus ERA5-Land, Department of Census and Statistics (Sri Lanka), FAOSTAT and UN Comtrade (see `../research-story-materials/docs/references/data_sources.md`). Font: Noto Sans by Google, under the SIL Open Font License 1.1. Libraries: Streamlit, Plotly, pandas, NumPy.
+Data: Central Bank of Sri Lanka, Copernicus ERA5-Land, Department of Census and Statistics (Sri Lanka), FAOSTAT and UN Comtrade (see `../research-story-materials/docs/references/data_sources.md`). Fonts: Manrope and Newsreader, under the SIL Open Font License 1.1. Libraries: Streamlit, Plotly, pandas, NumPy.
