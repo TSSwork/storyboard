@@ -49,7 +49,11 @@ h1, h2, h3, h4 { font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
 .s-label .sq { display: inline-block; width: 8px; height: 8px; background: var(--coral); margin-right: 10px; vertical-align: middle; }
 .s-h1 { font-size: 2.1rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 .35rem; padding: 0; color: var(--ink); }
 .s-sub { color: var(--muted); font-size: 1.05rem; margin: 0 0 1rem; }
-.s-foot { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: .8rem; border-top: 1px solid var(--rule); padding-top: .6rem; margin-top: 1rem; }
+.s-foot { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem; color: var(--ink); font-size: .92rem; background: #fff; border: 1px solid var(--rule); border-radius: 12px; padding: .75rem 1.1rem; margin: 1.5rem 0 2rem; }
+.s-foot .src b { text-transform: uppercase; letter-spacing: .06em; font-size: .75rem; font-weight: 700; color: #fff; background: var(--ink); border-radius: 6px; padding: .2rem .55rem; margin-right: .75rem; }
+.s-foot .src { flex: 1; line-height: 1.6; }
+.s-foot .tag { white-space: nowrap; color: var(--muted); font-weight: 600; font-size: .85rem; }
+[data-testid="stMarkdownContainer"] p.fine { padding-bottom: .9rem; }
 .s-card-h { font-weight: 600; font-size: 1.1rem; margin-bottom: .6rem; color: var(--ink); }
 [data-testid="stVerticalBlockBorderWrapper"] { border-color: var(--rule); }
 .nav-group { font-size: .78rem; line-height: 1.4; color: var(--muted); font-weight: 500; margin: 1rem .2rem .75rem; padding: 1.1rem .4rem 0; border-top: 1px solid var(--rule); }

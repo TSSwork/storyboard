@@ -37,7 +37,7 @@ def header(n, act, title, lede):
 
 
 def footer(src):
-    st.markdown(f'<div class="s-foot"><span>Source: {esc(src)}</span><span>Exploratory · not proof of cause</span></div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="s-foot"><span class="src"><b>Source</b>{esc(src)}</span><span class="tag">Exploratory · not proof of cause</span></div>', unsafe_allow_html=True)
 
 
 def pick_veg(key):
@@ -136,7 +136,7 @@ def rain_map(selected_place: str = "Whole island"):
         k = st.select_slider("Month", options=list(range(1, 13)), value=5, format_func=lambda i: MONTHS[i - 1],
                              key="p1_cal", label_visibility="collapsed")
         df, label = R.typical_map(k), f"an average {MONTHS[k - 1]} ({R.months()[0].year}–{R.months()[-1].year})"
-    z = df.pivot(index="lat", columns="lon", values="rain_mm")
+    z = R.on_island(df).pivot(index="lat", columns="lon", values="rain_mm")
     fig = go.Figure(go.Heatmap(x=z.columns, y=z.index, z=z.values, zmin=0, zmax=MAP_MAX, colorscale=MAP_SCALE, hoverongaps=False,
                                colorbar=dict(title=dict(text="mm", side="top"), thickness=10, len=0.6, outlinewidth=0, tickfont=dict(color=MUTED)),
                                hovertemplate="%{z:.0f} mm<extra></extra>"))
@@ -221,7 +221,7 @@ def p_pattern():
         st.plotly_chart(fig2, width="stretch", config=CFG)
     st.markdown('<p class="hook">A pattern is a clue, not proof. The next page puts it to a real test.</p>', unsafe_allow_html=True)
     st.markdown('<p class="fine">With 7 vegetables × 4 delays = 28 links, a few can look strong just by chance.</p>', unsafe_allow_html=True)
-    footer("CBSL Dambulla wholesale prices; ERA5-Land national rain. Exploratory patterns (lag_correlations.csv reproduced)")
+    footer("CBSL Dambulla wholesale prices; ERA5-Land national rainfall")
 
 
 # ---------------- 2 ----------------
@@ -260,7 +260,7 @@ def p2():
     ui.verdict_strip(M.verdicts(region, market), veg)
     st.markdown(f'<p class="fine">{k["n"]} real month-ahead forecasts, {f.target_month.min():%b %Y} – {f.target_month.max():%b %Y}. '
                 'Rain is only ever the rain already observed, never future rain.</p>', unsafe_allow_html=True)
-    footer("forecast_model_comparison_v2.csv, forecast_results_v2.csv (stored backtest results; nothing re-estimated here)")
+    footer("CBSL Dambulla and Pettah wholesale prices; ERA5-Land rainfall. Backtest results from the study")
 
 
 # ---------------- 3 ----------------
@@ -299,7 +299,7 @@ def p3():
     f3.add_vrect(x0="2022-01-01", x1="2022-12-31", fillcolor=SOFT, opacity=.45, line_width=0, annotation_text="2022 crisis", annotation_font_color=MUTED)
     f3.update_yaxes(title_text="Rs per US dollar")
     titles = ["Weather and the rice harvest", "Rice imports", "The exchange rate"]
-    notes = ["Short series with policy shocks: an association only.", "Paddy-to-rice conversion (0.67) is an assumption.", "Shows the rupee's fall; no price pass-through is estimated."]
+    notes = ["Short series: an association only.", "Paddy-to-rice conversion (0.67) is an assumption.", "No price pass-through is estimated."]
     for col, fg, t, nt in zip(cols, (f1, f2, f3), titles, notes):
         style(fg, 320, legend=False)
         with col, st.container(border=True):
