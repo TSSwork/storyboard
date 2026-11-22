@@ -5,17 +5,18 @@
 ## What to do on this page
 1. Leave **Cabbage** selected and let the audience read the four KPI cards.
 2. Click **Beans**, then **Tomato**. The cards and chart change. Point out that every vegetable swings, by different amounts.
-3. Turn **Show rainfall underneath** off and on so people see the two series line up in time.
+3. Turn **Show rainfall underneath** off and on so people see the two series line up in time. Then click **Dambulla**, **Nuwara Eliya** and **Colombo** above the chart: the rain bars change to that area and its square is outlined on the map.
 4. On the **rain map** at the right, drag the month slider. Then switch to **Long-term monthly average** and slide from May to October. The south-west turns dark blue in the May–September monsoon, and the north and east get their rain later in the year.
 5. End on the coral line under the chart: the question for the whole talk.
 
 ## What to say
 "This is the wholesale price of cabbage at Dambulla, a major vegetable wholesale market, every month since 2016. Look at the cards. In its cheapest month cabbage sold for about 16 rupees a kilo, and in its dearest month about 452 rupees. That is roughly a 28-times gap. In six months out of ten the price moves by more than a fifth from one month to the next.
 
-Farmers, traders and households all live with this. On the right is where the rain falls. Darker blue means more rain. It is not spread evenly: the south-west is soaked in the May monsoon, and the dry zone around Dambulla gets much less. The two dotted squares are the areas whose rain we also tested. So we asked a simple question. Underneath the price I've put the rain that fell across the island. Can last month's rain warn us about next month's price? Let's look for a pattern."
+Farmers, traders and households all live with this. On the right is where the rain falls. Darker blue means more rain. It is not spread evenly: the south-west is soaked in the May monsoon, and the dry zone around Dambulla gets much less. The dotted squares mark Dambulla, Nuwara Eliya and Colombo. Dambulla and Nuwara Eliya are the two areas whose rain we also tested; Colombo is there for comparison. So we asked a simple question. Underneath the price I've put the rain that fell across the island. Can last month's rain warn us about next month's price? Let's look for a pattern."
 
 ## Key points
 - The swings are large, frequent and different for each vegetable. That makes forecasting worthwhile and hard.
+- The rain-area picker is for display only: Colombo's rain was not part of the forecasting test.
 - The question is about one month ahead, using rain that has **already fallen**.
 
 ## Reading the cards

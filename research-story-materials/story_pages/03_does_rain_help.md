@@ -17,7 +17,7 @@ For cabbage the prices-only forecast missed by about 52 rupees a kilo on a typic
 
 Now try beans. Adding rain makes nothing better; it is slightly worse. Pumpkin and snake gourd: no clear effect. Tomato looks a bit better, but not enough to trust.
 
-So rain carries useful information for some vegetables, mostly cabbage, brinjal and carrot, and not for others. The last card is the honest part: even the better forecast is often off, and the real price falls inside our 80 percent range only about seven or eight times in ten."
+The bar chart at the bottom shows all seven side by side: green bars are the clear gains, grey ones are too small to trust, and beans dips below zero. So rain carries useful information for some vegetables, mostly cabbage, brinjal and carrot, and not for others. The last card is the honest part: even the better forecast is often off, and the real price falls inside our 80 percent range only about seven or eight times in ten."
 
 ## Key points
 - Fair test: both forecasts see the same past prices, the same months and only information available at the time.
