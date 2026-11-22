@@ -56,7 +56,7 @@ def test_conclusion_reveal_and_back():
 def test_rain_map_real_and_typical_month():
     at = run(0)
     assert "Darker blue = more rain" in text(at)
-    at.radio(key="p1_mapview").set_value("Typical month").run()
+    at.radio(key="p1_mapview").set_value("Long-term monthly average").run()
     assert not at.exception
     assert "Darker blue = more rain" in text(at)
 

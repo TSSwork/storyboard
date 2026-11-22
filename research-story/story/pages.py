@@ -48,6 +48,16 @@ def rs(x):
     return f"Rs {x:,.0f}"
 
 
+RAIN_PLACES = ["Whole island", "Dambulla", "Nuwara Eliya", "Colombo"]
+
+
+def _rain_series(place: str) -> tuple[pd.Series, str]:
+    if place == "Whole island":
+        rain, _ = C.national_rain()
+        return rain, "Rain across the island"
+    return R.box_series(place), f"Rain around {place}"
+
+
 # ---------------- 1 ----------------
 def p1():
     header(1, ACT[0], "Vegetable prices swing wildly",
@@ -63,9 +73,18 @@ def p1():
     ])
     left, right = st.columns([3, 2], gap="large")
     with left:
-        show_rain = st.toggle("Show rainfall underneath", value=True, key="p1_rain")
+        c1, c2 = st.columns([1.2, 2.2])
+        show_rain = c1.toggle("Show rainfall underneath", value=True, key="p1_rain")
+        rain_place = c2.segmented_control(
+            "Rainfall area",
+            RAIN_PLACES,
+            default="Whole island",
+            key="p1_rain_place",
+            label_visibility="collapsed",
+            disabled=not show_rain,
+        ) or "Whole island"
         p = M._prices()[veg].dropna()
-        rain, _ = C.national_rain()
+        rain, rain_label = _rain_series(rain_place)
         rain = rain.loc[p.index.min():].dropna()
         rows = 2 if show_rain else 1
         fig = make_subplots(rows=rows, cols=1, shared_xaxes=True, row_heights=[0.65, 0.35] if show_rain else [1], vertical_spacing=0.06)
@@ -73,12 +92,12 @@ def p1():
                                  fill="tozeroy", fillcolor="rgba(182,223,237,.25)", hovertemplate="Rs %{y:,.0f}/kg<extra></extra>"), 1, 1)
         fig.update_yaxes(title_text="Rs per kg", row=1, col=1)
         if show_rain:
-            fig.add_trace(go.Bar(x=rain.index, y=rain.values, marker_color=RAIN, name="Rain across the island", hovertemplate="%{y:.0f} mm<extra></extra>"), 2, 1)
+            fig.add_trace(go.Bar(x=rain.index, y=rain.values, marker_color=RAIN, name=rain_label, hovertemplate="%{y:.0f} mm<extra></extra>"), 2, 1)
             fig.update_yaxes(title_text="Rain, mm", row=2, col=1)
         style(fig, 560)
         st.plotly_chart(fig, width="stretch", config=CFG)
     with right:
-        rain_map()
+        rain_map(selected_place=rain_place if show_rain else "Whole island")
     st.markdown('<p class="hook">So, can last month\'s rain warn us about next month\'s price?</p>', unsafe_allow_html=True)
     footer("Central Bank of Sri Lanka daily wholesale prices (monthly average); ERA5-Land rainfall")
 
@@ -100,9 +119,15 @@ def island_outline():
     return xs, ys
 
 
-def rain_map():
-    view = st.radio("Map", ["A real month", "Typical month"], horizontal=True, key="p1_mapview", label_visibility="collapsed")
-    if view == "A real month":
+def rain_map(selected_place: str = "Whole island"):
+    view = st.radio(
+        "Map",
+        ["One specific month", "Long-term monthly average"],
+        horizontal=True,
+        key="p1_mapview",
+        label_visibility="collapsed",
+    )
+    if view == "One specific month":
         ms = R.months()
         m = st.select_slider("Month", options=ms, value=ms[-1], format_func=lambda d: pd.Timestamp(d).strftime("%b %Y"),
                              key="p1_month", label_visibility="collapsed")
@@ -110,27 +135,44 @@ def rain_map():
     else:
         k = st.select_slider("Month", options=list(range(1, 13)), value=5, format_func=lambda i: MONTHS[i - 1],
                              key="p1_cal", label_visibility="collapsed")
-        df, label = R.typical_map(k), f"a typical {MONTHS[k - 1]} (average {R.months()[0].year}–{R.months()[-1].year})"
+        df, label = R.typical_map(k), f"an average {MONTHS[k - 1]} ({R.months()[0].year}–{R.months()[-1].year})"
     z = df.pivot(index="lat", columns="lon", values="rain_mm")
     fig = go.Figure(go.Heatmap(x=z.columns, y=z.index, z=z.values, zmin=0, zmax=MAP_MAX, colorscale=MAP_SCALE, hoverongaps=False,
                                colorbar=dict(title=dict(text="mm", side="top"), thickness=10, len=0.6, outlinewidth=0, tickfont=dict(color=MUTED)),
                                hovertemplate="%{z:.0f} mm<extra></extra>"))
     xs, ys = island_outline()
     fig.add_trace(go.Scatter(x=xs, y=ys, mode="lines", line=dict(color=NAVY, width=1), hoverinfo="skip", showlegend=False))
-    for name, (la, lo) in R.BOXES.items():
-        fig.add_shape(type="rect", x0=lo - R.HALF, x1=lo + R.HALF, y0=la - R.HALF, y1=la + R.HALF, line=dict(color=CORAL, width=1.6, dash="dot"))
-        fig.add_annotation(x=lo + R.HALF, y=la + R.HALF, text=name, showarrow=False, xanchor="left", yanchor="bottom", font=dict(color=NAVY, size=11))
+    for name, (la, lo) in R.ALL_BOXES.items():
+        is_sel = name == selected_place
+        fig.add_shape(
+            type="rect",
+            x0=lo - R.HALF,
+            x1=lo + R.HALF,
+            y0=la - R.HALF,
+            y1=la + R.HALF,
+            line=dict(color=CORAL, width=2.4 if is_sel else 1.4, dash="solid" if is_sel else "dot"),
+        )
+        if name != "Colombo":
+            fig.add_annotation(
+                x=lo + R.HALF,
+                y=la + R.HALF,
+                text=name,
+                showarrow=False,
+                xanchor="left",
+                yanchor="bottom",
+                font=dict(color=NAVY, size=11),
+                bgcolor="rgba(255,255,255,.85)",
+                borderpad=2,
+            )
     fig.add_trace(go.Scatter(x=[79.85], y=[6.94], mode="markers", marker=dict(color="white", size=8, symbol="square", line=dict(color=NAVY, width=1.5)),
                              hoverinfo="skip", showlegend=False))
     fig.add_annotation(x=79.85, y=6.94, text="Colombo (Pettah)", showarrow=False, xanchor="left", yanchor="top", yshift=-7, font=dict(color=NAVY, size=11),
                        bgcolor="rgba(255,255,255,.85)", borderpad=2)
-    for a in fig.layout.annotations[:-1]:
-        a.update(bgcolor="rgba(255,255,255,.85)", borderpad=2)
     fig.update_xaxes(visible=False, range=[79.4, 82.1]); fig.update_yaxes(visible=False, scaleanchor="x", scaleratio=1, range=[5.8, 9.95])
     style(fig, 470, legend=False); fig.update_layout(hovermode="closest")
     st.plotly_chart(fig, width="stretch", config=CFG)
     st.markdown(f'<p class="fine">Rain in {esc(label)}. Darker blue = more rain. '
-                'Dotted squares: the two areas whose rain we also tested on page 3.</p>', unsafe_allow_html=True)
+                'Dotted squares: Dambulla, Nuwara Eliya, and Colombo areas.</p>', unsafe_allow_html=True)
 
 
 # ---------------- pattern ----------------

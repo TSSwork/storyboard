@@ -10,6 +10,11 @@ import pandas as pd
 from story.common import DATA
 
 BOXES = {"Dambulla": (7.86, 80.65), "Nuwara Eliya": (6.97, 80.77)}   # rain boxes used in the study, ±0.3°
+ALL_BOXES = {
+    "Dambulla": (7.86, 80.65),
+    "Nuwara Eliya": (6.97, 80.77),
+    "Colombo": (6.94, 79.85),
+}
 HALF = 0.3
 
 
@@ -32,6 +37,17 @@ def typical_map(calendar_month: int) -> pd.DataFrame:
     g = grid()
     g = g[g.month.dt.month == calendar_month]
     return g.groupby(["lat", "lon"], as_index=False).rain_mm.mean()
+
+
+def box_series(place: str) -> pd.Series:
+    """Cosine-latitude-weighted monthly rainfall series (mm) for a ±0.3° box around Dambulla, Nuwara Eliya, or Colombo."""
+    la, lo = ALL_BOXES[place]
+    g = grid()
+    sub = g[(g.lat >= la - HALF) & (g.lat <= la + HALF) & (g.lon >= lo - HALF) & (g.lon <= lo + HALF)].copy()
+    sub["w"] = np.cos(np.deg2rad(sub["lat"]))
+    sub["wr"] = sub["rain_mm"] * sub["w"]
+    agg = sub.groupby("month")[["wr", "w"]].sum()
+    return (agg["wr"] / agg["w"]).sort_index()
 
 
 def summary(month: pd.Timestamp) -> dict:
