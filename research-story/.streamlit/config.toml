@@ -1,0 +1,12 @@
+[theme]
+base = "light"
+primaryColor = "#002941"
+backgroundColor = "#f6fafc"
+secondaryBackgroundColor = "#e9f4f9"
+textColor = "#002941"
+
+[server]
+enableStaticServing = true      # serves static/fonts so the bundled Noto Sans loads on any computer
+
+[browser]
+gatherUsageStats = false
