@@ -7,7 +7,7 @@
 2. Point at the chart: navy is what actually happened, the dotted grey line is the prices-only forecast, and green is the forecast that also knew the rain.
 3. Click **Beans**. The verdict turns coral, "No help". Let that land: rain does not help every vegetable.
 4. Click **Brinjal** and **Carrot** (both clear help), then **Tomato** ("A hint, not proven").
-5. Switch **Where rain is measured** to *Hill country* and the **Market** to *Pettah*. The strip of seven vegetables shows which verdicts hold up.
+5. Switch **Where rain is measured** to *Hill country* and the **Market** to *Pettah*. The bar chart at the bottom ranks all seven vegetables by how much rain cut the error, and shows which verdicts hold up.
 6. Finish on the last card: even the better forecast misses often, and the price lands inside the range only 7 or 8 times in 10.
 
 ## What to say

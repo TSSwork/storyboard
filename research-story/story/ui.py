@@ -49,14 +49,6 @@ CSS = """
 .kpi-val small { font-size:.95rem; font-weight:500; margin-left:.25rem; letter-spacing:0; opacity:.85; }
 .kpi-chip { display:inline-block; font-size:.8rem; font-weight:600; padding:.18rem .6rem; border-radius:999px; margin-top:.35rem; background:rgba(255,255,255,.24); }
 .kpi.c-cyan .kpi-chip, .kpi.c-orange .kpi-chip, .kpi.c-pink .kpi-chip { background:rgba(255,255,255,.45); }
-.verdicts { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0 .2rem; }
-.vd { display:flex; align-items:center; gap:.45rem; background:#fff; border:1px solid var(--rule); border-radius:999px; padding:.35rem .8rem .35rem .45rem; font-size:.88rem; }
-.vd .dot { width:24px; height:24px; border-radius:50%; display:grid; place-items:center; }
-.vd .dot svg { width:14px; height:14px; }
-.vd.good .dot { background:#e5f2ec; color:#2f6b52; } .vd.soft .dot { background:var(--tint); color:#1d5574; }
-.vd.flat .dot { background:#edf2f5; color:#4c6472; } .vd.bad .dot { background:#fde9e9; color:#a23b3b; }
-.vd.sel { border:1.5px solid var(--ink); font-weight:600; }
-.vd .lab { color:var(--muted); font-weight:400; }
 
 .lede { font-size:1.08rem; color:var(--muted); margin:.1rem 0 .9rem; max-width:62rem; }
 .hook { font-size:1.2rem; font-weight:500; color:var(--ink); margin:.6rem 0 0; }
@@ -91,12 +83,12 @@ CSS = """
   @keyframes rise { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
   @keyframes pagein { from { opacity:0; transform:translateX(18px); } to { opacity:1; transform:none; } }
   [class*="st-key-page_"] { animation: pagein .45s cubic-bezier(.2,.7,.2,1) both; }
-  .kpi, .vd, .take .card { animation: rise .45s cubic-bezier(.2,.7,.2,1) both; }
+  .kpi, .take .card { animation: rise .45s cubic-bezier(.2,.7,.2,1) both; }
   .kpi:nth-child(2), .take .card:nth-child(2) { animation-delay:.07s; }
   .kpi:nth-child(3) { animation-delay:.14s; } .take .card:nth-child(3) { animation-delay:.35s; }
   .kpi:nth-child(4) { animation-delay:.21s; }
   .take .card:nth-child(2) { animation-delay:.18s; }
-  .kpi, .vd { transition: border-color .2s ease; }
+  .kpi { transition: border-color .2s ease; }
 }
 </style>
 """
@@ -118,12 +110,6 @@ def kpi(icon: str, label: str, value: str, note: str = "", tone: str = "flat", u
 def kpi_row(cards: list[str]) -> None:
     cls = "kpi-row three" if len(cards) == 3 else "kpi-row"
     st.markdown(f'<div class="{cls}">{"".join(cards)}</div>', unsafe_allow_html=True)
-
-
-def verdict_strip(items: list[tuple[str, str, str]], selected: str) -> None:
-    pills = "".join(f'<div class="vd {tone}{" sel" if veg == selected else ""}"><span class="dot">{ICON["leaf"]}</span>'
-                    f'{esc(veg)} <span class="lab">· {esc(lab)}</span></div>' for veg, lab, tone in items)
-    st.markdown(f'<div class="verdicts">{pills}</div>', unsafe_allow_html=True)
 
 
 def confetti() -> None:

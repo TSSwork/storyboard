@@ -14,7 +14,7 @@ Narrative arc: a felt problem (1) → the viewer finds a clue (2) → the viewer
 
 ## How this replaced the 10-page deck
 - Old pages 1–2 became page 1, and old page 3 (the lag correlations) became page 2.
-- Old pages 4–8 became page 3. Design and evaluation moved to the speaking guide. The main result is the verdict card and strip, robustness is the region and market controls, and accuracy is the "inside our range" card.
+- Old pages 4–8 became page 3. Design and evaluation moved to the speaking guide. The main result is the verdict card and the all-vegetable bar chart, robustness is the region and market controls, and accuracy is the "inside our range" card.
 - Old page 9 became page 4, and old page 10 became the reveal on page 5.
 - The old deck is kept in `archive/ten_slide_deck/`.
 

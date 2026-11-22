@@ -256,8 +256,19 @@ def p2():
     fig.update_yaxes(title_text="Rs per kg")
     style(fig, 420)
     st.plotly_chart(fig, width="stretch", config=CFG)
-    st.markdown('<div class="s-label" style="margin-top:.2rem">All seven vegetables, with these settings</div>', unsafe_allow_html=True)
-    ui.verdict_strip(M.verdicts(region, market), veg)
+    st.markdown('<div class="s-card-h" style="margin-top:.4rem">Did rain help every vegetable? Same settings, all seven</div>', unsafe_allow_html=True)
+    rows = sorted(((v, M.rain_kpis(v, region, market)) for v in C.VEGS), key=lambda t: t[1]["gain_pct"])
+    tone_color = {"good": SAGE, "soft": SOFT, "flat": SLATE, "bad": CORAL}
+    fig3 = go.Figure(go.Bar(
+        y=[v for v, _ in rows], x=[r["gain_pct"] for _, r in rows], orientation="h",
+        marker_color=[tone_color[r["tone"]] for _, r in rows],
+        text=[f"{r['gain_pct']:+.0f}% · {r['label']}" for _, r in rows], textposition="outside", cliponaxis=False,
+        hovertemplate="%{y}: error %{x:+.1f}% smaller with rain<extra></extra>"))
+    fig3.add_vline(x=0, line_color=NAVY, line_width=1)
+    fig3.update_xaxes(title_text="how much smaller the forecast error became when rain was added, %", range=[min(-5, min(r["gain_pct"] for _, r in rows) - 5), max(r["gain_pct"] for _, r in rows) + 14])
+    fig3.update_yaxes(autorange=True, tickfont=dict(size=14))
+    style(fig3, 300, legend=False); fig3.update_layout(hovermode="closest", margin=dict(l=10, r=10, t=10, b=40))
+    st.plotly_chart(fig3, width="stretch", config=CFG)
     st.markdown(f'<p class="fine">{k["n"]} real month-ahead forecasts, {f.target_month.min():%b %Y} – {f.target_month.max():%b %Y}. '
                 'Rain is only ever the rain already observed, never future rain.</p>', unsafe_allow_html=True)
     footer("CBSL Dambulla and Pettah wholesale prices; ERA5-Land rainfall. Backtest results from the study")
