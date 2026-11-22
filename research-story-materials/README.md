@@ -9,10 +9,7 @@ research-story-materials/
 │                    and the design note and build plan (docs/superpowers/)
 ├── tests/           automated checks for the app
 ├── scripts/         tools that rebuild or check data (some need the full research project)
-├── archive/         the earlier 10-slide version: PNG slides, guides, slide code
-├── app2.py          a friend's general-purpose dashboard, kept for reference (ideas borrowed: scatter page, guess before reveal)
-├── SUMMARY.docx     your summary document
-└── Summary_ Sri Lanka Climate Intelligence Dashboard.pdf
+└── archive/         the earlier 10-slide version: PNG slides, guides, slide code
 ```
 
 ## Speaking guides
